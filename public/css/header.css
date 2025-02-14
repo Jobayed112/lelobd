@@ -1,0 +1,21 @@
+/* Custom optional styles */
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .search-bar form input {
+        width: 150px !important;
+    }
+    .search-bar form button {
+        width: 80px !important;
+    }
+}
+
+
+
+
