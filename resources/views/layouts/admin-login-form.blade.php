@@ -12,6 +12,7 @@
     <meta name="author" content="LELOBD" />
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/progress.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet" />
     {{-- tailwindcss --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -22,11 +23,15 @@
 
 <body>
 
-    <div id="loader" class="LoadingOverlay d-none">
+    {{-- <div id="loader" class="LoadingOverlay d-none">
         <div class="Line-Progress">
             <div class="indeterminate"></div>
         </div>
-    </div>
+    </div> --}}
+    <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <!-- Spinner using Tailwind utilities -->
+        <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
 
     <x-toast-message />
 
@@ -39,7 +44,7 @@
 
 
 
-
+    <script src="{{ asset('js/config.js') }}"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <!-- Toastify CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">

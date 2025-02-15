@@ -30,6 +30,29 @@
                     </li>
                 </ul>
             </li>
+
+            {{-- Sub Category --}}
+            <li>
+                <button aria-controls="SubCategory-dropdown" data-collapse-toggle="SubCategory-dropdown" type="button"
+                    class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
+                    <span>Sub Category</span>
+                </button>
+                <ul id="SubCategory-dropdown" class="hidden py-2 space-y-2">
+                    <li>
+                        <a href="{{ route('subcategory-list') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>Sub Category list</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('subcategory-create') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>Sub Category create</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             {{-- product --}}
             <li>
                 <button aria-controls="Product-dropdown" data-collapse-toggle="Product-dropdown" type="button"
@@ -43,17 +66,42 @@
                             <span>Product list</span>
                         </a>
                     </li>
+
                     <li>
                         <a href="{{ route('product-create') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
                             <span>Product create</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('top-product-list') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>Top Product List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('popular-product-list') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>Popular Product List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('special-product-list') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>Special Product List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('new-product-list') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>New Product List</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
-             {{-- Offers --}}
-             <li>
+            {{-- Offers --}}
+            <li>
                 <button aria-controls="Offer-dropdown" data-collapse-toggle="Offer-dropdown" type="button"
                     class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
                     <span>Offer</span>

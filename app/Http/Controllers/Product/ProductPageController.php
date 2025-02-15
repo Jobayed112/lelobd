@@ -9,16 +9,22 @@ use App\Http\Controllers\Controller;
 
 class ProductPageController extends Controller
 {
-    // public function product()
-    // {
-    //     $products = Product::with('category')->paginate(10);
-    //     return view('pages.product.product-page',compact('products'));
-    // }
-    public function ProductView()
+
+    public function productPage()
     {
 
-        return view('pages.product.product_view');
+        return view('pages.product.product-page');
     }
+
+    public function productView($id)
+    {
+        $product = Product::with('category')->findOrFail($id);
+        return view('pages.product.product-view',compact('product'));
+    }
+
+
+
+
     public function ProductBuy()
     {
         return view('pages.product.product_buy');

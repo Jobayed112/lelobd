@@ -9,9 +9,14 @@ use App\Http\Controllers\Admin\auth\AdminResetController;
 use App\Http\Controllers\Admin\auth\AdminRegisterController;
 use App\Http\Controllers\Admin\Product\CategoryController;
 use App\Http\Controllers\Admin\Product\ProductController;
+use App\Http\Controllers\Admin\Product\SubCategoryController;
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\Product\CartPageController;
+use App\Http\Controllers\Product\ProductPageController;
 
-// logout
-Route::get('logout',[AdminLogoutController::class,'logout'])->name('logout');
+
+Route::get('logout', [AdminLoginController::class, 'logout'])->name('logout');
+
 
 // admin routes role admin than middleware admin use prefix admin
 Route::get('admin-login-form', [AdminLoginController::class, 'adminLoginForm'])->name('admin-login-form');
@@ -38,33 +43,84 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
 
 
-    // product-lis
-    Route::get('product-list',[ProductController::class,'productList'])->name('product-list');
+    // product-list
+    Route::get('product/list',[ProductController::class,'productList'])->name('product-list');
 
-    Route::get('product-create',[ProductController::class,'productCreate'])->name('product-create');
-    Route::post('product-store',[ProductController::class,'productStore'])->name('product-store');
+    Route::get('product/create',[ProductController::class,'productCreate'])->name('product-create');
+    Route::post('product/store',[ProductController::class,'productStore'])->name('product-store');
 
-    Route::get('product-edit/{id}',[ProductController::class,'productEdit'])->name('product-edit');
-    Route::post('product-update/{id}',[ProductController::class,'productUpdate'])->name('product-update');
-    Route::get('product-delete/{id}', [ProductController::class, 'productDelete'])->name('product-delete');
+    Route::get('/product/edit/{id}', [ProductController::class, 'productEdit'])->name('product-edit');
 
+    Route::post('/product/update/{id}', [ProductController::class, 'productUpdate'])->name('product-update');
+
+    Route::get('/product/delete/{id}', [ProductController::class, 'productDelete'])->name('product-delete');
+
+    // new product
+    Route::get('new/product/list',[ProductController::class,'productNewList'])->name('new-product-list');
+
+    Route::get('special/product/list',[ProductController::class,'productSpecialList'])->name('special-product-list');
+
+    Route::get('top/product/list',[ProductController::class,'productTopList'])->name('top-product-list');
+
+    Route::get('popular/product/list',[ProductController::class,'productPopularList'])->name('popular-product-list');
+
+    //
+    // Route::get('/offer-list', [OfferController::class, 'index'])->name('offer.list');
+    //     Route::get('/offer-create', [OfferController::class, 'create'])->name('offer.create');
+    // Route::post('/offer/store', [OfferController::class, 'store'])->name('offer.store');
+    // Route::get('/offer/edit/{id}', [OfferController::class, 'edit'])->name('offer.edit');
+    // Route::post('/offer/update/{id}', [OfferController::class, 'update'])->name('offer.update');
+    // Route::delete('/offer/delete/{id}', [OfferController::class, 'destroy'])->name('offer.delete');
 
     // category-list
-    Route::get('category-list',[CategoryController::class,'categoryList'])->name('category-list');
+    Route::get('category/list',[CategoryController::class,'categoryList'])->name('category-list');
 
-    Route::get('category-create',[CategoryController::class,'categoryCreate'])->name('category-create');
-    Route::post('category-store',[CategoryController::class,'categoryStore'])->name('category-store');
+    Route::get('category/create',[CategoryController::class,'categoryCreate'])->name('category-create');
+    Route::post('category/store',[CategoryController::class,'categoryStore'])->name('category-store');
 
-    Route::get('category-edit/{id}',[CategoryController::class,'categoryEdit'])->name('category-edit');
-    Route::post('category-update/{id}',[CategoryController::class,'categoryUpdate'])->name('category-update');
-    Route::get('category-delete/{id}', [CategoryController::class, 'categoryDelete'])->name('category-delete');
+    Route::get('category/edit/{id}',[CategoryController::class,'categoryEdit'])->name('category-edit');
+    Route::post('category/update/{id}',[CategoryController::class,'categoryUpdate'])->name('category-update');
+    Route::get('category/delete/{id}', [CategoryController::class, 'categoryDelete'])->name('category-delete');
 
+    // subcategory
+    Route::get('subcategory/list',[SubCategoryController::class,'subCategoryList'])->name('subcategory-list');
 
+    Route::get('subcategory/create',[SubCategoryController::class,'subCategoryCreate'])->name('subcategory-create');
+    Route::post('subcategory/store',[SubCategoryController::class,'subCategoryStore'])->name('subcategory-store');
 
+    Route::post('subcategory/store',[SubCategoryController::class,'subCategoryStore'])->name('subcategory-store');
 
+    Route::get('subcategory/edit/{id}',[SubCategoryController::class,'subCategoryEdit'])->name('subcategory-edit');
+    Route::put('subcategory/update/{id}',[SubCategoryController::class,'subCategoryUpdate'])->name('subcategory-update');
+    Route::get('subcategory/delete/{id}', [SubCategoryController::class, 'subCategoryDelete'])->name('subcategory-delete');
 
 
 });
 
 // home
 Route::get('/',[HomeController::class,'home'])->name('home');
+
+
+// user login
+
+Route::get('login',[LoginController::class,'loginForm'])->name('login');
+
+// product view
+Route::get('product-page ',[ProductPageController::class,'productPage'])->name('product-page');
+Route::get('product-view/{id}',[ProductPageController::class,'productView'])->name('product-view');
+
+// cart
+
+Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart-add');
+Route::get('/cart-show', [CartPageController::class, 'cartShow'])->name('cart-show');
+Route::get('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart-remove');
+
+
+
+
+Route::prefix('user')->middleware('check')->group(function () {
+
+
+
+});
+

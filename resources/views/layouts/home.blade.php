@@ -12,6 +12,7 @@
     <meta name="author" content="LELOBD" />
 
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/progress.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet" />
     {{-- tailwindcss --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -21,45 +22,52 @@
 
     <link rel="stylesheet" href="css/fontawesome.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <!-- Toastify CSS -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
-<!-- Include SwiperJcss -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Include SwiperJcss -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+
 </head>
 
 <body class="overflow-x-hidden">
     {{-- loader --}}
-    <div id="loader" class="LoadingOverlay d-none">
+    {{-- <div id="loader" class="LoadingOverlay d-none">
         <div class="Line-Progress">
             <div class="indeterminate"></div>
         </div>
+    </div> --}}
+    {{-- one time loding --}}
+    <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <!-- Spinner using Tailwind utilities -->
+        <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
     </div>
 
     <x-toast-message />
 
 
 
-    @include('components.home.header')
-    @include('components.home.sidebar')
-
 
     @yield('content')
 
-    @include('components.home.footer')
 
 
     <script src="{{ asset('js/header.js') }}"></script>
-
+    <script src="{{ asset('js/config.js') }}"></script>
     <!-- Include SwiperJS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Flowbite JS CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 
 
-  <!-- Toastify JS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-  </script>
+    <!-- Toastify JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    </script>
+
+
+
 </body>
 
 </html>

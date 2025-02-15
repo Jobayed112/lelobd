@@ -24,21 +24,22 @@
                     @foreach ($products as $product)
                         <tr class="hover:bg-gray-300 transition  ">
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <span class="px-2 py-1 rounded-lg text-white
+                                <span
+                                    class="px-2 py-1 rounded-lg text-white
                                     {{ $product->stock == 'instock' ? 'bg-green-500' : 'bg-red-500' }}">
-                                  {{ $product->id  }}
+                                    {{ $product->id }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
                                 <span class="px-2 py-1 rounded-lg text-black
                                ">
-                                   {{ $product->category->name  }}
+                                    {{ $product->category->name }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
                                 <span class="px-2 py-1 rounded-lg text-black
                                    ">
-                                   {{ $product->name  }}
+                                    {{ $product->name }}
                                 </span>
                             </td>
 
@@ -49,19 +50,27 @@
                             </td>
 
                             <td class="px-4 py-3 text-center border-b border-gray-200">
-                                <span class="px-2 py-1 rounded-lg text-white
+                                <span
+                                    class="px-2 py-1 rounded-lg text-white
                                     {{ $product->stock == 'instock' ? 'bg-green-500' : 'bg-red-500' }}">
                                     {{ $product->stock == 'instock' ? 'In Stock' : 'Unavailable' }}
                                 </span>
                             </td>
                             <!-- 🔥 Display Product Image -->
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <img src="{{ asset($product->img_url) }}" alt="{{ $product->name }}"
-                                    class="w-16 h-16 object-cover rounded-lg shadow">
+                                @if ($product->images->isNotEmpty())
+                                    <img src="{{ asset($product->images->last()->img_url) }}"
+                                         class="w-16 h-16 object-cover rounded-lg shadow" alt="Product Image">
+                                @else
+                                    <p>No image available</p>
+                                @endif
                             </td>
+
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <a href="{{ route('product-edit', $product->id) }}" class="text-blue-500 hover:text-blue-700">Edit</a> |
-                                <a href="{{ route('product-delete', $product->id) }}" class="text-red-500 hover:text-red-700"
+                                <a href="{{ route('product-edit', $product->id) }}"
+                                    class="text-blue-500 hover:text-blue-700">Edit</a> |
+                                <a href="{{ route('product-delete', $product->id) }}"
+                                    class="text-red-500 hover:text-red-700"
                                     onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
                             </td>
                         </tr>

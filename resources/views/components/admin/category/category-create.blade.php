@@ -1,8 +1,8 @@
 <div class="bg-gray-100">
     <div class="container mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <div class="flex justify-between items-center mb-4">
-            <h1 class="text-3xl font-bold text-gray-800">Create Category</h1>
-            <a href="{{ route('category-list') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">
+        <div class="flex justify-between items-center mb-4 flex-wrap">
+            <h1 class="text-3xl font-bold text-gray-800 w-full sm:w-auto">Create Category</h1>
+            <a href="{{ route('category-list') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition mt-2 sm:mt-0">
                 Back to Categories
             </a>
         </div>
@@ -16,6 +16,7 @@
                     <label for="name" class="text-gray-700 font-semibold sm:w-1/4">Category Name</label>
                     <input type="text" id="name" name="name" class="w-full sm:w-3/4 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
+
             </div>
 
             <!-- Submit Button -->

@@ -202,3 +202,43 @@ a:hover {
 }
 
 /* user dashboard end */
+
+
+
+/* product slider */
+    .swiper-button-next, .swiper-button-prev {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 40px; /* Adjust size */
+        height: 40px; /* Adjust size */
+        background-color: rgba(75, 85, 99, 0.5); /* Dark Gray background */
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swiper-button-next::after, .swiper-button-prev::after {
+        font-size: 20px;
+        color: white; /* Change arrow color to white */
+    }
+
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+        background-color: rgba(75, 85, 99, 0.8); /* Darker Gray on hover */
+    }
+
+    /* Ensure buttons are visible on all screen sizes */
+    .swiper-button-next, .swiper-button-prev {
+        display: block !important;
+    }
+/* product slider end */
+/* one time loader */
+
+    /* If you want custom animation speed or styling, you can adjust here */
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+

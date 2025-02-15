@@ -28,3 +28,14 @@ function errorToast(msg) {
         }
     }).showToast();
 }
+// onr time loding
+window.addEventListener('load', function() {
+    // Hide loader
+    const loader = document.getElementById('loader');
+    loader.style.display = 'none';
+
+    // Optionally, reveal your content with a fade-in effect
+    const content = document.getElementById('content');
+    content.classList.remove('opacity-0');
+    content.classList.add('opacity-100', 'transition', 'duration-500');
+  });

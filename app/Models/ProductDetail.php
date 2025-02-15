@@ -11,11 +11,11 @@ class ProductDetail extends Model
     use HasFactory;
 
     protected $fillable=[
-        'product_id', 'brand', 'size', 'color', 'material', 'expiry_date',
+        'product_id', 'brand', 'size', 'color', 'material',
 
     ];
 
-    public function products(): BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

@@ -16,11 +16,8 @@ class ProductController extends Controller
             $products = Product::with('category')->paginate(10);
             return view('pages.admin.product.product-list', compact('products'));
         } catch (\Exception $e) {
-            return response()->json(
-                ['error' => 'Something went wrong',
-                'message' => $e->getMessage()
-            ],
-                500
+            return back()->with(
+                'error','Something went wrong'
             );
         }
 
@@ -31,9 +28,8 @@ class ProductController extends Controller
             $categories = Category::with('subcategories')->get();
             return view('pages.admin.product.product-create', compact('categories'));
         } catch (\Exception $e) {
-            return response()->json(
-                ['error' => 'Something went wrong',],
-                500
+            return back()->with(
+                'error','Something went wrong'
             );
         }
     }
@@ -41,122 +37,176 @@ class ProductController extends Controller
     {
         try {
             $request->validate([
-                'category_id' => 'required|',
-                'name' => 'required|string|max:255|unique:products,name,',
+                'category_id' => 'required|exists:categories,id',
+                'sub_category_id' => 'required|exists:sub_categories,id',
+                'name' => 'required|string|max:255|unique:products,name',
                 'description' => 'nullable|string',
                 'quantity' => 'required|integer|min:1',
                 'price' => 'required|numeric|min:0',
+                'type'=>'required|in:popular,new,top,special',
                 'stock' => 'required|in:instock,unavailable',
-                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4048', //
+                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4048',
             ]);
 
-            $product = new Product();
-            $product->category_id = $request->category_id;
-            $product->name = $request->name;
-            $product->description = $request->description;
-            $product->quantity = $request->quantity;
-            $product->price = $request->price;
-            $product->img_url = $request->img_url;
-            $product->stock = $request->stock;
+            $product = Product::create([
+                'category_id' => $request->category_id,
+                'sub_category_id' => $request->sub_category_id,
+                'name' => $request->name,
+                'description' => $request->description,
+                'quantity' => $request->quantity,
+                'price' => $request->price,
+                'type'=> $request->type,
+                'stock' => $request->stock,
+            ]);
 
             if ($request->hasFile('img_url')) {
-                $img_url = $request->file('img_url');
-                $img_url_name = time() . '.' . $img_url->getClientOriginalExtension();
-                $img_url->move(public_path('uploads/products/'), $img_url_name);
+                $image = $request->file('img_url');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
 
-                $product->img_url = 'uploads/products/' . $img_url_name;
+                $image->move(public_path('uploads/products/'), $imageName);
+                $product->images()->create([
+                    'img_url' => 'uploads/products/' . $imageName,
+                ]);
             }
-            $product->save();
+
             return redirect()->route('product-list')->with('success', 'Product created successfully.');
-
-        } catch (\Exception $te) {
-            return response()->json(
-                ['error' => 'Something went wrong',
-
-            ],
-                500
-            );
-        }
-
-    }
-
-    public function productEdit($id)
-    {
-        try {
-
-            $product = Product::with('category')->findOrFail($id);
-
-            $categories = Category::with('subcategories')->get();
-            return view('pages.admin.product.product-update', compact('product','categories'));
 
         } catch (\Exception $e) {
             return back()->with(
                 'error', 'Something went wrong',
             );
         }
+    }
 
+    public function productEdit($id)
+    {
+        try {
+            // Fetch the product with its category and subcategory
+            $product = Product::with('category', 'subCategory')->findOrFail($id);
+            $categories = Category::with('subcategories')->get();
+
+            return view('pages.admin.product.product-update', compact('product', 'categories'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
 
     public function productUpdate(Request $request, $id)
     {
         try {
+
             $request->validate([
                 'category_id' => 'required|exists:categories,id',
+                'sub_category_id' => 'required|exists:sub_categories,id',
                 'name' => 'required|string|max:255|unique:products,name,' . $id,
                 'description' => 'nullable|string',
                 'quantity' => 'required|integer|min:1',
                 'price' => 'required|numeric|min:0',
+                'type' => 'required|in:popular,new,top,special',
                 'stock' => 'required|in:instock,unavailable',
-                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4048',
             ]);
 
             $product = Product::findOrFail($id);
-            $product->category_id = $request->category_id;
-            $product->name = $request->name;
-            $product->description = $request->description;
-            $product->quantity = $request->quantity;
-            $product->price = $request->price;
-            $product->stock = $request->stock;
+
+            $product->update([
+                'category_id' => $request->category_id,
+                'sub_category_id' => $request->sub_category_id,
+                'name' => $request->name,
+                'description' => $request->description,
+                'quantity' => $request->quantity,
+                'price' => $request->price,
+                'type' => $request->type,
+                'stock' => $request->stock,
+            ]);
 
             if ($request->hasFile('img_url')) {
-                if ($product->img_url) {
-                    unlink(public_path($product->img_url));
-                }
+                $image = $request->file('img_url');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
 
-                $img_url = $request->file('img_url');
-                $img_url_name = time() . '.' . $img_url->getClientOriginalExtension();
-                $img_url->move(public_path('uploads/products/'), $img_url_name);
+                $image->move(public_path('uploads/products/'), $imageName);
 
-                $product->img_url = 'uploads/products/' . $img_url_name;
+                $product->images()->create([
+                    'img_url' => 'uploads/products/' . $imageName,
+                ]);
             }
 
-            $product->save();
             return redirect()->route('product-list')->with('success', 'Product updated successfully.');
+
         } catch (\Exception $e) {
-            return back()->with(
-                'error', 'Something went wrong',
-            );
+            return back()->with('error', 'Something went wrong');
         }
-
-
     }
+
 
     public function productDelete($id)
     {
         try {
             $product = Product::findOrFail($id);
-            if ($product->img_url) {
-                unlink(public_path($product->img_url));
+
+            foreach ($product->images as $image) {
+                if (file_exists(public_path($image->img_url))) {
+                    unlink(public_path($image->img_url));
+                }
             }
+
+            $product->images()->delete();
+
             $product->delete();
-            return redirect()->route('product-list')->with('success', 'Product deleted successfully.');
+
+            return redirect()->route('product-list')->with('success', 'Product and its images deleted successfully.');
         } catch (\Exception $e) {
-            return back()->with(
-                'error', 'Something went wrong',
-            );
+            return back()->with('error', 'Something went wrong');
         }
     }
+
+
+
+// new product
+public function productNewList()
+{
+    try {
+        $newProducts = Product::where('type', 'new')->get();
+        return view('pages.admin.product.new-product-list', compact('newProducts'));
+    } catch (\Exception $e) {
+        return back()->with('error', 'Something went wrong');
+    }
+}
+
+public function productPopularList()
+{
+    try {
+        $PopularProducts = Product::where('type', 'popular')->get();
+        return view('pages.admin.product.popular-product-list', compact('PopularProducts'));
+    } catch (\Exception $e) {
+        return back()->with('error', 'Something went wrong');
+    }
+}
+
+public function productTopList()
+{
+    try {
+        $TopProducts = Product::where('type', 'top')->get();
+        return view('pages.admin.product.top-product-list', compact('TopProducts'));
+    } catch (\Exception $e) {
+        return back()->with('error', 'Something went wrong');
+    }
+}
+
+public function productSpecialList()
+{
+    try {
+        $SpecialProducts = Product::where('type', 'special')->get();
+        return view('pages.admin.product.special-product-list', compact('SpecialProducts'));
+    } catch (\Exception $e) {
+        return back()->with('error', 'Something went wrong');
+    }
+}
+
+
+
+
 
 
 

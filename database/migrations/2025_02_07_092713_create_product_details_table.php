@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->string('color')->nullable();
             $table->string('material')->nullable();
-            $table->string('expiry_date')->nullable();
-
 
             $table->foreign('product_id')
                 ->references('id')->on('products')

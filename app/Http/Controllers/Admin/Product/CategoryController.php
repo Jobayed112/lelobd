@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Product;
 
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -36,10 +37,11 @@ class CategoryController extends Controller
 
     public function categoryEdit($id)
     {
-        $category = Category::findOrFail($id);
-        $products = $category->products;
-        return view('pages.admin.category.category-update', compact('category', 'products'));
+        $category = Category::with('subcategories')->findOrFail($id);
+        $subcategories = SubCategory::all();
+        return view('pages.admin.category.category-update', compact('category', 'subcategories'));
     }
+
     public function categoryUpdate(Request $request , $id)  {
         $request->validate([
             'name' => 'required',

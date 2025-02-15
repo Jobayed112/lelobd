@@ -2,6 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Cart;
+use App\Models\OrderItem;
+use App\Models\InvoiceItem;
+use App\Models\SubCategory;
+use App\Models\ProductImage;
+use App\Models\ProductOffer;
+use App\Models\ProductDetail;
+use App\Models\ProductReview;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,23 +19,40 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
     use HasFactory;
-protected $fillable=[
+
+protected $fillable = [
     'category_id',
+    'sub_category_id',
     'name',
     'description',
     'quantity',
+    'type',
     'price',
-    'img_url',
     'stock',
-
 ];
+
+
     public function category() : BelongsTo {
         return $this->belongsTo(Category::class);
+    }
+    public function subCategory(): BelongsTo
+    {
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function productDetail() : HasOne {
         return $this->hasOne(ProductDetail::class);
     }
+    public function productReview(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+    public function images(): HasMany
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+
     public function offers()
     {
     return $this->hasMany(ProductOffer::class);
@@ -43,10 +68,6 @@ protected $fillable=[
         return $this->hasMany(OrderItem::class);
     }
 
-    public function productReview(): HasMany
-    {
-        return $this->hasMany(ProductReview::class);
-    }
 
     public function invoices(): HasMany
     {

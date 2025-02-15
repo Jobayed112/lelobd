@@ -13,7 +13,6 @@ class HomeController extends Controller
     {
         $products=Product::with('category')->paginate(10);
         $categories = Category::with('subcategories')->paginate(8);
-
         return view('pages.home',compact('categories','products'));
     }
     public function profile()

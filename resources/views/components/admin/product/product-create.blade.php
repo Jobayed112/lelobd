@@ -1,6 +1,5 @@
 <div class="bg-gray-100">
     <div class="container mx-auto bg-white p-6 rounded-lg shadow-lg">
-
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-3xl font-bold text-gray-800">Create Product</h1>
             <a href="{{ route('product-list') }}"
@@ -24,7 +23,22 @@
                         @endforeach
                     </select>
                 </div>
-                {{-- sub Category --}}
+
+           
+                <!-- Sub Category -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                    <label for="sub_category_id" class="text-gray-700 font-semibold sm:w-1/4">Sub Category</label>
+                    <select id="sub_category_id" name="sub_category_id"
+                        class="w-full sm:w-3/4 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        required>
+                        <option value="">Select Sub Category</option>
+                        @foreach ($categories as $category)
+                            @foreach ($category->subcategories as $subcategory)
+                                <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                            @endforeach
+                        @endforeach
+                    </select>
+                </div>
 
 
                 <!-- Product Name -->
@@ -58,6 +72,19 @@
                         required>
                 </div>
 
+                <!-- Type -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+                    <label for="type" class="text-gray-700 font-semibold sm:w-1/4">Product Type</label>
+                    <select id="type" name="type"
+                        class="w-full sm:w-3/4 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select Type</option>
+                        <option value="popular">Popular</option>
+                        <option value="new">New</option>
+                        <option value="top">Top</option>
+                        <option value="special">Special</option>
+                    </select>
+                </div>
+
                 <!-- Stock Status -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
                     <label for="stock" class="text-gray-700 font-semibold sm:w-1/4">Stock Status</label>
@@ -68,16 +95,13 @@
                     </select>
                 </div>
 
-                <!-- Image Upload and Preview with Flexbox -->
+                <!-- Image Upload and Preview -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-6 mt-6">
-                    <!-- Image Upload -->
                     <div class="flex flex-col sm:w-1/2">
                         <label for="img_url" class="text-gray-700 font-semibold">Product Image</label>
                         <input type="file" id="img_url" name="img_url" accept="image/*"
                             class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     </div>
-
-                    <!-- Image Preview -->
                     <div class="flex flex-col sm:w-1/2">
                         <label class="text-gray-700 font-semibold">Image Preview</label>
                         <div class="mt-2">
@@ -85,8 +109,8 @@
                                 class="hidden w-[30%] h-[30%] object-cover border border-gray-300 rounded-lg">
                         </div>
                     </div>
-
                 </div>
+
             </div>
 
             <!-- Submit Button -->

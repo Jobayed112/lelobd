@@ -15,16 +15,21 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('sub_category_id');
 
             $table->string('name', 100);
             $table->string('description', 250);
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
-            $table->string('img_url', 100);
+            $table->string('type')->comment('popular, new, top, special');
             $table->enum("stock", ["instock", "unavailable"])->default("instock");
 
             $table->foreign('category_id')
                 ->references('id')->on('categories')
+                ->cascadeOnUpdate()->restrictOnDelete();
+
+            $table->foreign('sub_category_id')
+                ->references('id')->on('sub_categories')
                 ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->timestamp('created_at')->useCurrent();
