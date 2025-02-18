@@ -15,9 +15,7 @@
                 <input type="email" id="email" name="email"
                     class="w-full px-5 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your email" required>
-                @error('email')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+
             </div>
 
             <!-- Submit Button -->
@@ -31,7 +29,7 @@
 
         <p class="text-center text-sm text-gray-600 mt-3">
             Remembered your password?
-            <a href="{{ url('login-form') }}" class="text-blue-600 hover:underline">Login here</a>
+            <a href="{{ route('login.form') }}" class="text-blue-600 hover:underline">Login here</a>
         </p>
     </div>
 </div>

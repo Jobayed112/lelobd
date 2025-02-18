@@ -1,24 +1,62 @@
-<div class="bg-gray-100">
-    <div class="container mx-auto bg-white p-6 rounded-lg shadow-lg">
-        <div class="flex justify-between items-center mb-4">
-            <h1 class="text-3xl font-bold text-gray-800">Update Category</h1>
-            <a href="{{ route('category-list') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition">
-                Back to Categories
+<div class="max-w-2xl mx-auto mt-2">
+    <div class="bg-gradient-to-br from-blue-50 to-purple-50 shadow-xl rounded-3xl p-6 border border-gray-300">
+        <!-- Header Section -->
+        <div class="flex justify-between items-center mb-6 flex-wrap">
+            <h1 class="text-4xl font-extrabold text-gray-800 w-full sm:w-auto">Create Category</h1>
+            <a href="{{ route('category-list') }}"
+                class="bg-gradient-to-r from-blue-500 to-indigo-600 text-gray-200 px-5 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform hover:text-white hover:font-bold">
+                ↩️ Back to Category List
             </a>
         </div>
-        <form action="{{ route('category-update', $category->id) }}" method="POST">
+
+        <!-- Category Form -->
+        <form action="{{ route('category-store') }}" method="POST" class="space-y-5" enctype="multipart/form-data">
             @csrf
-            @method('POST')
-            <div class="space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                    <label for="name" class="text-gray-700 font-semibold sm:w-1/4">Category Name</label>
-                    <input type="text" id="name" name="name" value="{{ $category->name }}" class="w-full sm:w-3/4 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+
+            <!-- Category Name -->
+            <div class="flex flex-col">
+                <label for="name" class="mb-2 text-sm font-medium text-gray-700">Category Name</label>
+                <input type="text" id="name" name="name" value="{{ old('name') }}"
+                    class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 focus:outline-none text-gray-800"
+                    placeholder="Enter category name" required>
+            </div>
+
+            <!-- Category Image -->
+            <div class="flex flex-col">
+                <label for="img_url" class="mb-2 text-sm font-medium text-gray-700">Category Image</label>
+                <input type="file" id="img_url" name="img_url" accept="image/*"
+                    class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                <div class="mt-3">
+                    <img id="img_urlPreview" src="" alt="Image Preview"
+                        class="hidden w-40 h-40 object-cover border border-gray-300 rounded-xl">
                 </div>
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition">Update Category</button>
+            <!-- Submit Button -->
+            <div class="mt-6 flex justify-center">
+                <button type="submit"
+                    class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-xl shadow-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105">
+                    Create Category
+                </button>
             </div>
         </form>
     </div>
 </div>
+
+<!-- Image Preview Script -->
+<script>
+    const imgInput = document.getElementById('img_url');
+    const imgPreview = document.getElementById('img_urlPreview');
+
+    imgInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imgPreview.src = e.target.result;
+                imgPreview.classList.remove('hidden');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

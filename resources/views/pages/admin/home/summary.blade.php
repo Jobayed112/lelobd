@@ -3,5 +3,5 @@
 Dashboard Summary
 @endsection
 @section('content')
-    @include('components.admin.home.content')
+    @include('components.admin.home.summary')
 @endsection

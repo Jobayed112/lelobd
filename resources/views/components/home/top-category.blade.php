@@ -1,4 +1,4 @@
-<div class="top-categories-section m-2 p-2">
+{{-- <div class="top-categories-section m-2 p-2">
     <h2 class="text-2xl font-semibold mb-4 text-center text-blue-600">Top Categories</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         @foreach ($categories as $category)
@@ -28,4 +28,4 @@
             </div>
         @endforeach
     </div>
-</div>
+</div> --}}

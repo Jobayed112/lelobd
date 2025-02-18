@@ -41,10 +41,8 @@ class ResetController extends Controller
         return redirect()->route('OTP-form')->with('status', 'OTP sent to your email!');
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Reset Failed',
-                'message' => $e->getMessage()
-            ], 400);
+            return back()->with(
+                'error' ,'unauthorize' );
         }
 
 
@@ -82,11 +80,9 @@ class ResetController extends Controller
 
             return redirect()->route('reset-password-form')->with('status', 'OTP verified successfully. Please reset your password.');
 
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'OTP verification failed',
-                'message' => $e->getMessage()
-            ], 400);
+        }  catch (\Exception $e) {
+            return back()->with(
+                'error' ,'unauthorize' );
         }
     }
 

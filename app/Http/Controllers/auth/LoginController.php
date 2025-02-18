@@ -1,11 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\auth;
 
+use App\Models\User;
 use App\Helper\JWTToken;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -13,39 +16,33 @@ class LoginController extends Controller
     {
         return view('pages.auth.login-form');
     }
-    public function create(Request $request)
+
+
+    public function loginCreate(Request $request)
     {
         try {
-            $credentials = $request->validate([
+            $request->validate([
                 'email' => 'required|string|email',
                 'password' => 'required|string|min:6',
-
             ]);
 
-            $credentials = $request->only('email', 'password');
+            $user = User::where('email', "=",$request->email)->first();
 
-            if (!Auth::attempt($credentials)) {
-                return redirect()->back()->withInput()->withErrors([
-                    'email' => 'Email not match.',
-                    'password' => 'password not match'
-                ]);
-                # code...
+            if (!$user) {
+                return back()->with('error', 'User not found');
             }
-            $token = JWTToken::CreateToken('email');
-            return redirect()->back()->with(
-                  'success', 'User Login Successful',
-           )
-            ->cookie('token', $token, time() + 60 * 24 * 30);
+
+            if (Hash::check($request->password, $user->password)) {
+                $token = JWTToken::CreateToken($user->email, $user->id);
+
+                return redirect()->route('home')->with('success', 'Login Successful')
+                    ->cookie('token', $token, time() + 60 * 24 * 30);
+            } else {
+                return back()->with('error', 'Invalid credentials');
+            }
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Login failed',
-                'message' => $e->getMessage()
-            ], 400);
+            return back()->with('error', 'Unauthorized');
         }
     }
-
-
-
-
 }

@@ -20,32 +20,37 @@
                     </tr>
                 </thead>
                 <tbody class="bg-gray-50 divide-y divide-gray-200">
-                    @foreach ($cart as $item)
+                    @foreach ($cartItems as $item)
                         <tr class="hover:bg-gray-200 transition">
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <img src="{{ asset($item['img_url']) }}"
-                                     class="w-16 h-16 object-cover rounded-lg shadow" alt="Product Image">
+                                <td class="px-4 py-3 border-b border-gray-200">
+                                    <img src="{{ asset($item->product->images->first()->img_url ?? 'images/no-image.png') }}"
+                                         class="w-16 h-16 object-cover rounded-lg shadow" alt="Product Image">
+                                </td>
+
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <span class="px-2 py-1 rounded text-gray-800">{{ $item['name'] }}</span>
+                                <span class="px-2 py-1 rounded text-gray-800">{{ $item->product->name }}</span>
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <span class="px-2 py-1 rounded text-gray-800">${{ number_format($item['price'], 2) }}</span>
+                                <span class="px-2 py-1 rounded text-gray-800">BDT {{ number_format($item->price, 2) }}</span>
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <span class="px-2 py-1 rounded text-gray-800">{{ $item['quantity'] }}</span>
+                                <span class="px-2 py-1 rounded text-gray-800">{{ $item->qty }}</span>
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
                                 <span class="px-2 py-1 rounded text-gray-800">
-                                    ${{ number_format($item['price'] * $item['quantity'], 2) }}
+                                    BDT {{ number_format($item->price * $item->qty, 2) }}
                                 </span>
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <a href="{{ route('cart-remove', $loop->index) }}"
-                                   class="text-red-500 hover:text-red-700 transition"
-                                   onclick="return confirm('Are you sure you want to remove this item?')">
-                                    Remove
-                                </a>
+                                <form action="{{ route('cart.remove', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this item?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-700 transition">
+                                        Remove
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -56,7 +61,7 @@
         <!-- Cart Summary -->
         <div class="flex flex-wrap justify-between items-center p-4 border-t border-gray-200">
             <div class="text-lg  font-semibold">
-                Total: ${{ number_format($totalPrice, 2) }}
+                Total: BDT {{ number_format($cartItems->sum(fn($item) => $item->price * $item->qty), 2) }}
             </div>
             <div>
                 <a href="{{ url('checkout') }}"

@@ -6,7 +6,7 @@
         <p class="text-gray-600 text-center mb-3">Welcome back! Please enter your details below to login.</p>
 
         <!-- Form -->
-        <form action="{{ url('create') }}" method="POST">
+        <form action="{{ route('login.create') }}" method="POST">
             @csrf
             <!-- Email Address -->
             <div class="mb-6">
@@ -14,9 +14,7 @@
                 <input type="email" id="email" name="email"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your email" required>
-                @error('email')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+
             </div>
 
             <!-- Password -->
@@ -25,11 +23,9 @@
                 <input type="password" id="password" name="password"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your password" required>
-                @error('password')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror   <p class="text-center text-sm text-gray-600 mt-1">
+                <p class="text-center text-sm text-gray-600 mt-1">
                 Forgot your password?
-                <a href="{{ url('reset-form') }}" class="text-blue-600 hover:underline">Forgot it here</a>
+                <a href="{{ url('reset.form') }}" class="text-blue-600 hover:underline">Forgot it here</a>
             </p>
             </div>
 
@@ -45,7 +41,7 @@
 
         <p class="text-center text-sm text-gray-600 mt-1">
             Don't have an account?
-            <a href="{{ url('register-form') }}" class="text-blue-600 hover:underline ">Register here</a>
+            <a href="{{ route('register.form') }}" class="text-blue-600 hover:underline ">Register here</a>
         </p>
 
 

@@ -88,7 +88,7 @@
                                         <tr>
                                             <td class="px-4 py-2 flex items-center space-x-2">
 
-                                                <img src="{{ asset($product->images->first()->img_url) }}" alt="{{ $product->name }}" class="w-12 h-12 object-cover rounded-md">
+                                                <img src="{{ asset($product['images'][count($product['images']) - 1]['img_url'] ?? 'uploads/default.png') }}" alt="{{ $product['name'] }}" class="w-12 h-12 object-cover rounded-md">
 
                                                 <span class="ml-2">{{ $product['name'] }}</span>
                                             </td>
@@ -149,7 +149,7 @@
                 <a href="{{ url('user-profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-green-500 border-b rounded-md">My
                     Profile</a>
 
-                <a href="{{ url('login-page') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-green-500 border-b">Login</a>
+                <a href="{{ route('login.form') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-green-500 border-b">Login</a>
                 <a href="{{ url('logout') }} " class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-green-500 rounded-md ">LogOut</a>
             </div>
 

@@ -12,9 +12,11 @@ class AdminLogoutController extends Controller
     {
         try {
             Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
             return redirect()->route('admin-login-form')->with('success' ,'Logout successful' )->cookie('token',' ',-1);
         } catch (\Exception $e) {
-            return  back()->with('error' ,'unathorize' );
+            return  back()->with('error' ,'Unauthorized' );
         }
     }
 }

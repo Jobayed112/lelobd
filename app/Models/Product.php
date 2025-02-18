@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Models\Cart;
+use App\Models\Category;
 use App\Models\OrderItem;
-use App\Models\InvoiceItem;
 use App\Models\SubCategory;
 use App\Models\ProductImage;
 use App\Models\ProductOffer;
@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
     use HasFactory;
+    protected $table = 'products';
 
 protected $fillable = [
     'category_id',
@@ -69,9 +70,6 @@ protected $fillable = [
     }
 
 
-    public function invoices(): HasMany
-    {
-        return $this->hasMany(InvoiceItem::class);
-    }
+
 
 }

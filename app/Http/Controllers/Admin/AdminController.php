@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Invoice;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -14,9 +15,11 @@ class AdminController extends Controller
 
 public function adminDashboard() {
     $products = Product::all();
-    $categories = Category::all();
+    $categories = Category::with('subcategories')->get();
+
     $invoices = Invoice::all();
-    return view('pages.admin.home.summary',compact('products','categories','invoices'));
+    $users= User::all();
+    return view('pages.admin.home.summary',compact('products','categories','invoices','users'));
 }
 public function admin()
 {

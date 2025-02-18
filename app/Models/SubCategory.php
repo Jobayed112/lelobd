@@ -12,16 +12,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class SubCategory extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'category_id',
-        'name',
-    ];
+    protected $table = 'sub_categories';
 
-    public function category():BelongsTo  {
-        return $this->belongsTo(Category::class);
-    }
-    public function products(): HasMany
-    {
-        return $this->hasMany(Product::class);
-    }
-}
+     protected $fillable=[
+         'category_id',
+         'name',
+         'img_url',
+     ];
+
+     public function category():BelongsTo  {
+         return $this->belongsTo(Category::class);
+     }
+     public function products(): HasMany
+     {
+         return $this->hasMany(Product::class);
+     }
+ }
+ 

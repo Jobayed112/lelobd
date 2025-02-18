@@ -15,45 +15,30 @@ class RegisterController extends Controller
 
     }
 
-    public function register(Request $request)
+    public function Register(Request $request)
     {
         try {
             // Validate request data
-            $validatedData = $request->validate([
+            $user=$request->validate([
                 'name' => 'required|string|max:50',
                 'email' => 'required|string|email|unique:users,email',
                 'phone' => 'required|string|max:15|unique:users,phone',
                 'password' => 'required|string|min:6|confirmed',
             ]);
 
-            // Create a new user
-            $user = User::create([
-                'name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'phone' => $validatedData['phone'],
-                'password' => Hash::make($validatedData['password']),
-                'role' => 'user',
-            ]);
-            if ($user) {
-                // Successful response
-                return redirect()->route('login-form')
-                    ->withErrors([
-                        'message' => 'User registered successfully',
-                    ], 201);
-            }
-            return redirect()->back()->withInput()->withErrors([
-                'email' => 'Email not match.',
-                'password' => 'password not match',
-                'phone' => 'password not match'
-            ]);
+            $user = new User();
+            $user->name = $user['name'];
+            $user->email=$user['email'];
+            $user->phone=$user['phone'];
+            $user->password = bcrypt($user['password']);
+            $user->save();
 
+            return redirect()->route('login.form')
+            ->with('success','User Create Successfully');
 
-        } catch (\Exception $e) {
-            // Handle other errors
-            return response()->json([
-                'error' => 'Registration Failed',
-                'message' => $e->getMessage(),
-            ], 500);
+        }  catch (\Exception $e) {
+            return back()->with(
+                'error' ,'unauthorized' );
         }
     }
 }

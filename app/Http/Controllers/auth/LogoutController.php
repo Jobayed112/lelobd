@@ -12,9 +12,11 @@ class LogoutController extends Controller
     {
         try {
             Auth::logout();
-            return redirect()->route('login-form')->with('success' ,'Logout successful' )->cookie('token',' ',-1);
-        } catch (\Exception $e) {
-            return  back()->with('error' ,'unathorize' );
+            return redirect()->route('login.form')->with('success' ,'Logout successful' )->cookie('token',' ',-1);
+
+        }  catch (\Exception $e) {
+            return back()->with(
+                'error' ,'unauthorize' );
         }
     }
 }

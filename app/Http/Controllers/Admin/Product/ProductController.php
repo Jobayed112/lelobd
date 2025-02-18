@@ -45,7 +45,7 @@ class ProductController extends Controller
                 'price' => 'required|numeric|min:0',
                 'type'=>'required|in:popular,new,top,special',
                 'stock' => 'required|in:instock,unavailable',
-                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4048',
+                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:6144',
             ]);
 
             $product = Product::create([
@@ -81,7 +81,6 @@ class ProductController extends Controller
     public function productEdit($id)
     {
         try {
-            // Fetch the product with its category and subcategory
             $product = Product::with('category', 'subCategory')->findOrFail($id);
             $categories = Category::with('subcategories')->get();
 
@@ -105,7 +104,7 @@ class ProductController extends Controller
                 'price' => 'required|numeric|min:0',
                 'type' => 'required|in:popular,new,top,special',
                 'stock' => 'required|in:instock,unavailable',
-                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4048',
+                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:6144',
             ]);
 
             $product = Product::findOrFail($id);
@@ -127,7 +126,7 @@ class ProductController extends Controller
 
                 $image->move(public_path('uploads/products/'), $imageName);
 
-                $product->images()->create([
+                $product->images()->update([
                     'img_url' => 'uploads/products/' . $imageName,
                 ]);
             }
@@ -173,6 +172,37 @@ public function productNewList()
         return back()->with('error', 'Something went wrong');
     }
 }
+
+public function editNewProduct($id)
+{
+    try {
+        $product = Product::findOrFail($id);
+        return view('pages.admin.product.new-product-update', compact('product'));
+    } catch (\Exception $e) {
+        return back()->with('error', 'Product not found');
+    }
+}
+
+
+public function updateNewProduct(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'price' => 'required|numeric|min:0',
+        'type' => 'required|string|in:new,old',
+    ]);
+
+    try {
+        $product = Product::findOrFail($id);
+        $product->update($request->only('name', 'price', 'type'));
+        return redirect()->route('product.new.list')->with('success', 'Product updated successfully');
+    } catch (\Exception $e) {
+        return back()->with('error', 'Failed to update product');
+    }
+
+}
+
+
 
 public function productPopularList()
 {

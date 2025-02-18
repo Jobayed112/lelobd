@@ -20,37 +20,76 @@ class CategoryController extends Controller
     {
         return view('pages.admin.category.category-create');
     }
-
     public function categoryStore(Request $request)
-    {
+{
+    try {
         $request->validate([
             'name' => 'required',
+            'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:6144',
         ]);
+
         $category = new Category();
         $category->name = $request->name;
+
+        if ($request->hasFile('img_url')) {
+            $image = $request->file('img_url');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/categories/'), $imageName);
+            $category->img_url = 'uploads/categories/' . $imageName;
+        }
+
         $category->save();
+
         return redirect()->route('category-list')->with(
             'success',
             'Category created successfully'
         );
+    } catch (\Exception $e) {
+        return back()->with('error', 'Something went wrong');
     }
+}
 
     public function categoryEdit($id)
     {
-        $category = Category::with('subcategories')->findOrFail($id);
-        $subcategories = SubCategory::all();
-        return view('pages.admin.category.category-update', compact('category', 'subcategories'));
+        try {
+            $category = Category::with('subcategories')->findOrFail($id);
+            $subcategories = SubCategory::all();
+            return view('pages.admin.category.category-update', compact('category', 'subcategories'));
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong');
+        }
+
     }
 
     public function categoryUpdate(Request $request , $id)  {
-        $request->validate([
-            'name' => 'required',
-        ]);
-        $category = Category::findOrFail($id);
-        $category->name = $request->name;
 
-        $category->save();
-        return redirect()->route('category-list')->with('success', 'Product updated successfully.');
+        try {
+            $request->validate([
+                'name' => 'required',
+                'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:6144',
+            ]);
+            $category = Category::findOrFail($id);
+            $category->name = $request->name;
+
+            if ($request->hasFile('img_url')) {
+                $image = $request->file('img_url');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+                $image->move(public_path('uploads/category/'), $imageName);
+
+                $category->update([
+                    'img_url' => 'uploads/category/' . $imageName,
+                ]);
+            }
+
+            $category->save();
+            return redirect()->route('category-list')->with('success', 'Product updated successfully.');
+
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong');
+        }
+
 
     }
     public function categoryDelete($id)

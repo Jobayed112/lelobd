@@ -4,18 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\auth\AdminLoginController;
-use App\Http\Controllers\Admin\auth\AdminLogoutController;
 use App\Http\Controllers\Admin\auth\AdminResetController;
 use App\Http\Controllers\Admin\auth\AdminRegisterController;
 use App\Http\Controllers\Admin\Product\CategoryController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\Product\SubCategoryController;
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\LogoutController;
+use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\Product\CartPageController;
 use App\Http\Controllers\Product\ProductPageController;
 
 
-Route::get('logout', [AdminLoginController::class, 'logout'])->name('logout');
 
 
 // admin routes role admin than middleware admin use prefix admin
@@ -36,8 +36,10 @@ Route::get('admin-reset-password-form',[AdminResetController::class,'adminresetP
 Route::post('admin-reset-password',[AdminResetController::class,'adminResetPassword'])->name('admin-reset-password');
 
 
-Route::prefix('admin')->middleware('admin')->group(function () {
-    Route::get('admin-dashboard', [AdminController::class, 'adminDashboard'])->name('admin-dashboard');
+Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
+
+
+    Route::get('dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
 
     Route::get('admin-profile', [AdminController::class, 'profile'])->name('admin-profile');
 
@@ -57,6 +59,11 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
     // new product
     Route::get('new/product/list',[ProductController::class,'productNewList'])->name('new-product-list');
+
+    Route::get('new/products/edit/{id}', [ProductController::class, 'editNewProduct'])->name('new-product-edit');
+    Route::post('new/products/update/{id}', [ProductController::class, 'updateProduct'])->name('product.update');
+
+
 
     Route::get('special/product/list',[ProductController::class,'productSpecialList'])->name('special-product-list');
 
@@ -97,30 +104,42 @@ Route::prefix('admin')->middleware('admin')->group(function () {
 
 });
 
-// home
+// user web
 Route::get('/',[HomeController::class,'home'])->name('home');
 
+Route::middleware('VerifyToken')->group( function ()  {
+
+
+    Route::get('product-view/{id}',[ProductPageController::class,'productView'])->name('product-view');
+
+
+    // carts
+    Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart-show', [CartPageController::class, 'cartShow'])->name('cart.show');
+    Route::get('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
+
+});
+
+
+ // product view
+ Route::get('product-page ',[ProductPageController::class,'productPage'])->name('product-page');
 
 // user login
 
-Route::get('login',[LoginController::class,'loginForm'])->name('login');
+Route::get('login/form',[LoginController::class,'loginForm'])->name('login.form');
 
-// product view
-Route::get('product-page ',[ProductPageController::class,'productPage'])->name('product-page');
-Route::get('product-view/{id}',[ProductPageController::class,'productView'])->name('product-view');
 
-// cart
-
-Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart-add');
-Route::get('/cart-show', [CartPageController::class, 'cartShow'])->name('cart-show');
-Route::get('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart-remove');
+Route::post('login/create',[LoginController::class,'loginCreate'])->name('login.create');
 
 
 
+Route::get('register/form',[RegisterController::class,'registerForm'])->name('register.form');
+Route::post('register/store',[RegisterController::class,'Register'])->name('register');
 
-Route::prefix('user')->middleware('check')->group(function () {
+
+Route::get('logout',[LogoutController::class,'logout'])->name('logout');
 
 
 
-});
+
 

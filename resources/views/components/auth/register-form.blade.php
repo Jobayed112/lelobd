@@ -6,7 +6,7 @@
         <p class="text-sm sm:text-base text-gray-600 text-center mb-1">Create an account to get started.</p>
 
         <!-- Form -->
-        <form action="{{ url('register') }}" method="POST">
+        <form action="{{ Route('register') }}" method="POST">
             @csrf
             <!-- Name -->
             <div class="mb-1">
@@ -14,9 +14,7 @@
                 <input type="text" id="name" name="name"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your full name" required>
-                @error('name')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+
             </div>
 
             <!-- Email Address -->
@@ -25,9 +23,6 @@
                 <input type="email" id="email" name="email"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your email" required>
-                @error('email')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Phone Number -->
@@ -36,9 +31,6 @@
                 <input type="number" id="phone" name="phone"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your phone number" required>
-                @error('phone')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Password -->
@@ -47,9 +39,6 @@
                 <input type="password" id="password" name="password"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your password" required>
-                @error('message')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Confirm Password -->
@@ -71,7 +60,7 @@
 
         <p class="text-center text-xs sm:text-sm text-gray-600 mt-4">
             Already have an account?
-            <a href="{{ url('login-form') }}" class="text-blue-600 hover:underline">Login here</a>
+            <a href="{{ url('login.form') }}" class="text-blue-600 hover:underline">Login here</a>
         </p>
     </div>
 </div>

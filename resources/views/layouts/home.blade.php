@@ -15,17 +15,16 @@
     <link href="{{ asset('css/progress.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet" />
     {{-- tailwindcss --}}
-    <script src="https://cdn.tailwindcss.com"></script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
 
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.2.7/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/fontawesome.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <!-- Toastify CSS -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-
-    <!-- Include SwiperJcss -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
@@ -39,6 +38,9 @@
             <div class="indeterminate"></div>
         </div>
     </div> --}}
+
+    @include('components.home.header')
+
     {{-- one time loding --}}
     <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
         <!-- Spinner using Tailwind utilities -->
@@ -48,11 +50,9 @@
     <x-toast-message />
 
 
-
-
     @yield('content')
 
-
+    @include('components.home.footer')
 
     <script src="{{ asset('js/header.js') }}"></script>
     <script src="{{ asset('js/config.js') }}"></script>

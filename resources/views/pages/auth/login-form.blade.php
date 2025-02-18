@@ -3,5 +3,5 @@
 Login Form
 @endsection
 @section('content')
-    @include('components.auth.login-form')
+@include('components.auth.login-form')
 @endsection

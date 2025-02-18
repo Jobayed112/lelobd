@@ -1,76 +1,56 @@
-<div class="bg-gray-100">
-    <div class="container mx-auto bg-white rounded-lg shadow-lg">
-        <div class="flex justify-between items-center mb-4 flex-wrap">
-            <h1 class="text-3xl font-bold text-gray-800 w-full sm:w-auto">Product List</h1>
+<div class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen ">
+    <div class="container mx-auto bg-white rounded-xl shadow-xl p-6">
+        <div class="flex justify-between items-center mb-6 flex-wrap">
+            <h1 class="text-4xl font-extrabold text-gray-800 w-full sm:w-auto">Product List</h1>
             <a href="{{ route('product-create') }}"
-                class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition mt-2 sm:mt-0">
+                class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-5 py-3 rounded-xl shadow-lg hover:scale-105 transition-transform">
                 + Create Product
             </a>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full border border-gray-300 rounded-lg overflow-hidden shadow">
+            <table class="w-full text-sm text-left text-gray-700 border border-gray-300 rounded-xl shadow">
                 <thead>
-                    <tr class="bg-blue-500 text-white">
-                        <th class="px-4 py-3 text-left border-b border-gray-300">ID</th>
-                        <th class="px-4 py-3 text-left border-b border-gray-300">Category</th>
-                        <th class="px-4 py-3 text-left border-b border-gray-300">Name</th>
-                        <th class="px-4 py-3 text-left border-b border-gray-300">Price</th>
-                        <th class="px-4 py-3 text-left border-b border-gray-300">Stock</th>
-                        <th class="px-4 py-3 text-left border-b border-gray-300">Image</th> <!-- Added Image Column -->
-                        <th class="px-4 py-3 text-left border-b border-gray-300">Actions</th>
+                    <tr class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white">
+                        <th class="px-5 py-4">ID</th>
+                        <th class="px-5 py-4">Category</th>
+                        <th class="px-5 py-4">Name</th>
+                        <th class="px-5 py-4">Price</th>
+                        <th class="px-5 py-4">Stock</th>
+                        <th class="px-5 py-4">Image</th>
+                        <th class="px-5 py-4">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="bg-gray-50 divide-y border justifu-start divide-gray-200">
+                <tbody class="divide-y divide-gray-300">
                     @foreach ($products as $product)
-                        <tr class="hover:bg-gray-300 transition  ">
-                            <td class="px-4 py-3 border-b border-gray-200">
-                                <span
-                                    class="px-2 py-1 rounded-lg text-white
+                        <tr class="hover:bg-blue-50">
+                            <td class="px-5 py-4">
+                                <span class="px-3 py-1 rounded-xl text-white text-sm
                                     {{ $product->stock == 'instock' ? 'bg-green-500' : 'bg-red-500' }}">
                                     {{ $product->id }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 border-b border-gray-200">
-                                <span class="px-2 py-1 rounded-lg text-black
-                               ">
-                                    {{ $product->category->name }}
-                                </span>
-                            </td>
-                            <td class="px-4 py-3 border-b border-gray-200">
-                                <span class="px-2 py-1 rounded-lg text-black
-                                   ">
-                                    {{ $product->name }}
-                                </span>
-                            </td>
-
-                            <td class="px-4 py-3 border-b border-gray-200">
-                                <span class="px-2 py-1 rounded-lg text-black">
-                                    ${{ number_format($product->price, 2) }}
-                                </span>
-                            </td>
-
-                            <td class="px-4 py-3 text-center border-b border-gray-200">
-                                <span
-                                    class="px-2 py-1 rounded-lg text-white
+                            <td class="px-5 py-4">{{ $product->category->name }}</td>
+                            <td class="px-5 py-4">{{ $product->name }}</td>
+                            <td class="px-5 py-4">${{ number_format($product->price, 2) }}</td>
+                            <td class="px-5 py-4">
+                                <span class="px-3 py-1 rounded-xl text-white text-sm
                                     {{ $product->stock == 'instock' ? 'bg-green-500' : 'bg-red-500' }}">
                                     {{ $product->stock == 'instock' ? 'In Stock' : 'Unavailable' }}
                                 </span>
                             </td>
-                            <!-- 🔥 Display Product Image -->
-                            <td class="px-4 py-3 border-b border-gray-200">
+                            <td class="px-5 py-4">
                                 @if ($product->images->isNotEmpty())
                                     <img src="{{ asset($product->images->last()->img_url) }}"
-                                         class="w-16 h-16 object-cover rounded-lg shadow" alt="Product Image">
+                                         class="w-20 h-20 object-cover rounded-xl border border-gray-300 shadow-sm" alt="{{ $product->name }}">
                                 @else
-                                    <p>No image available</p>
+                                    <p class="text-gray-400">No image available</p>
                                 @endif
                             </td>
-
-                            <td class="px-4 py-3 border-b border-gray-200">
+                            <td class="px-5 py-4 space-x-3">
                                 <a href="{{ route('product-edit', $product->id) }}"
-                                    class="text-blue-500 hover:text-blue-700">Edit</a> |
+                                    class="text-blue-600 hover:underline">Edit</a>
                                 <a href="{{ route('product-delete', $product->id) }}"
-                                    class="text-red-500 hover:text-red-700"
+                                    class="text-red-600 hover:underline"
                                     onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
                             </td>
                         </tr>
@@ -79,8 +59,8 @@
             </table>
         </div>
 
-        <!-- Pagination buttons -->
-        <div class="flex justify-center mt-4 flex-wrap">
+        <!-- Pagination -->
+        <div class="flex justify-center mt-6">
             {{ $products->links() }}
         </div>
     </div>

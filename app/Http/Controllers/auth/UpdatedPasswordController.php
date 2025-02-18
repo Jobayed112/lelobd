@@ -32,8 +32,9 @@ class UpdatedPasswordController extends Controller
             ]);
 
             return response()->json(['message' => 'Password updated successfully'], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Password update failed', 'message' => $e->getMessage()], 400);
+        }  catch (\Exception $e) {
+            return back()->with(
+                'error' ,'unauthorize' );
         }
     }
 }

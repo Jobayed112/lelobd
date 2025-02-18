@@ -32,14 +32,8 @@
                     <span class="block text-xl font-bold text-gray-900">BDT: {{ number_format($product->price, 2) }}</span>
                     <span class="text-gray-500 line-through ml-2">BDT: 1500.00</span>
 
-                    {{-- Buy Now Button --}}
-                    <a href="{{ route('product-view', $product->id) }}"
-                        class="m-1 inline-block px-2 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-300">
-                        Buy Now
-                    </a>
-
                     {{-- Add to Cart Button --}}
-                    <form action="{{ route('cart-add') }}" method="POST" class="mt-2">
+                    <form action="{{ route('cart.add') }}" method="POST" class="mt-2">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <input type="number" name="quantity" value="1" min="1"

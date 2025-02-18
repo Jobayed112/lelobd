@@ -3,7 +3,7 @@
     <div class="h-full px-2 pb-4 overflow-y-auto">
         <ul class="space-y-2 font-medium">
             <li>
-                <a href="{{ route('admin-dashboard') }}"
+                <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
                     <span>Dashboard</span>
                 </a>

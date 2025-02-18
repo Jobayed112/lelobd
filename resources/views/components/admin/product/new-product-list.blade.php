@@ -26,7 +26,7 @@
                         <td class="py-2 px-4 text-green-600 font-bold border-r border-gray-300">${{ number_format($product->price, 2) }}</td>
                         <td class="py-2 px-4 flex space-x-2">
                             <!-- Edit Button -->
-                            <a href="{{ url('product.edit', $product->id) }}"
+                            <a href="{{ route('new-product-edit', $product->id) }}"
                                class="inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
                                 Edit
                             </a>

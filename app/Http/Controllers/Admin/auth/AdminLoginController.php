@@ -1,11 +1,14 @@
 <?php
+
 namespace App\Http\Controllers\Admin\auth;
 
 
+use App\Models\User;
 use App\Helper\JWTToken;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminLoginController extends Controller
 {
@@ -21,23 +24,23 @@ class AdminLoginController extends Controller
                 'email' => 'required|email',
                 'password' => 'required|string|min:8',
             ]);
-            $credentials = $request->only('email', 'password');
+            $user = User::where('email', "=", $request->email)->first();
 
-            if (!Auth::attempt($credentials)) {
-                return redirect()->back()->with('error', 'Invalid email or password.');
-            } elseif (Auth::user()->role !== 'admin') {
-                Auth::logout();
-                return redirect()->back()->with('error', 'Unauthorized access. Only admins can log in.');
+            if (!$user) {
+                return back()->with('error', 'User not found');
             }
-            $token = JWTToken::CreateToken(Auth::user()->email);
 
-            return redirect()->route('admin-dashboard')->with('success', 'Admin Login successfully!')
-                ->cookie('token', $token, 60 * 24 * 30);
+            if (Hash::check($request->password, $user->password ) && $user->role==='admin') {
+
+                $token = JWTToken::CreateToken($user->email, $user->id);
+
+                return redirect()->route('admin.dashboard')->with('success', 'Admin Login Successful')
+                    ->cookie('token', $token, time() + 60 * 24 * 30);
+            } else {
+                return back()->with('error', 'Invalid Email or Password');
+            }
         } catch (\Exception $e) {
-            return response()->json([
-                'failed' => 'Login failed',
-            ], 400);
+            return back()->with('error', 'Unauthorized');
         }
     }
-
 }

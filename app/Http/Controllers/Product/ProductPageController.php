@@ -13,7 +13,8 @@ class ProductPageController extends Controller
     public function productPage()
     {
 
-        return view('pages.product.product-page');
+        $products = Product::paginate(10);
+        return view('pages.product.product-page',compact('products'));
     }
 
     public function productView($id)
