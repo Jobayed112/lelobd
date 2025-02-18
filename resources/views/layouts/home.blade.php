@@ -39,7 +39,7 @@
         </div>
     </div> --}}
 
-    @include('components.home.header')
+
 
     {{-- one time loding --}}
     <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
@@ -52,7 +52,7 @@
 
     @yield('content')
 
-    @include('components.home.footer')
+
 
     <script src="{{ asset('js/header.js') }}"></script>
     <script src="{{ asset('js/config.js') }}"></script>

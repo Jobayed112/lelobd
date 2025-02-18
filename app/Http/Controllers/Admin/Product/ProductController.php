@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -17,10 +18,10 @@ class ProductController extends Controller
             return view('pages.admin.product.product-list', compact('products'));
         } catch (\Exception $e) {
             return back()->with(
-                'error','Something went wrong'
+                'error',
+                'Something went wrong'
             );
         }
-
     }
     public function productCreate()
     {
@@ -29,7 +30,8 @@ class ProductController extends Controller
             return view('pages.admin.product.product-create', compact('categories'));
         } catch (\Exception $e) {
             return back()->with(
-                'error','Something went wrong'
+                'error',
+                'Something went wrong'
             );
         }
     }
@@ -43,7 +45,7 @@ class ProductController extends Controller
                 'description' => 'nullable|string',
                 'quantity' => 'required|integer|min:1',
                 'price' => 'required|numeric|min:0',
-                'type'=>'required|in:popular,new,top,special',
+                'type' => 'required|in:popular,new,top,special',
                 'stock' => 'required|in:instock,unavailable',
                 'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:6144',
             ]);
@@ -55,7 +57,7 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'quantity' => $request->quantity,
                 'price' => $request->price,
-                'type'=> $request->type,
+                'type' => $request->type,
                 'stock' => $request->stock,
             ]);
 
@@ -64,16 +66,17 @@ class ProductController extends Controller
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
 
                 $image->move(public_path('uploads/products/'), $imageName);
+
                 $product->images()->create([
                     'img_url' => 'uploads/products/' . $imageName,
                 ]);
             }
 
             return redirect()->route('product-list')->with('success', 'Product created successfully.');
-
         } catch (\Exception $e) {
             return back()->with(
-                'error', 'Something went wrong',
+                'error',
+                'Something went wrong',
             );
         }
     }
@@ -126,13 +129,12 @@ class ProductController extends Controller
 
                 $image->move(public_path('uploads/products/'), $imageName);
 
-                $product->images()->update([
+                $product->images()->updateOrCreate([
                     'img_url' => 'uploads/products/' . $imageName,
                 ]);
             }
 
             return redirect()->route('product-list')->with('success', 'Product updated successfully.');
-
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong');
         }
@@ -143,101 +145,95 @@ class ProductController extends Controller
     {
         try {
             $product = Product::findOrFail($id);
-
+            $cat = Cart::where('product_id', $product->id)->get();
+            if ($cat->isNotEmpty()) {
+                return back()->with('error', 'Product is being used in the cart.');
+            }
             foreach ($product->images as $image) {
-                if (file_exists(public_path($image->img_url))) {
-                    unlink(public_path($image->img_url));
+                $imagePath = public_path($image->img_url);
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
                 }
             }
-
             $product->images()->delete();
-
             $product->delete();
 
             return redirect()->route('product-list')->with('success', 'Product and its images deleted successfully.');
         } catch (\Exception $e) {
-            return back()->with('error', 'Something went wrong');
+            return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
     }
 
 
 
-// new product
-public function productNewList()
-{
-    try {
-        $newProducts = Product::where('type', 'new')->get();
-        return view('pages.admin.product.new-product-list', compact('newProducts'));
-    } catch (\Exception $e) {
-        return back()->with('error', 'Something went wrong');
-    }
-}
-
-public function editNewProduct($id)
-{
-    try {
-        $product = Product::findOrFail($id);
-        return view('pages.admin.product.new-product-update', compact('product'));
-    } catch (\Exception $e) {
-        return back()->with('error', 'Product not found');
-    }
-}
-
-
-public function updateNewProduct(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'price' => 'required|numeric|min:0',
-        'type' => 'required|string|in:new,old',
-    ]);
-
-    try {
-        $product = Product::findOrFail($id);
-        $product->update($request->only('name', 'price', 'type'));
-        return redirect()->route('product.new.list')->with('success', 'Product updated successfully');
-    } catch (\Exception $e) {
-        return back()->with('error', 'Failed to update product');
+    // new product
+    public function productNewList()
+    {
+        try {
+            $newProducts = Product::where('type', 'new')->get();
+            return view('pages.admin.product.new-product-list', compact('newProducts'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong');
+        }
     }
 
-}
-
-
-
-public function productPopularList()
-{
-    try {
-        $PopularProducts = Product::where('type', 'popular')->get();
-        return view('pages.admin.product.popular-product-list', compact('PopularProducts'));
-    } catch (\Exception $e) {
-        return back()->with('error', 'Something went wrong');
+    public function editNewProduct($id)
+    {
+        try {
+            $product = Product::findOrFail($id);
+            return view('pages.admin.product.new-product-update', compact('product'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Product not found');
+        }
     }
-}
 
-public function productTopList()
-{
-    try {
-        $TopProducts = Product::where('type', 'top')->get();
-        return view('pages.admin.product.top-product-list', compact('TopProducts'));
-    } catch (\Exception $e) {
-        return back()->with('error', 'Something went wrong');
+
+    public function updateNewProduct(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'type' => 'required|string|in:new,old',
+        ]);
+
+        try {
+            $product = Product::findOrFail($id);
+            $product->update($request->only('name', 'price', 'type'));
+            return redirect()->route('product.new.list')->with('success', 'Product updated successfully');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to update product');
+        }
     }
-}
 
-public function productSpecialList()
-{
-    try {
-        $SpecialProducts = Product::where('type', 'special')->get();
-        return view('pages.admin.product.special-product-list', compact('SpecialProducts'));
-    } catch (\Exception $e) {
-        return back()->with('error', 'Something went wrong');
+
+
+    public function productPopularList()
+    {
+        try {
+            $PopularProducts = Product::where('type', 'popular')->get();
+            return view('pages.admin.product.popular-product-list', compact('PopularProducts'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong');
+        }
     }
-}
 
+    public function productTopList()
+    {
+        try {
+            $TopProducts = Product::where('type', 'top')->get();
+            return view('pages.admin.product.top-product-list', compact('TopProducts'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong');
+        }
+    }
 
-
-
-
-
-
+    public function productSpecialList()
+    {
+        try {
+            $SpecialProducts = Product::where('type', 'special')->get();
+            return view('pages.admin.product.special-product-list', compact('SpecialProducts'));
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong');
+        }
+    }
 }

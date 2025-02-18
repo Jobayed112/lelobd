@@ -25,11 +25,13 @@ class CartPageController extends Controller
         $user_id=$request->header('user_id');
 
         Cart::updateOrCreate([
-            'user_id' =>$user_id,
+            'user_id' => $user_id,
             'product_id' => $product->id,
-            'qty' => $product->quantity,
+
+            'qty' => $request->qty,
             'price' => $product->price,
         ]);
+
 
         return redirect()->route('cart.show')->with('success', 'Product added to cart successfully!');
     }
@@ -38,8 +40,10 @@ class CartPageController extends Controller
     {
         $cartItems = Cart::with('product')
         ->where('user_id', Auth::id())->get();
+        $category=Category::with('subcategories');
+        $categories=Category::all();
 
-        return view('pages.user.carts', compact('cartItems'));
+        return view('pages.user.carts', compact('cartItems','category','categories'));
     }
 
     public function remove($id)

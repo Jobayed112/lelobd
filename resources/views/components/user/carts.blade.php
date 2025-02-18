@@ -23,11 +23,8 @@
                     @foreach ($cartItems as $item)
                         <tr class="hover:bg-gray-200 transition">
                             <td class="px-4 py-3 border-b border-gray-200">
-                                <td class="px-4 py-3 border-b border-gray-200">
-                                    <img src="{{ asset($item->product->images->first()->img_url ?? 'images/no-image.png') }}"
-                                         class="w-16 h-16 object-cover rounded-lg shadow" alt="Product Image">
-                                </td>
-
+                                <img src="{{ asset($item->product->images->first()->img_url ?? 'images/no-image.png') }}"
+                                     class="w-16 h-16 object-cover rounded-lg shadow" alt="Product Image">
                             </td>
                             <td class="px-4 py-3 border-b border-gray-200">
                                 <span class="px-2 py-1 rounded text-gray-800">{{ $item->product->name }}</span>
@@ -60,7 +57,7 @@
 
         <!-- Cart Summary -->
         <div class="flex flex-wrap justify-between items-center p-4 border-t border-gray-200">
-            <div class="text-lg  font-semibold">
+            <div class="text-lg font-semibold">
                 Total: BDT {{ number_format($cartItems->sum(fn($item) => $item->price * $item->qty), 2) }}
             </div>
             <div>

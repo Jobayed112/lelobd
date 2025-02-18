@@ -39,12 +39,10 @@
                                 </span>
                             </td>
                             <td class="px-5 py-4">
-                                @if ($product->images->isNotEmpty())
-                                    <img src="{{ asset($product->images->last()->img_url) }}"
-                                         class="w-20 h-20 object-cover rounded-xl border border-gray-300 shadow-sm" alt="{{ $product->name }}">
-                                @else
-                                    <p class="text-gray-400">No image available</p>
-                                @endif
+                                <img src="{{ $product->images->isNotEmpty() ? asset($product->images->first()->img_url) : asset('uploads/default.png') }}"
+                                class="w-20 h-20 object-cover rounded-xl border border-gray-300 shadow-sm" alt="{{ $product->name }}">
+
+
                             </td>
                             <td class="px-5 py-4 space-x-3">
                                 <a href="{{ route('product-edit', $product->id) }}"

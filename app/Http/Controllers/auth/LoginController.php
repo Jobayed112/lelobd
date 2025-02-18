@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller
 {
     public function loginForm()
+
     {
-        return view('pages.auth.login-form');
+        $categories=Category::with('category');
+        return view('pages.auth.login-form',compact('categories'));
     }
 
 
