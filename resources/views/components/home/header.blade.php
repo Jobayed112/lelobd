@@ -25,19 +25,20 @@
         {{-- desktop nav --}}
         <nav class="hidden md:flex space-x-6 text-gray-700">
 
-            <a href="{{ url('/') }}" class="flex items-center hover:text-green-500 px-2 py-2  hover:bg-blue-100 rounded-lg ">home
+            <a href="{{ url('/') }}"
+                class="flex items-center hover:text-green-500 px-2 py-2  hover:bg-blue-100 rounded-lg ">home
             </a>
             @foreach ($categories as $category)
                 <ul class="relative group">
-
                     <li class="flex items-center hover:bg-blue-100 rounded-lg hover:text-green-500">
                         <a href="category-{{ $category->name }}" class="px-2 py-2">{{ $category->name }}
                         </a>
                     </li>
                     <!-- Subcategories Dropdown -->
-                    <ul class="absolute left-0 hidden group-hover:block bg-gray-100 shadow-md rounded mt-1 w-44 p-3 z-20">
+                    <ul
+                        class="absolute left-0 hidden group-hover:block bg-gray-100 shadow-md rounded mt-1 w-44 p-3 z-20">
                         @foreach ($category->subcategories as $subcategory)
-                            <li class="px-4 py-2 hover:bg-blue-100 hover:text-green-500 border-b">
+                            <li class="px-2 py-1 hover:bg-blue-100 hover:text-green-500 border-b">
                                 <a href="{{ url('subcategory/' . $subcategory->id) }}"
                                     class="block">{{ $subcategory->name }}</a>
                             </li>
@@ -54,89 +55,94 @@
 
         <!-- Icons & Mobile Menu Button -->
         <div class="flex items-center space-x-4">
-            <div>
+           <a href="http://">
                 <!-- Cart Icon -->
                 <button id="cart-btn" class="relative text-gray-600 hover:text-green-500 focus:outline-none">
                     {{-- use fa icon --}}
                     <i class="fa fa-shopping-cart h-6 w-6"></i>
                     <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs rounded-full px-1">3</span>
                 </button>
-                {{-- cart menu --}}
-                {{-- <div id="cart-menu" class="absolute right-0 mt-4 w-72 bg-gray-100 shadow-lg m-2 rounded-md hidden">
+                <!-- Cart Menu -->
+                {{-- <div id="cart-menu" class="absolute right-0  w-80 bg-gray-100 shadow-lg  rounded-md hidden">
                     <h1 class="text-xl font-bold mb-4 text-center">Your Cart</h1>
 
-                    @if (session('cart') && count(session('cart')) > 0)
+                    <!-- Check if there are items in the cart -->
+                    @if ($cartItems->isEmpty())
+                        <p class="text-center text-gray-500">Cart Not Found</p>
+                    @else
                         <div class="overflow-x-auto bg-white shadow-lg rounded-lg max-h-96 overflow-y-auto">
-                            <table class="min-w-full table-auto text-left">
+                            <table class="min-w-full text-left">
                                 <thead>
                                     <tr class="bg-gray-200">
-                                        <th class="px-4 py-2">Product</th>
-                                        <th class="px-4 py-2">Price</th>
-                                        <th class="px-4 py-2">Qty</th>
-                                        <th class="px-4 py-2">Total</th>
-                                        <th class="px-4 py-2">Remove</th>
+                                        <th class="px-2 py-1">Product</th>
+                                        <th class="px-2 py-1">Name</th>
+                                        <th class="px-2 py-1">Price</th>
+                                        <th class="px-2 py-1">Qty</th>
+                                        <th class="px-2 py-1">Total</th>
+                                        <th class="px-2 py-1">Remove</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @php
-                                        $total = 0;
-                                    @endphp
-                                    @foreach (session('cart') as $id => $product)
-                                        @php
-                                            $total += $product['price'] * $product['quantity'];
-                                        @endphp
-                                        <tr>
-                                            <td class="px-4 py-2 flex items-center space-x-2">
+                                @foreach ($cartItems as $cart)
+                                    @if ($cart)
+                                        @foreach ($products as $product)
+                                            <tbody>
+                                                <tr class="border-b">
+                                                    <td class="px-2 py-1 flex items-center space-x-2">
+                                                        <img src="{{ asset($product->images->last()->img_url ?? 'uploads/default.png') }}"
+                                                            alt="{{ $product->name }}"
+                                                            class="w-12 h-12 object-cover rounded-md">
 
-                                                <img src="{{ asset($product['images'][count($product['images']) - 1]['img_url'] ?? 'uploads/default.png') }}" alt="{{ $product['name'] }}" class="w-12 h-12 object-cover rounded-md">
+                                                    </td>
 
-                                                <span class="ml-2">{{ $product['name'] }}</span>
-                                            </td>
-                                            <td class="px-4 py-2 text-center">{{ number_format($product['price'], 2) }}
-                                            </td>
-                                            <td class="px-4 py-2">
-                                                <form action="{{ route('cart.update', $id) }}" method="POST"
-                                                    class="inline-block">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <input type="number" name="quantity"
-                                                        value="{{ $product['quantity'] }}" min="1"
-                                                        max="99" class="w-12 p-1 border rounded text-center">
-                                                    <button type="submit"
-                                                        class="ml-2 text-green-500 hover:text-green-700 text-sm">Update</button>
-                                                </form>
-                                            </td>
-                                            <td class="px-4 py-2 text-center">
-                                                {{ number_format($product['price'] * $product['quantity'], 2) }}</td>
-                                            <td class="px-4 py-2 text-center">
-                                                <form action="{{ route('cart.remove', $id) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="text-red-500 hover:text-red-700 text-sm">Remove</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                                    <td class="px-2 py-1 text-center">
+                                                        {{ $product->name }}</td>
+
+                                                    <td class="px-2 py-1 text-center">BDT
+                                                        {{ number_format($product->price, 2) }}</td>
+                                                    <td class="px-2 py-1 text-center">
+                                                        <form action="{{ url('cart.update', $cart->id) }}"
+                                                            method="POST" class="inline-block">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="number" name="quantity"
+                                                                value="{{ $cart->quantity }}" min="1"
+                                                                max="99"
+                                                                class="w-10 p-1 border rounded text-center">
+                                                            <button type="submit"
+                                                                class=" text-green-500 hover:text-green-700 text-sm">Update</button>
+                                                        </form>
+                                                    </td>
+                                                    <td class="px-2 py-1 text-center">BDT
+                                                        {{ number_format($cart->price, 2) }}</td>
+                                                    <td class="px-2 py-1 text-center">
+                                                        <form action="{{ url('cart.remove', $cart->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 text-sm">Remove</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        @endforeach
+                                    @endif
+                                @endforeach
                             </table>
                             <div class="flex justify-between items-center py-4 px-6 bg-gray-100 border-t">
-                                <span class="font-semibold text-lg">Total: ${{ number_format($total, 2) }}</span>
-                                <a href="{{ route('checkout') }}"
-                                    class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">Checkout</a>
+                                @foreach ($cartItems as $cart)
+                                    <span class="font-semibold text-lg">Total: BDT
+                                        {{ number_format($cart->price, 2) }}</span>
+                                @endforeach
+                                <a href="{{ url('checkout') }}"
+                                    class="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600">
+                                    Checkout
+                                </a>
                             </div>
-                        </div>
-                    @else
-                        <div class="bg-gray-200 p-4 rounded-lg text-center">
-                            <p>Your cart is empty.</p>
-                            <a href="{{ route('home') }}" class="text-green-500 hover:text-green-700">Continue
-                                Shopping</a>
                         </div>
                     @endif
                 </div> --}}
-
-
-            </div>
+            </a>
         </div>
         <!-- Profile Icon -->
         <div>
@@ -146,11 +152,14 @@
             </button>
 
             <div id="profile-menu" class="absolute right-3 mt-6 z-20 w-48 bg-gray-100 shadow-lg m-2 rounded-md hidden">
-                <a href="{{ url('user-profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-green-500 border-b rounded-md">My
+                <a href="{{ route('profile') }}"
+                    class="block px-2 py-1 text-gray-700 hover:bg-blue-100 hover:text-green-500 border-b rounded-md">My
                     Profile</a>
 
-                <a href="{{ route('login.form') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-green-500 border-b">Login</a>
-                <a href="{{ url('logout') }} " class="block px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-green-500 rounded-md ">LogOut</a>
+                <a href="{{ route('login.form') }}"
+                    class="block px-2 py-1 text-gray-700 hover:bg-blue-100 hover:text-green-500 border-b">Login</a>
+                <a href="{{ url('logout') }} "
+                    class="block px-2 py-1 text-gray-700 hover:bg-blue-100 hover:text-green-500 rounded-md ">LogOut</a>
             </div>
 
         </div>

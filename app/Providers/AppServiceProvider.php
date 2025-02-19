@@ -22,15 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // View::composer('*', function ($view) {
+        View::composer('*', function ($view) {
 
-        //     $categories = Category::with('subcategories')->get();
-        //     $products = Product::with('images')->get();
+            $categories = Category::with('subcategories')->get();
+            $products = Product::with('images')->paginate(10);
 
-        //     $view->with([
-        //         'categories' => $categories,
-        //         'products' => $products
-        //     ]);
-        // });
+            $view->with([
+                'categories' => $categories,
+                'products' => $products
+            ]);
+        });
     }
 }

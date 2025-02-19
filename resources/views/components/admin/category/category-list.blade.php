@@ -45,7 +45,7 @@
         </div>
         <!-- Pagination buttons -->
         <div class="flex justify-center mt-4 flex-wrap">
-            {{ $categories->links() }}
+            {{-- {{ $categories->links() }} --}}
 
         </div>
     </div>

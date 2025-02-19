@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>LELOBD - @yield('title')</title>
+    <title>LELOBD @yield('title')</title>
     <link rel="icon" type="lelobd/icon" href="{{ asset('/images/lelobd.png') }}" />
     {{-- tag com pany name is lelobd --}}
     <meta name="description" content="LELOBD is a online shopping platform" />
@@ -38,9 +38,6 @@
             <div class="indeterminate"></div>
         </div>
     </div> --}}
-
-
-
     {{-- one time loding --}}
     <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white z-50">
         <!-- Spinner using Tailwind utilities -->
@@ -49,8 +46,10 @@
 
     <x-toast-message />
 
+@yield('content')
 
-    @yield('content')
+
+
 
 
 

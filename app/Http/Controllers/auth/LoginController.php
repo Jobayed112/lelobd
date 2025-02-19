@@ -15,10 +15,9 @@ class LoginController extends Controller
     public function loginForm()
 
     {
-        $categories=Category::with('category');
-        return view('pages.auth.login-form',compact('categories'));
-    }
 
+        return view('pages.auth.login-form');
+    }
 
     public function loginCreate(Request $request)
     {
@@ -28,17 +27,22 @@ class LoginController extends Controller
                 'password' => 'required|string|min:6',
             ]);
 
-            $user = User::where('email', "=",$request->email)->first();
+            $user = User::where('email', $request->email)->first();
 
             if (!$user) {
                 return back()->with('error', 'User not found');
             }
 
             if (Hash::check($request->password, $user->password)) {
-                $token = JWTToken::CreateToken($user->email, $user->id);
+                Auth::login($user);
 
-                return redirect()->route('home')->with('success', 'Login Successful')
-                    ->cookie('token', $token, time() + 60 * 24 * 30);
+                if (class_exists('JWTToken')) {
+                    $token = JWTToken::CreateToken($user->email, $user->id);
+                    return redirect()->route('home')->with('success', 'Login Successful')
+                        ->cookie('token', $token, 60 * 24 * 30);
+                }
+
+                return redirect()->route('home')->with('success', 'Login Successful');
             } else {
                 return back()->with('error', 'Invalid credentials');
             }
@@ -47,4 +51,5 @@ class LoginController extends Controller
             return back()->with('error', 'Unauthorized');
         }
     }
+
 }

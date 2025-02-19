@@ -106,24 +106,15 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
 // user web
 Route::get('/',[HomeController::class,'home'])->name('home');
-
-Route::middleware('VerifyToken')->group( function ()  {
-
+Route::get('/profile',[HomeController::class,'profile'])->name('profile');
 
     Route::get('product-view/{id}',[ProductPageController::class,'productView'])->name('product-view');
 
 
-    // carts
-    Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart.add');
-    Route::get('/cart-show', [CartPageController::class, 'cartShow'])->name('cart.show');
-    Route::get('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
-
-});
-
 
  // product view
  Route::get('product-page ',[ProductPageController::class,'productPage'])->name('product-page');
-
+ Route::get('product-view ',[ProductPageController::class,'productView'])->name('product.view');
 // user login
 
 Route::get('login/form',[LoginController::class,'loginForm'])->name('login.form');
@@ -140,6 +131,9 @@ Route::post('register/store',[RegisterController::class,'Register'])->name('regi
 Route::get('logout',[LogoutController::class,'logout'])->name('logout');
 
 
-
+    // carts
+    Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart.add');
+    Route::get('/cart-show', [CartPageController::class, 'cartShow'])->name('cart.show');
+    Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
 
 

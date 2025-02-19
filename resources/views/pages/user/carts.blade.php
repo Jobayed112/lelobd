@@ -4,7 +4,8 @@ Carts Page
 @endsection
 @section('content')
 @include('components.home.header')
-@include('components.user.carts'    )
+
+@include('components.user.carts')
+
 @include('components.home.footer')
-{{-- @include('components.home.top-category') --}}
 @endsection

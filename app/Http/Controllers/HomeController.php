@@ -11,18 +11,17 @@ class HomeController extends Controller
 {
     public function home()
     {
-        $products=Product::with('category')->paginate(10);
-        $categories = Category::with('subcategories')->paginate(8);
-        return view('pages.home',compact('categories','products'));
+
+        return view('pages.home');
     }
     public function profile()
     {
         $user = Auth::user();
 
         if (!$user) {
-            return redirect()->route('login-form');
+            return redirect()->route('login.form');
         } elseif (Auth::check()) {
-            return view('pages.profile');
+            return view('pages.user.profile');
         }
 
     }
