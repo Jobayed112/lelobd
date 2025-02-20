@@ -63,9 +63,7 @@
             <!-- Cart Summary -->
             <div class="flex flex-wrap justify-between items-center p-4 border-t border-gray-200 ml-20">
                 <div class="text-lg m-4 font-semibold">
-
-                    Total: BDT {{ number_format($cart->price, 2) }}
-
+                    Total: BDT {{ number_format($tola_carts_price, 2) }}
                 </div>
                 <div>
                     <a href="{{ url('checkout') }}"

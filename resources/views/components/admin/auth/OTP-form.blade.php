@@ -4,7 +4,7 @@
         <h2 class="text-2xl font-bold text-center text-gray-800">Enter OTP</h2>
         <p class="mt-2 text-sm text-gray-600 text-center">A verification code has been sent to your email</p>
 
-        <form action="{{ route('admin-verifyotp') }}" method="POST" class="mt-6">
+        <form action="{{ route('admin.verifyotp') }}" method="POST" class="mt-6">
             @csrf
             <label for="otp" class="block text-sm font-medium text-gray-700">OTP Code</label>
             <input type="text" id="otp" name="otp" required placeholder="Enter OTP" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">

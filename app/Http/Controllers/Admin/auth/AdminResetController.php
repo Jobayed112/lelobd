@@ -40,7 +40,7 @@ class AdminResetController extends Controller
 
         $request->session()->put('email', $email);
 
-        return redirect()->route('admin-OTP-form')->with('status', 'OTP sent to your email!');
+        return redirect()->route('admin.OTP.form')->with('status', 'OTP sent to your email!');
 
         } catch (\Exception $e) {
             return back()->with(
@@ -82,10 +82,10 @@ class AdminResetController extends Controller
             return back()->with('error', 'OTP has expired. Please request a new one.');
         }
 
-        return redirect()->route('reset-password-form')->with('status', 'OTP verified successfully. Please reset your password.');
+        return redirect()->route('admin.reset.password.form')->with('status', 'OTP verified successfully. Please reset your password.');
     } catch (\Exception $e) {
-        return back()->with(
-            'error','Unauthorized'
+        return back()->with('error','Unauthorized'
+
         );
     }
 
@@ -103,11 +103,12 @@ class AdminResetController extends Controller
                 'password' => 'required|string|min:8|confirmed',
             ]);
 
+
             $email = $request->session()->get('email');
             $user = User::where('email', $email)->first();
 
             if (!$user) {
-                return redirect()->route('admin-login-form')->withErrors(['email' => 'Email not found']);
+                return redirect()->route('admin.login.form')->with('email', 'Email not found');
             }
 
             $user->password = Hash::make($request->input('password'));
@@ -115,13 +116,13 @@ class AdminResetController extends Controller
 
             DB::table('password_reset_tokens')->where('email', $email)->delete();
 
-            return redirect()->route('admin-login-form')->with('status', 'Password reset successfully. Please login.');
+            return redirect()->route('admin.login.form')->with('status', 'Password reset successfully. Please login.');
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Password reset failed',
-                'message' => $e->getMessage()
-            ], 400);
+            return back()->with('error','password is not match'
+
+            );
         }
+
     }
 }

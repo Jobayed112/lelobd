@@ -16,7 +16,7 @@
                     <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-4">
                         <h3 class="text-xl font-semibold text-white mb-2">{{ $product->name }}</h3>
                         <p class="text-green-600 font-bold text-lg">${{ number_format($product->price, 2) }}</p>
-                        <a href="{{ url('product.details', $product->id) }}"
+                        <a href="{{ url('product/view', $product->id) }}"
                            class="mt-3 inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
                             View Details
                         </a>
@@ -42,7 +42,7 @@ var swiper = new Swiper('.mySwiper', {
     spaceBetween: 30,
     loop: {{ count($products) > 4 ? 'true' : 'false' }},
     autoplay: {
-        delay: 3000,
+        delay: 1000,
         disableOnInteraction: false,
     },
     pagination: {

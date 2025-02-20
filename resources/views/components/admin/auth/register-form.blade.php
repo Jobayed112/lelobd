@@ -3,7 +3,7 @@
     <p class="text-sm text-gray-600 text-center mt-1">Please fill in the details to create a new account.</p>
 
     <!-- Register Form -->
-    <form action="{{ route('admin-register-form-create') }}" method="POST" class="mt-2">
+    <form action="{{ route('admin.register.create') }}" method="POST" class="mt-2">
         @csrf
         <!-- Name Input -->
         <div class="mb-2">
@@ -74,6 +74,6 @@
     <!-- Login Link -->
     <p class="mt-6 text-center text-sm text-gray-600">
         Already have an account?
-        <a href="{{ route('admin-login-form') }}" class="text-blue-500 font-medium hover:underline">Login</a>
+        <a href="{{ route('admin.login.form') }}" class="text-blue-500 font-medium hover:underline">Login</a>
     </p>
 </div>

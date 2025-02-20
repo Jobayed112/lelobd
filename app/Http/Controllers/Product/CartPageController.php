@@ -43,9 +43,11 @@ class CartPageController extends Controller
             ['qty' => $request->qty ?? 1, 'price' => $total_price]
         );
 
-        return redirect()->route('cart.show')->with('success', 'Product added to cart successfully!');
+
+
+        return back()->with('success', 'Product added to cart successfully!');
     } catch (\Exception $e) {
-        return back()->with('error', 'Something went wrong');
+        return back()->with('error','Something went wrong');
     }
 }
 
@@ -57,7 +59,9 @@ class CartPageController extends Controller
         }
 
         $cartItems = Cart::where('user_id', $user_id)->get();
-        return view('pages.user.carts', compact('cartItems'));
+
+        $tola_carts_price=$cartItems->sum('price');
+        return view('pages.user.carts', compact('cartItems','tola_carts_price'));
     }
 
     public function removeFromCart($id)

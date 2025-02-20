@@ -18,22 +18,29 @@ use App\Http\Controllers\Product\ProductPageController;
 
 
 
-// admin routes role admin than middleware admin use prefix admin
-Route::get('admin-login-form', [AdminLoginController::class, 'adminLoginForm'])->name('admin-login-form');
 
-Route::post('admin-login-create', [AdminLoginController::class, 'adminCreate'])->name('admin-login-create');
+Route::get('admin-register-form', [AdminRegisterController::class, 'adminRegisterForm'])->name('admin.register.form');
+Route::post('admin-register', [AdminRegisterController::class, 'adminregister'])->name('admin.register.create');
 
-Route::get('admin-register-form', [AdminRegisterController::class, 'adminRegisterForm'])->name('admin-register-form');
-Route::post('admin-register', [AdminRegisterController::class, 'adminregister'])->name('admin-register-form-create');
+Route::get('admin/login/form', [AdminLoginController::class, 'adminLoginForm'])->name('admin.login.form');
+Route::post('admin/login/create', [AdminLoginController::class, 'adminCreate'])->name('admin.login.create');
 
-Route::get('admin-reset-form', [AdminResetController::class, 'adminResetForm'])->name('admin-reset-form');
-Route::post('admin-reset', [AdminResetController::class, 'adminreset'])->name('admin-reset-form-create');
+Route::get('admin/reset/form', [AdminResetController::class, 'adminResetForm'])->name('admin.reset.form');
+Route::post('admin/reset', [AdminResetController::class, 'adminreset'])->name('admin.reset.create');
 
-Route::get('admin-OTP-form', [AdminResetController::class, 'adminotpform'])->name('admin-OTP-form');
-Route::post('admin-verify-otp', [AdminResetController::class, 'adminverifyOtp'])->name('admin-verifyotp');
+Route::get('admin/OTP/form', [AdminResetController::class, 'adminotpform'])->name('admin.OTP.form');
+Route::post('admin/verify/otp', [AdminResetController::class, 'adminverifyOtp'])->name('admin.verifyotp');
 
-Route::get('admin-reset-password-form',[AdminResetController::class,'adminresetPasswordForm'])->name('reset-password-form');
-Route::post('admin-reset-password',[AdminResetController::class,'adminResetPassword'])->name('admin-reset-password');
+Route::get('admin/reset/password/form',[AdminResetController::class,'adminresetPasswordForm'])->name('admin.reset.password.form');
+Route::post('admin/reset/password',[AdminResetController::class,'adminResetPassword'])->name('admin.reset.password');
+
+
+
+
+
+
+
+
 
 
 Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
@@ -104,36 +111,52 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
 });
 
-// user web
-Route::get('/',[HomeController::class,'home'])->name('home');
-Route::get('/profile',[HomeController::class,'profile'])->name('profile');
-
-    Route::get('product-view/{id}',[ProductPageController::class,'productView'])->name('product-view');
 
 
-
- // product view
- Route::get('product-page ',[ProductPageController::class,'productPage'])->name('product-page');
- Route::get('product-view ',[ProductPageController::class,'productView'])->name('product.view');
-// user login
-
-Route::get('login/form',[LoginController::class,'loginForm'])->name('login.form');
-
-
-Route::post('login/create',[LoginController::class,'loginCreate'])->name('login.create');
-
-
+// User LOgin Web Route
 
 Route::get('register/form',[RegisterController::class,'registerForm'])->name('register.form');
 Route::post('register/store',[RegisterController::class,'Register'])->name('register');
+
+Route::get('login/form',[LoginController::class,'loginForm'])->name('login.form');
+Route::post('login/create',[LoginController::class,'loginCreate'])->name('login.create');
+
 
 
 Route::get('logout',[LogoutController::class,'logout'])->name('logout');
 
 
-    // carts
+
+
+// user web
+Route::get('/',[HomeController::class,'home'])->name('home');
+Route::get('/profile',[HomeController::class,'profile'])->name('profile');
+
+// product route
+
+
+
+
+ // product view
+    // Route::get('product/page ',[ProductPageController::class,'productPage'])->name('product.page');
+
+    Route::get('product/view/{id}',[ProductPageController::class,'productView'])->name('product.view');
+
+    Route::get('/category/{id}/products', [ProductPageController::class, 'categoryByProduct'])->name('category.products');
+
+
+// add to cart
     Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart.add');
-    Route::get('/cart-show', [CartPageController::class, 'cartShow'])->name('cart.show');
+    Route::get('/cart/show', [CartPageController::class, 'cartShow'])->name('cart.show');
     Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
+
+
+// user login
+
+
+
+
+
+    // carts
 
 

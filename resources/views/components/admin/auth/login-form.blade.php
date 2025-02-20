@@ -3,7 +3,7 @@
     <p class="text-sm text-gray-600 text-center mt-2">Welcome back! Please enter your details below.</p>
 
     <!-- Login Form -->
-    <form action="{{ url('admin-login-create') }}" method="POST" class="mt-6">
+    <form action="{{ route('admin.login.create') }}" method="POST" class="mt-6">
         @csrf
 
         <!-- Email Input -->
@@ -26,7 +26,7 @@
 
         <!-- Forgot Password Link -->
         <div class="flex justify-end mb-4">
-            <a href="{{ url('admin-reset-form') }}" class="text-sm text-blue-500 hover:underline">Forgot Password?</a>
+            <a href="{{ route('admin.reset.form') }}" class="text-sm text-blue-500 hover:underline">Forgot Password?</a>
         </div>
 
         <!-- Submit Button -->
@@ -46,6 +46,6 @@
     <!-- Signup Link -->
     <p class="mt-6 text-center text-sm text-gray-600">
         Don’t have an account?
-        <a href="{{ url('admin-register-form') }}" class="text-blue-500 font-medium hover:underline">Sign Up</a>
+        <a href="{{ route('admin.register.form') }}" class="text-blue-500 font-medium hover:underline">Sign Up</a>
     </p>
 </div>

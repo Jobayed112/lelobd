@@ -14,12 +14,13 @@ class ProductPageController extends Controller
     {
 
         $products = Product::paginate(10);
-        return view('pages.product.product-page',compact('products'));
+        return view('pages.product.product-page',compact(var_name: 'products'));
     }
 
     public function productView($id)
     {
         $product = Product::with('category')->findOrFail($id);
+
         return view('pages.product.product-view',compact('product'));
     }
 
@@ -45,25 +46,22 @@ class ProductPageController extends Controller
     }
 
 
-    public function femaleproduct()
+    public function categoryByProduct($id)
     {
         try {
-            $maleCategory = Category::where('name', 'Female')->first();
+            $category = Category::findOrFail($id);
 
-            if (!$maleCategory) {
-                return response()->json(['error' => 'Female category not found'], 404);
-            }
+            $products = Product::where('category_id', $id)
+                ->with('images', 'productDetail')
+                ->paginate(20);
 
-            $products = Product::where('category_id', $maleCategory->id)->paginate(10);
-
-            return view('pages.product.product-page', compact('products'));
+            return view('pages.product.category_by_product', compact('category', 'products'));
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Something went wrong',
-            ], 500);
+            return redirect()->back()->with('error', 'Category not found.');
         }
     }
+
     public function maleproduct()
     {
         try {

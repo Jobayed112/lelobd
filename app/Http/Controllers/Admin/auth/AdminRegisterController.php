@@ -34,7 +34,7 @@ class AdminRegisterController extends Controller
 
 
             $user->save();
-            return redirect()->route('admin-login-form')
+            return redirect()->route('admin.login.form')
                 ->with('success', 'Admin Created Successfully');
         } catch (\Exception $e) {
             return back()->with('error', 'Email or Phone Allrady Token');

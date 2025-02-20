@@ -7,8 +7,8 @@
             password.</p>
 
         <!-- Form -->
-        <form action="{{ route('admin-reset-form-create') }}" method="POST">
-@csrf
+        <form action="{{ route('admin.reset.create') }}" method="POST">
+            @csrf
             <!-- Email Address -->
             <div class="mb-6">
                 <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
@@ -29,7 +29,7 @@
 
         <p class="text-center text-sm text-gray-600 mt-3">
             Remembered your password?
-            <a href="{{ route('admin-login-form') }}" class="text-blue-600 hover:underline">Login here</a>
+            <a href="{{ route('admin.login.form') }}" class="text-blue-600 hover:underline">Login here</a>
         </p>
     </div>
 </div>

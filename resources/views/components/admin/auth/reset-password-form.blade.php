@@ -7,7 +7,7 @@
         <p class="text-gray-600 text-center mb-6">Enter a new password for your account.</p>
 
         <!-- Form -->
-        <form action="{{ route('admin-reset-password') }}" method="POST">
+        <form action="{{ route('admin.reset.password') }}" method="POST">
             @csrf
             <!-- Password -->
             <div class="mb-6">
@@ -15,9 +15,6 @@
                 <input type="password" id="password" name="password"
                     class="w-full px-5 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter your new password" required>
-                @error('password')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- Confirm Password -->

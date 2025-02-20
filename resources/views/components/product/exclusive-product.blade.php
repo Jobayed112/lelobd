@@ -1,6 +1,6 @@
-<section class="container mx-auto p-4">
+<section class="container mx-auto p-4 m-2 border-b">
     <!-- Filter Buttons -->
-    <div class="flex justify-center mb-6 space-x-2 flex-wrap">
+    <div class="flex justify-center mb-6 space-x-2 flex-wrap pb-2 border-b">
         <button onclick="filterProducts('popular')"
             class="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm sm:text-base">
             Popular
@@ -25,20 +25,20 @@
 
     <!-- Product Grid -->
 
-    <div class="product-wrapper bg-gray-50 rounded-xl p-2 shadow-lg">
-        <div class="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
+    <div class="product-wrapper bg-slate-200 rounded-xl  shadow-lg">
+        <div class="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
             {{-- Product Item --}}
             @foreach ($products as $product)
-                <div class="w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 product-item"
+                <div class="sm:w-56 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 product-item"
                     data-type="{{ $product->type }}">
                     <!-- Product Image -->
-                    <div class="w-full bg-gray-100 rounded-t-lg overflow-hidden">
-                        <a href="{{ url('product-page/' . $product->id) }}">
+                    <div class="sm:w-56 bg-gray-100 rounded-t-lg overflow-hidden border-b">
+                        <a href="{{ url('product/view/' . $product->id) }}">
                             @if ($product->images->isNotEmpty())
-                                <img class="w-full  h-56 object-cover transition-transform duration-300 hover:scale-105"
+                                <img class="sm:w-56   h-56 object-cover transition-transform duration-300 hover:scale-105"
                                     src="{{ asset($product->images->first()->img_url) }}" alt="{{ $product->name }}">
                             @else
-                                <img class="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
+                                <img class="sm:w-56 h-auto object-cover transition-transform duration-300 hover:scale-105"
                                     src="{{ asset('images/no-image.png') }}" alt="No Image Available">
                             @endif
                         </a>
@@ -46,7 +46,7 @@
 
                     <!-- Product Details -->
                     <div class="p-1 text-center">
-                        <a href="{{ url('product-page/' . $product->id) }}"
+                        <a href="{{ url('product/view/' . $product->id) }}"
                             class="text-sm font-semibold text-gray-800 hover:text-indigo-600 hover:underline">
                             {{ $product->name }}
                         </a>
