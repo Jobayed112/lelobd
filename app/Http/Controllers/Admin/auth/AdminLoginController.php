@@ -33,6 +33,7 @@ class AdminLoginController extends Controller
             if (Hash::check($request->password, $user->password ) && $user->role==='admin') {
 
                 $token = JWTToken::CreateToken($user->email, $user->id);
+                // dd($token);
 
                 return redirect()->route('admin.dashboard')->with('success', 'Admin Login Successful')
                     ->cookie('token', $token, time() + 60 * 24 * 30);

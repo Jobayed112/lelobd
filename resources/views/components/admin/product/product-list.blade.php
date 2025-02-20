@@ -39,7 +39,7 @@
                                 </span>
                             </td>
                             <td class="px-5 py-4">
-                                <img src="{{ $product->images->isNotEmpty() ? asset($product->images->first()->img_url) : asset('uploads/default.png') }}"
+                                <img src="{{ $product->images->isNotEmpty() ? asset($product->images->last()->img_url) : asset('uploads/default.png') }}"
                                 class="w-20 h-20 object-cover rounded-xl border border-gray-300 shadow-sm" alt="{{ $product->name }}">
 
 

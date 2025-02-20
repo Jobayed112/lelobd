@@ -3,5 +3,7 @@
 Profile Page
 @endsection
 @section('content')
-    @include('components.user.profile')
+@include('components.home.header')
+@include('components.user.profile')
+@include('components.home.footer')
 @endsection

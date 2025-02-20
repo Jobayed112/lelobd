@@ -3,5 +3,7 @@
 Register Form
 @endsection
 @section('content')
-    @include('components.auth.register-form')
+@include('components.home.header')
+@include('components.auth.register-form')
+@include('components.home.footer')
 @endsection

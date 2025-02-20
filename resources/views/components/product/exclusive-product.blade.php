@@ -24,9 +24,8 @@
     </div>
 
     <!-- Product Grid -->
-
-    <div class="product-wrapper bg-slate-200 rounded-xl  shadow-lg">
-        <div class="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
+    <div class="product-wrapper bg-slate-50 rounded-xl m-3 shadow-lg">
+        <div class="product-flex flex flex-wrap gap-2 justify-center">
             {{-- Product Item --}}
             @foreach ($products as $product)
                 <div class="sm:w-56 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 product-item"
@@ -35,11 +34,11 @@
                     <div class="sm:w-56 bg-gray-100 rounded-t-lg overflow-hidden border-b">
                         <a href="{{ url('product/view/' . $product->id) }}">
                             @if ($product->images->isNotEmpty())
-                                <img class="sm:w-56   h-56 object-cover transition-transform duration-300 hover:scale-105"
-                                    src="{{ asset($product->images->first()->img_url) }}" alt="{{ $product->name }}">
+                                <img class="sm:w-56 h-56 object-cover transition-transform duration-300 hover:scale-105"
+                                     src="{{ asset($product->images->last()->img_url) }}" alt="{{ $product->name }}">
                             @else
                                 <img class="sm:w-56 h-auto object-cover transition-transform duration-300 hover:scale-105"
-                                    src="{{ asset('images/no-image.png') }}" alt="No Image Available">
+                                     src="{{ asset('images/no-image.png') }}" alt="No Image Available">
                             @endif
                         </a>
                     </div>
@@ -47,7 +46,7 @@
                     <!-- Product Details -->
                     <div class="p-1 text-center">
                         <a href="{{ url('product/view/' . $product->id) }}"
-                            class="text-sm font-semibold text-gray-800 hover:text-indigo-600 hover:underline">
+                           class="text-sm font-semibold text-gray-800 hover:text-indigo-600 hover:underline">
                             {{ $product->name }}
                         </a>
                         <p class="text-sm {{ $product->stock ? 'text-green-500' : 'text-red-500' }} font-medium">
@@ -62,25 +61,27 @@
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <input type="number" name="qty" value="1" min="1"
-                                    class="w-16 text-center border border-gray-300 rounded-lg">
+                                       class="w-16 text-center border border-gray-300 rounded-lg">
                                 <button type="submit"
-                                    class="m-1 text- inline-block px-2 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-300">
+                                        class="m-1 text-inline-block px-2 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-300">
                                     Add to Cart
                                 </button>
                             </form>
                         @else
                             <p class="mt-1 text-sm text-red-500">Out of Stock</p>
                         @endif
-
                     </div>
                 </div>
             @endforeach
-
-            {{-- End Product Item --}}
         </div>
     </div>
 
+    <!-- Message if no products match the filter -->
+    <div id="no-products-message" class="text-center text-lg text-gray-600 hidden mt-4">
+        <p>No products found for this filter.</p>
+    </div>
 
+    <!-- Pagination -->
     <div class="mt-6 flex justify-center">
         {{ $products->links() }}
     </div>
@@ -89,13 +90,23 @@
 <script>
     function filterProducts(type) {
         const items = document.querySelectorAll('.product-item');
-        items.forEach(item => {
+        let visibleItems = 0;
 
+        items.forEach(item => {
             if (type === 'all' || item.dataset.type === type) {
                 item.style.display = 'block';
+                visibleItems++;
             } else {
                 item.style.display = 'none';
             }
         });
+
+        // Show message if no items are visible
+        const noProductsMessage = document.getElementById('no-products-message');
+        if (visibleItems === 0) {
+            noProductsMessage.classList.remove('hidden');
+        } else {
+            noProductsMessage.classList.add('hidden');
+        }
     }
 </script>

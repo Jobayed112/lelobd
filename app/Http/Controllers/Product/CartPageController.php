@@ -55,20 +55,20 @@ class CartPageController extends Controller
     {
         $user_id = Auth::id();
         if (!$user_id) {
-            return redirect()->route('login')->with('error', 'You must be logged in to view your cart.');
+            return redirect()->route('login.form')->with('error', 'You must be logged in to view your cart.');
         }
 
         $cartItems = Cart::where('user_id', $user_id)->get();
 
         $tola_carts_price=$cartItems->sum('price');
-        return view('pages.user.carts', compact('cartItems','tola_carts_price'));
+        return view('pages.product.carts', compact('cartItems','tola_carts_price'));
     }
 
     public function removeFromCart($id)
     {
         $user_id = Auth::id();
         if (!$user_id) {
-            return redirect()->route('login')->with('error', 'Unauthorized access.');
+            return redirect()->route('login.form')->with('error', 'Unauthorized access.');
         }
 
         $cart = Cart::where('id', $id)->where('user_id', $user_id)->firstOrFail();

@@ -1,9 +1,7 @@
-
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-6">
         {{ $category->name }}
     </h1>
-
     <section class="container mx-auto p-4 m-2 border-b">
         <div class="product-wrapper bg-slate-200 rounded-xl  shadow-lg">
             <div class="product-grid grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">

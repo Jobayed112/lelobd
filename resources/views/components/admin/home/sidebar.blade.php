@@ -108,13 +108,13 @@
                 </button>
                 <ul id="Offer-dropdown" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{ url('offer-list') }}"
+                        <a href="{{ route('offer.list') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
                             <span>Offer list</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('offer-create') }}"
+                        <a href="{{ route('offer.create') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
                             <span>Offer create</span>
                         </a>

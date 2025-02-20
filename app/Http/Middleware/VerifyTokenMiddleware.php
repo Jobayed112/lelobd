@@ -14,6 +14,7 @@ class VerifyTokenMiddleware
     try {
         $token = $request->cookie('token');
         $result = JWTToken::ReadToken($token);
+
         if ($result === "unauthorized") {
             return redirect()->route('login.form')->with('error', 'Your Token Not Found');
         }

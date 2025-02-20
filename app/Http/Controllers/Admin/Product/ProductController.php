@@ -166,7 +166,8 @@ class ProductController extends Controller
 
 
 
-    // new product
+
+    // exclusive product
     public function productNewList()
     {
         try {
@@ -237,3 +238,4 @@ class ProductController extends Controller
         }
     }
 }
+

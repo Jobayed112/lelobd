@@ -8,16 +8,14 @@ use App\Http\Controllers\Admin\auth\AdminResetController;
 use App\Http\Controllers\Admin\auth\AdminRegisterController;
 use App\Http\Controllers\Admin\Product\CategoryController;
 use App\Http\Controllers\Admin\Product\ProductController;
+use App\Http\Controllers\Admin\Product\ProductOfferController;
 use App\Http\Controllers\Admin\Product\SubCategoryController;
 use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\auth\ResetController;
 use App\Http\Controllers\Product\CartPageController;
 use App\Http\Controllers\Product\ProductPageController;
-
-
-
-
 
 Route::get('admin-register-form', [AdminRegisterController::class, 'adminRegisterForm'])->name('admin.register.form');
 Route::post('admin-register', [AdminRegisterController::class, 'adminregister'])->name('admin.register.create');
@@ -34,6 +32,26 @@ Route::post('admin/verify/otp', [AdminResetController::class, 'adminverifyOtp'])
 Route::get('admin/reset/password/form',[AdminResetController::class,'adminresetPasswordForm'])->name('admin.reset.password.form');
 Route::post('admin/reset/password',[AdminResetController::class,'adminResetPassword'])->name('admin.reset.password');
 
+
+// User LOgin Web Route
+
+Route::get('register/form',[RegisterController::class,'registerForm'])->name('register.form');
+Route::post('register/store',[RegisterController::class,'Register'])->name('register');
+
+Route::get('login/form',[LoginController::class,'loginForm'])->name('login.form');
+Route::post('login/create',[LoginController::class,'loginCreate'])->name('login.create');
+
+Route::get('reset/form',[ResetController::class,'resetForm'])->name('reset.form');
+Route::post('user/reset',[ResetController::class,'userReset'])->name('user.reset');
+
+Route::get('otp/form',[ResetController::class,'otpForm'])->name('otp.form');
+Route::post('verify/otp',[ResetController::class,'verifyOtp'])->name('verify.otp');
+
+    Route::get('reset/password/form',[ResetController::class,'resetPasswordForm'])->name('reset.pass.form');
+Route::post('reset/password',[ResetController::class,'resetPassword'])->name('reset.password');
+
+
+Route::get('logout',[LogoutController::class,'logout'])->name('logout');
 
 
 
@@ -79,12 +97,15 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
     Route::get('popular/product/list',[ProductController::class,'productPopularList'])->name('popular-product-list');
 
     //
-    // Route::get('/offer-list', [OfferController::class, 'index'])->name('offer.list');
-    //     Route::get('/offer-create', [OfferController::class, 'create'])->name('offer.create');
-    // Route::post('/offer/store', [OfferController::class, 'store'])->name('offer.store');
-    // Route::get('/offer/edit/{id}', [OfferController::class, 'edit'])->name('offer.edit');
-    // Route::post('/offer/update/{id}', [OfferController::class, 'update'])->name('offer.update');
-    // Route::delete('/offer/delete/{id}', [OfferController::class, 'destroy'])->name('offer.delete');
+    Route::get('/offer/list', [ProductOfferController::class, 'offerList'])->name('offer.list');
+    Route::get('/offer-create', [ProductOfferController::class, 'offerCreate'])->name('offer.create');
+
+    Route::post('/offer/store', [ProductOfferController::class, 'store'])->name('offer.store');
+
+    Route::get('/offer/edit/{id}', [ProductOfferController::class, 'offerEdit'])->name('offer.edit');
+
+    Route::put('/offer/update/{id}', [ProductOfferController::class, 'offerUpdate'])->name('offer.update');
+    Route::delete('/offer/delete/{id}', [ProductOfferController::class, 'destroy'])->name('offer.delete');
 
     // category-list
     Route::get('category/list',[CategoryController::class,'categoryList'])->name('category-list');
@@ -113,18 +134,6 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
 
 
-// User LOgin Web Route
-
-Route::get('register/form',[RegisterController::class,'registerForm'])->name('register.form');
-Route::post('register/store',[RegisterController::class,'Register'])->name('register');
-
-Route::get('login/form',[LoginController::class,'loginForm'])->name('login.form');
-Route::post('login/create',[LoginController::class,'loginCreate'])->name('login.create');
-
-
-
-Route::get('logout',[LogoutController::class,'logout'])->name('logout');
-
 
 
 
@@ -133,8 +142,6 @@ Route::get('/',[HomeController::class,'home'])->name('home');
 Route::get('/profile',[HomeController::class,'profile'])->name('profile');
 
 // product route
-
-
 
 
  // product view
@@ -151,12 +158,5 @@ Route::get('/profile',[HomeController::class,'profile'])->name('profile');
     Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
 
 
-// user login
-
-
-
-
-
-    // carts
 
 

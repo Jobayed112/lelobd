@@ -44,6 +44,12 @@ protected $fillable = [
     public function productDetail() : HasOne {
         return $this->hasOne(ProductDetail::class);
     }
+    public function offers()
+    {
+    return $this->hasMany(ProductOffer::class);
+    }
+
+
     public function productReview(): HasMany
     {
         return $this->hasMany(ProductReview::class);
@@ -54,10 +60,7 @@ protected $fillable = [
     }
 
 
-    public function offers()
-    {
-    return $this->hasMany(ProductOffer::class);
-    }
+
 
     public function carts(): HasMany
     {

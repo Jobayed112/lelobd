@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\ProductOffer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,13 +32,14 @@ class AppServiceProvider extends ServiceProvider
             $cartItems=Cart::get();
 
             $productDetail=ProductDetail::first();
+            $productOffers=ProductOffer::with('product')->get();
 
             $view->with([
                 'categories' => $categories,
                 'products' => $products,
                 'cartItems'=> $cartItems,
-                'productDetail'=>$productDetail
-
+                'productDetail'=>$productDetail,
+                'productOffers'=>$productOffers,
             ]);
         });
     }

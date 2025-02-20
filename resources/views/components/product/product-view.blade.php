@@ -4,19 +4,19 @@
         <!-- Image Gallery -->
         <div class="w-full h-full">
             <!-- Main Image -->
-            <img id="mainImage" src="{{ asset($product->images->first()->img_url) }}"
-                alt="{{ $product->name }}"
+            <img id="mainImage" src="{{ asset($product->images->first()->img_url) }}" alt="{{ $product->name }}"
                 class="w-full h-[350px] object-cover rounded-lg">
 
             <!-- Thumbnail Images -->
-            <div class="grid grid-cols-4 gap-4 mt-4">
-                @foreach ($product->images as $image)
-                    <img src="{{ asset($image->img_url) }}"
-                        alt="{{ $product->name }}"
-                        class="w-16 h-16 object-cover rounded-lg cursor-pointer hover:ring-2 hover:ring-green-600"
+            <div class="grid grid-cols-4 gap-4 rounded-md bg-gray-200 mt-4">
+                {{-- Show only 4 product images --}}
+                @foreach ($product->images->take(4) as $image)
+                    <img src="{{ asset($image->img_url) }}" alt="{{ $product->name }}"
+                        class="w-16 m-2 ring-2 h-16 object-cover rounded-lg cursor-pointer hover:ring-2 hover:ring-green-600"
                         onclick="changeMainImage(this)">
                 @endforeach
             </div>
+
         </div>
 
         <!-- Product Information -->
@@ -32,8 +32,9 @@
             </div>
             <div class="text-base font-bold text-green-600 mb-4">
                 BDT {{ number_format($product->price, 2) }}
-                @if($product->discount_price)
-                    <span class="text-gray-500 line-through text-xs">BDT {{ number_format($product->original_price, 2) }}</span>
+                @if ($product->discount_price)
+                    <span class="text-gray-500 line-through text-xs">BDT
+                        {{ number_format($product->original_price, 2) }}</span>
                 @endif
             </div>
             <p class="text-xs text-gray-700 mb-4">{{ $product->description }}</p>
@@ -42,7 +43,8 @@
                 <h3 class="text-xs font-semibold mb-2">Select Size:</h3>
                 <div class="flex space-x-2">
                     @foreach (['S', 'M', 'L', 'XL'] as $size)
-                        <button class="border px-2 py-1 text-xs rounded-lg hover:border-green-600 transition">{{ $size }}</button>
+                        <button
+                            class="border px-2 py-1 text-xs rounded-lg hover:border-green-600 transition">{{ $size }}</button>
                     @endforeach
                 </div>
             </div>
@@ -50,19 +52,25 @@
             <div class="mb-6">
                 <h3 class="text-xs font-semibold mb-2">Quantity:</h3>
                 <div class="flex items-center">
-                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-lg text-xs" onclick="changeQuantity(-1)">-</button>
+                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-lg text-xs"
+                        onclick="changeQuantity(-1)">-</button>
                     <input id="quantityInput" type="number" value="1" min="1"
                         class="w-8 text-center border-t border-b border-gray-300 text-xs">
-                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-lg text-xs" onclick="changeQuantity(1)">+</button>
+                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-lg text-xs"
+                        onclick="changeQuantity(1)">+</button>
                 </div>
             </div>
 
             <div class="flex items-center space-x-4">
                 <a href="{{ route('cart.add', $product->id) }}">
-                    <button class="bg-green-500 text-white text-xs px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">Add to Cart</button>
+                    <button
+                        class="bg-green-500 text-white text-xs px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">Add
+                        to Cart</button>
                 </a>
                 <a href="{{ url('product.buy', $product->id) }}">
-                    <button class="bg-blue-500 text-white text-xs px-4 py-2 hover:bg-blue-600 hover:ring-4 rounded transition">Buy Now</button>
+                    <button
+                        class="bg-blue-500 text-white text-xs px-4 py-2 hover:bg-blue-600 hover:ring-4 rounded transition">Buy
+                        Now</button>
                 </a>
             </div>
         </div>

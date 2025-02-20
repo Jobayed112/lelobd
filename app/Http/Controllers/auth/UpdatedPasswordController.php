@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UpdatedPasswordController extends Controller
 {
-    public function updateform()
+    public function resetPasswordForm()
     {
-        return view('pages.auth.updated-form');
+        return view('pages.auth.reset-form');
     }
 
-    public function update(Request $request)
+    public function resetPassword(Request $request)
     {
         try {
             $validatedData = $request->validate([
