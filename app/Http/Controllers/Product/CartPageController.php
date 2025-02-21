@@ -47,7 +47,7 @@ class CartPageController extends Controller
 
         return back()->with('success', 'Product added to cart successfully!');
     } catch (\Exception $e) {
-        return back()->with('error','Something went wrong');
+        return response()->json( ['error'=>'Something went wrong','sd'=>$e->getMessage()]);
     }
 }
 
@@ -60,8 +60,8 @@ class CartPageController extends Controller
 
         $cartItems = Cart::where('user_id', $user_id)->get();
 
-        $tola_carts_price=$cartItems->sum('price');
-        return view('pages.product.carts', compact('cartItems','tola_carts_price'));
+        $total_carts_price=$cartItems->sum('price');
+        return view('pages.product.add_to_cart', compact('cartItems','total_carts_price'));
     }
 
     public function removeFromCart($id)

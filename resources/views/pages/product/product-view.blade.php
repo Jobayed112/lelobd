@@ -7,7 +7,6 @@ Product View
     @include('components.product.product-view')
     @include('components.product.top-category')
     @include('components.product.product-page')
-
     @include('components.home.footer')
 @endsection
 

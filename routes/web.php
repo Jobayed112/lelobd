@@ -149,8 +149,9 @@ Route::get('/profile',[HomeController::class,'profile'])->name('profile');
 
     Route::get('product/view/{id}',[ProductPageController::class,'productView'])->name('product.view');
 
-    Route::get('/category/{id}/products', [ProductPageController::class, 'categoryByProduct'])->name('category.products');
+    Route::get('category/{category_name}/product', [ProductPageController::class, 'categoryByProduct'])->name('category.products');
 
+    Route::get('product/subcategory/{id}', [ProductPageController::class, 'showSubcategoryProducts'])->name('subcategory.products');
 
 // add to cart
     Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart.add');

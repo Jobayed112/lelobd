@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SubCategory;
 
 class ProductPageController extends Controller
 {
@@ -14,14 +15,14 @@ class ProductPageController extends Controller
     {
 
         $products = Product::paginate(10);
-        return view('pages.product.product-page',compact(var_name: 'products'));
+        return view('pages.product.product-page', compact(var_name: 'products'));
     }
 
     public function productView($id)
     {
         $product = Product::with('category')->findOrFail($id);
 
-        return view('pages.product.product-view',compact('product'));
+        return view('pages.product.product-view', compact('product'));
     }
 
 
@@ -46,21 +47,37 @@ class ProductPageController extends Controller
     }
 
 
-    public function categoryByProduct($id)
+    public function categoryByProduct($category_name)
     {
-        try {
-            $category = Category::findOrFail($id);
+        $category = Category::where('name', $category_name)->with('subcategories')->first();
 
-            $products = Product::where('category_id', $id)
-                ->with('images', 'productDetail')
-                ->paginate(20);
-
-            return view('pages.product.category_by_product', compact('category', 'products'));
-
-        } catch (\Exception $e) {
+        if (!$category) {
             return redirect()->back()->with('error', 'Category not found.');
         }
+
+        $subcategoryIds = $category->subcategories->pluck('id');
+
+        $products = Product::where('category_id', $category->id)
+            ->orWhereIn('sub_category_id', $subcategoryIds)
+            ->with('images', 'category', 'subCategory')
+            ->get();
+
+        return view('pages.product.category_by_product', compact('products', 'category'));
     }
+
+
+    public function showSubcategoryProducts($name)
+    {
+
+        $subcategory = SubCategory::where('name', $name)->firstOrFail();
+
+        $products = Product::where('sub_category_id', $subcategory->id)->get();
+
+        return view('pages.product.subcategory_by_product', compact('subcategory', 'products'));
+    }
+
+
+
 
     public function maleproduct()
     {
@@ -74,7 +91,6 @@ class ProductPageController extends Controller
             $products = Product::where('category_id', $maleCategory->id)->paginate(10);
 
             return view('pages.product.product-page', compact('products'));
-
         } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Something went wrong',

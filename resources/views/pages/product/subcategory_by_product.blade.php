@@ -1,11 +1,11 @@
 @extends('layouts.home')
 @section('title')
-Carts Page
+    Sub Category Page
 @endsection
 @section('content')
 @include('components.home.header')
-
-@include('components.product.carts')
-
+@include('components.product.slider')
+@include('components.product.subcategory_by_product')
 @include('components.home.footer')
 @endsection
+

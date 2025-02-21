@@ -1,18 +1,14 @@
 <section class="container mx-auto m-2 border-b-2 ring-1">
     <div class="product-slider-section m-2 p-2 bg-gray-50">
         <h2 class="text-3xl font-bold mb-6 text-center text-indigo-700">Featured Products</h2>
-
-        <!-- Swiper Slider -->
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
                 @foreach ($products as $product)
                     <div class="swiper-slide bg-white shadow-lg rounded-lg relative">
-                        <!-- Image with responsive height -->
                         <img src="{{ asset($product->images->last()->img_url ?? 'uploads/default.png') }}"
                              alt="{{ $product->name }}"
                              class="w-full h-auto sm:h-full object-cover rounded-lg responsive-height">
 
-                        <!-- Product Name and Price Overlay -->
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-4">
                             <h3 class="text-xl font-semibold text-white mb-2">{{ $product->name }}</h3>
                             <p class="text-green-600 font-bold text-lg">${{ number_format($product->price, 2) }}</p>
@@ -25,7 +21,6 @@
                 @endforeach
             </div>
 
-            <!-- Swiper Navigation -->
             <div class="swiper-button-next text-indigo-700"></div>
             <div class="swiper-button-prev text-indigo-700"></div>
             <div class="swiper-pagination"></div>

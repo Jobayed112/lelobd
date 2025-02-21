@@ -29,24 +29,25 @@
                 class="flex items-center hover:text-green-500 px-2 py-2  hover:bg-blue-100 rounded-lg ">home
             </a>
             @foreach ($categories as $category)
-                <ul class="relative group">
-                    <li class="flex items-center hover:bg-blue-100 rounded-lg hover:text-green-500">
-                        <a href="{{ route('category.products', ['id' => $category->id]) }}" class="px-2 py-2">
-                            {{ $category->name }}
-                        </a>
-                    </li>
-                    <!-- Subcategories Dropdown -->
-                    <ul
-                        class="absolute left-0 hidden group-hover:block bg-gray-100 shadow-md rounded mt-1 w-44 p-3 z-20">
-                        @foreach ($category->subcategories as $subcategory)
-                            <li class="px-2 py-1 hover:bg-blue-100 hover:text-green-500 border-b">
-                                <a href="{{ url('subcategory/' . $subcategory->id) }}"
-                                    class="block">{{ $subcategory->name }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
+            <ul class="relative group">
+                <li class="flex items-center hover:bg-blue-100 rounded-lg hover:text-green-500">
+                    <a href="{{ route('category.products', ['category_name' => $category->name]) }}" class="px-2 py-2">
+                        {{ $category->name }}
+                    </a>
+                </li>
+                <!-- Subcategories Dropdown -->
+                <ul class="absolute left-0 hidden group-hover:block bg-gray-100 shadow-md rounded mt-1 w-44 p-3 z-20">
+                    @foreach ($category->subcategories as $subcategory)
+                        <li class="px-2 py-1 hover:bg-blue-100 hover:text-green-500 border-b">
+                            <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}" class="block">
+                                {{ $subcategory->name }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
-            @endforeach
+            </ul>
+        @endforeach
+
         </nav>
         <!-- Search Bar for Desktop -->
         <div class="search-box">

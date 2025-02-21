@@ -1,5 +1,9 @@
+
 <section class=" mx-auto m-1 border-b">
     <div class="product-wrapper bg-slate-50 rounded-xl m-3 shadow-lg">
+        <h1 class="text-3xl text-center font-bold text-gray-800 mb-6">
+         Sub  Category->
+        </h1>
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
             @foreach ($products as $product)
                 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300  ring-1 hover:ring-4 ">

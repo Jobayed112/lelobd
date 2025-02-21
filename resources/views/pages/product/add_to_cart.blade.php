@@ -1,8 +1,11 @@
 @extends('layouts.home')
 @section('title')
-Add to Cart
+Carts Page
 @endsection
 @section('content')
-    @include('components.product.add_to_cart')
-@endsection
+@include('components.home.header')
 
+@include('components.product.add_to_cart')
+
+@include('components.home.footer')
+@endsection

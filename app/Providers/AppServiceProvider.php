@@ -29,10 +29,9 @@ class AppServiceProvider extends ServiceProvider
 
             $categories = Category::with('subcategories')->get();
             $products = Product::with('images')->paginate(20);
-            $cartItems=Cart::get();
-
-            $productDetail=ProductDetail::first();
-            $productOffers=ProductOffer::with('product')->get();
+            $cartItems=Cart::with(['user','product'])->get();
+            $productDetail=ProductDetail::with('product')->first();
+            $productOffers = Product::with([ 'offers'])->get();
 
             $view->with([
                 'categories' => $categories,

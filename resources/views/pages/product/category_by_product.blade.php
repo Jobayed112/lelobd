@@ -1,6 +1,6 @@
 @extends('layouts.home')
 @section('title')
-{{$category->name}}
+{{-- {{$products->category->name}} --}}
 @endsection
 @section('content')
 @include('components.home.header')

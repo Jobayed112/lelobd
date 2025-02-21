@@ -1,25 +1,18 @@
 <div class="container mx-auto px-4 py-8">
-    <!-- Product Details Section -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-        <!-- Image Gallery -->
         <div class="w-full h-full">
-            <!-- Main Image -->
-            <img id="mainImage" src="{{ asset($product->images->first()->img_url) }}" alt="{{ $product->name }}"
+            <img id="mainImage" src="{{ asset($product->images->last()->img_url) }}" alt="{{ $product->name }}"
                 class="w-full h-[350px] object-cover rounded-lg">
 
-            <!-- Thumbnail Images -->
             <div class="grid grid-cols-4 gap-4 rounded-md bg-gray-200 mt-4">
-                {{-- Show only 4 product images --}}
-                @foreach ($product->images->take(4) as $image)
+                @foreach ($product->images->reverse()->take(4) as $image)
                     <img src="{{ asset($image->img_url) }}" alt="{{ $product->name }}"
                         class="w-16 m-2 ring-2 h-16 object-cover rounded-lg cursor-pointer hover:ring-2 hover:ring-green-600"
                         onclick="changeMainImage(this)">
                 @endforeach
             </div>
-
         </div>
 
-        <!-- Product Information -->
         <div class="bg-white p-6 border rounded-lg shadow">
             <h1 class="text-sm font-bold text-gray-800 mb-4">{{ $product->name }}</h1>
             <div class="flex items-center mb-4">
@@ -62,20 +55,21 @@
             </div>
 
             <div class="flex items-center space-x-4">
-                <a href="{{ route('cart.add', $product->id) }}">
-                    <button
-                        class="bg-green-500 text-white text-xs px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">Add
-                        to Cart</button>
-                </a>
+                <form action="{{ route('cart.add', $product->id) }}" method="POST" class="inline-block">
+                    @csrf
+                    <button type="submit"
+                        class="bg-green-500 text-white text-xs px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">
+                        Add to Cart
+                    </button>
+                </form>
                 <a href="{{ url('product.buy', $product->id) }}">
                     <button
-                        class="bg-blue-500 text-white text-xs px-4 py-2 hover:bg-blue-600 hover:ring-4 rounded transition">Buy
-                        Now</button>
+                        class="bg-blue-500 text-white text-xs px-4 py-2 hover:bg-blue-600 hover:ring-4 rounded transition">Buy Now</button>
                 </a>
             </div>
+
         </div>
 
-        <!-- Product Details -->
         <div class="bg-white border rounded-lg p-2 shadow">
             <h2 class="text-sm font-bold text-gray-800 mb-4">Product Details</h2>
             <ul class="list-disc pl-6 text-xs text-gray-700">
@@ -102,4 +96,10 @@
             quantityInput.value = newValue;
         }
     }
+
+    function changeMainImage(element) {
+    const mainImage = document.getElementById('mainImage');
+    mainImage.src = element.src;
+}
+
 </script>
