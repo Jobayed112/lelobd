@@ -73,10 +73,15 @@
         <div class="bg-white border rounded-lg p-2 shadow">
             <h2 class="text-sm font-bold text-gray-800 mb-4">Product Details</h2>
             <ul class="list-disc pl-6 text-xs text-gray-700">
-                <li>Material: {{ $productDetail->material }}</li>
+                @if(isset($productDetail))
+                    <li>Material: {{ $productDetail->material }}</li>
                 <li>Available Sizes: {{ $productDetail->size }}</li>
                 <li>Color Options: {{ $productDetail->color }}</li>
                 <li>Brand: {{ $productDetail->brand }}</li>
+                @else
+                <li>product list is not shoig</li>
+                @endif
+
             </ul>
         </div>
     </div>

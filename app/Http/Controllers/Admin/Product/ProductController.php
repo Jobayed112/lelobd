@@ -5,12 +5,18 @@ namespace App\Http\Controllers\Admin\Product;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
     //  product lis heare
+    public function getSubcategories($categoryId)
+{
+    $subcategories = SubCategory::where('category_id', $categoryId)->get();
+    return response()->json($subcategories);
+}
     public function productlist()
     {
         try {
@@ -26,9 +32,12 @@ class ProductController extends Controller
     public function productCreate()
     {
         try {
+
             $categories = Category::with('subcategories')->get();
             return view('pages.admin.product.product-create', compact('categories'));
-        } catch (\Exception $e) {
+
+        }
+         catch (\Exception $e) {
             return back()->with(
                 'error',
                 'Something went wrong'

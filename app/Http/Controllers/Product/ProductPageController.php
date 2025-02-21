@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\ProductOffer;
 use App\Models\SubCategory;
 
 class ProductPageController extends Controller
@@ -97,4 +98,16 @@ class ProductPageController extends Controller
             ], 500);
         }
     }
+
+
+    // offer show
+    public function offerProduct()  {
+        $offerprodusts=ProductOffer::with('product')->get();
+
+        return view('pages.home',compact('offerprodusts'));
+
+    }
+
+
+
 }

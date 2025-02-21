@@ -13,7 +13,7 @@
             @csrf
 
             <!-- 3x3 Grid Layout -->
-            <div class="grid grid-cols-3 gap-5 mb-5">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
 
                 <!-- Product -->
                 <div class="flex flex-col">
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-5 mb-5">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-5">
                 <!-- Start Date -->
                 <div class="flex flex-col">
                     <label for="start_date" class="mb-2 text-sm font-medium text-gray-700">Start Date</label>

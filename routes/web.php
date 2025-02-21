@@ -16,6 +16,7 @@ use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\auth\ResetController;
 use App\Http\Controllers\Product\CartPageController;
 use App\Http\Controllers\Product\ProductPageController;
+use Brick\Math\Exception\RoundingNecessaryException;
 
 Route::get('admin-register-form', [AdminRegisterController::class, 'adminRegisterForm'])->name('admin.register.form');
 Route::post('admin-register', [AdminRegisterController::class, 'adminregister'])->name('admin.register.create');
@@ -158,6 +159,10 @@ Route::get('/profile',[HomeController::class,'profile'])->name('profile');
     Route::get('/cart/show', [CartPageController::class, 'cartShow'])->name('cart.show');
     Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
 
+
+    Route::get('checkout/page/',[CartPageController::class,'ckeckoutPage'])->name('checkout.page');
+
+    Route::get('checkout/submit',[CartPageController::class,'checkoutSubmit'])->name('checkout.submit');
 
 
 

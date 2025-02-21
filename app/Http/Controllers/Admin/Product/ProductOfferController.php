@@ -13,9 +13,6 @@ class ProductOfferController extends Controller
     {
         $offerList = ProductOffer::whereNotNull('product_id')->get();
 
-        if ($offerList->isEmpty()) {
-            return back()->with('error', 'Product Not Offer');
-        }
 
         return view('pages.admin.offerProduct.offer_product_list', compact('offerList'));
     }

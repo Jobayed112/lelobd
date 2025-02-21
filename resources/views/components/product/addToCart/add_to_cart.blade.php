@@ -64,11 +64,12 @@
                     Total: BDT {{ number_format($total_carts_price, 2) }}
                 </div>
                 <div>
-                    <a href="{{ url('checkout') }}"
-                    class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition">
+                    <a href="{{ route('checkout.page' )}}"
+                       class="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition">
                         Proceed to Checkout
                     </a>
                 </div>
+
             </div>
         @endif
     </div>
