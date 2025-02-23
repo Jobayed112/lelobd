@@ -14,4 +14,14 @@ class ProductDetailController extends Controller
 
         return view('pages.admin.category.category-list', compact('productdetails'));
     }
+    public function productDetailCreate()
+    {
+       try {
+              return view('pages.admin.category.category-list', compact('productdetails'));
+       } catch (\Exception $e) {
+   return back()->with('error','same problem');
+       }
+
+
+    }
 }
