@@ -19,7 +19,7 @@
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
                     required>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id }}">{{ $category->id  .' '.' '.$category->name  }}</option>
                     @endforeach
                 </select>
             </div>
@@ -34,7 +34,7 @@
                         @foreach ($category->subcategories as $subcategory)
                             <option value="{{ $subcategory->id }}"
                                 {{ old('sub_category_id') == $subcategory->id ? 'selected' : '' }}>
-                                {{ $subcategory->name }}
+                                {{  $subcategory->id .' '.' '.$subcategory->name }}
                             </option>
                         @endforeach
                     @endforeach

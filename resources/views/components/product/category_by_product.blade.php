@@ -3,8 +3,9 @@
         <h1 class="text-3xl text-center font-bold text-gray-800 mb-6">
             Products under {{ $category->name }}
         </h1>
+
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
-            @foreach ($products as $product)
+            @foreach ($categoryByProduct as $product)
                 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 ring-1 hover:ring-4">
                     <div class="bg-gray-100 rounded-t-lg overflow-hidden border-b">
                         <a href="{{ url('product/view/' . $product->id) }}">
@@ -18,9 +19,9 @@
                         </a>
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center p-2">
                         <a href="{{ url('product/view/' . $product->id) }}"
-                            class="text-sm font-semibold p-2 text-gray-800 hover:text-indigo-600 hover:underline">
+                            class="text-sm font-semibold text-gray-800 hover:text-indigo-600 hover:underline">
                             {{ $product->name }}
                         </a>
                         <p class="text-sm {{ $product->stock ? 'text-green-500' : 'text-red-500' }} font-medium">

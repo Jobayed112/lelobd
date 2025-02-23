@@ -1,4 +1,4 @@
-<section class="container mx-auto m-2 border-b-2 ring-1">
+<section class="container mx-auto m-2 border-b ">
     <div class="product-slider-section m-2 p-2 bg-gray-50">
         <h2 class="text-3xl font-bold mb-6 text-center text-indigo-700">Featured Products</h2>
         <div class="swiper mySwiper">
@@ -7,7 +7,7 @@
                     <div class="swiper-slide bg-white shadow-lg rounded-lg relative">
                         <img src="{{ asset($product->images->last()->img_url ?? 'uploads/default.png') }}"
                              alt="{{ $product->name }}"
-                             class="w-full h-auto sm:h-full object-cover rounded-lg responsive-height">
+                             class="w-full h-full sm:h-full object-cover rounded-lg responsive-height">
 
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-4">
                             <h3 class="text-xl font-semibold text-white mb-2">{{ $product->name }}</h3>
@@ -57,17 +57,17 @@ var swiper = new Swiper('.mySwiper', {
         640: {
             slidesPerView: 2,
             spaceBetween: 20,
-            height: 'auto',
+            height: '80px',
         },
         768: {
             slidesPerView: 3,
             spaceBetween: 30,
-            height: 'auto',
+            height: '80px',
         },
         1024: {
             slidesPerView: 4,
             spaceBetween: 30,
-            height: 'auto',  // Set to auto to maintain responsiveness
+            height: '80px',  // Set to auto to maintain responsiveness
         },
     }
 });

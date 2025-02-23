@@ -31,15 +31,15 @@
             @foreach ($categories as $category)
             <ul class="relative group">
                 <li class="flex items-center hover:bg-blue-100 rounded-lg hover:text-green-500">
-                    <a href="{{ route('category.products', ['category_name' => $category->name]) }}" class="px-2 py-2">
+                    <a href="{{ route('category.products', ['name' => $category->name]) }}" class="px-2 py-2">
                         {{ $category->name }}
                     </a>
                 </li>
                 <!-- Subcategories Dropdown -->
-                <ul class="absolute left-0 hidden group-hover:block bg-gray-100 shadow-md rounded mt-1 w-44 p-3 z-20">
+                <ul class="absolute left-0 hidden group-hover:block bg-gray-100 shadow-md rounded  w-44 p-1 z-10">
                     @foreach ($category->subcategories as $subcategory)
                         <li class="px-2 py-1 hover:bg-blue-100 hover:text-green-500 border-b">
-                            <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}" class="block">
+                            <a href="{{ route('subcategory.products', ['name' => $subcategory->name]) }}" class="block">
                                 {{ $subcategory->name }}
                             </a>
                         </li>
@@ -47,6 +47,7 @@
                 </ul>
             </ul>
         @endforeach
+
 
         </nav>
         <!-- Search Bar for Desktop -->
@@ -59,19 +60,19 @@
         <div class="flex items-center space-x-4">
             <a href="{{ route('cart.show') }}">
                 <!-- Cart Icon -->
-                <div id="cart-btn" class="relative text-gray-600 hover:text-green-500 focus:outline-none">
+                <div id="cart-btn" class="relative   text-gray-600 hover:text-green-500 focus:outline-none">
                     {{-- Use fa icon --}}
                     <i class="fa fa-shopping-cart font-bold h-8 w-6"></i>
 
-                    @auth
-                        @if(count($cartItems) > 0)
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 font-bold">
-                                {{ count($cartItems) }}
-                            </span>
-                        @endif
-                    @else
-                        <!-- No cart item count shown if user is not logged in -->
-                    @endauth
+
+
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 font-bold">
+
+                    </span>
+
+
+                    <!-- No cart item count shown if user is not logged in -->
+
                 </div>
             </a>
         </div>

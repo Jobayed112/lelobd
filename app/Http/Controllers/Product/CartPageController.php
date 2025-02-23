@@ -61,8 +61,8 @@ class CartPageController extends Controller
 
         $cartItems = Cart::where('user_id', $user_id)->get();
 
-        $total_carts_price = $cartItems->sum('price');
-        return view('pages.product.addToCart.add_to_cart', compact('cartItems', 'total_carts_price'));
+
+        return view('pages.product.addToCart.add_to_cart', compact('cartItems' ));
     }
 
     public function removeFromCart($id)
@@ -98,6 +98,7 @@ class CartPageController extends Controller
             }
 
             $cartItems = Cart::where('user_id', $user_id)->get();
+
             if ($cartItems->isEmpty()) {
                 return redirect()->route('cart.index')->with('error', 'Your cart is empty. Please add products to your cart.');
             }

@@ -14,7 +14,6 @@ return new class extends Migration
 
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('sub_category_id');
-
             $table->string('name', 100);
             $table->string('description', 250);
             $table->integer('quantity');
@@ -26,9 +25,9 @@ return new class extends Migration
                 ->references('id')->on('categories')
                ->restrictOnDelete()->cascadeOnUpdate();
 
-            $table->foreign('sub_category_id')
-                ->references('id')->on('sub_categories')
-               ->restrictOnDelete()->cascadeOnUpdate();
+               $table->foreign('sub_category_id')
+               ->references('id')->on('sub_categories')
+              ->restrictOnDelete()->cascadeOnUpdate();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();

@@ -65,22 +65,40 @@ class SubCategoryController extends Controller
         $subcategory->category_id = $request->category_id;
         $subcategory->name = $request->name;
 
+
         if ($request->hasFile('img_url')) {
+            if ($subcategory->img_url && file_exists(public_path($subcategory->img_url))) {
+                unlink(public_path($subcategory->img_url));
+            }
+
             $image = $request->file('img_url');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/categories/'), $imageName);
 
-            $image->move(public_path('uploads/subcategories/'), $imageName);
-
-            $subcategory->create([
-                'img_url' => 'uploads/subcategories/' . $imageName,
-            ]);
+            $subcategory->img_url = 'uploads/categories/' . $imageName;
         }
+
+
         $subcategory->save();
         return redirect()->route('subcategory-list')->with('success', 'Sub Category updated successfully.');
     }
+
+
+
+
+
     public function subcategorydelete($id)
     {
         $subcategory = SubCategory::findOrFail($id);
+        if ($subcategory->category()->exists()) {
+
+            return redirect()->route('subcategory-list')->with('error', 'Subcategories  Has Related Category Not Deleted.');
+        }
+
+        if (file_exists(public_path($subcategory->img_url))) {
+            unlink(public_path($subcategory->img_url));
+        }
+
         $subcategory->delete();
         return redirect()->route('subcategory-list')->with('success', 'Sub Category deleted successfully.');
     }

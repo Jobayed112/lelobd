@@ -48,34 +48,25 @@ class ProductPageController extends Controller
     }
 
 
-    public function categoryByProduct($category_name)
+    public function categoryByProduct($name)
     {
-        $category = Category::where('name', $category_name)->with('subcategories')->first();
+        $category = Category::where('name', $name)->with('products')->firstOrFail();
+        $categoryByProduct = $category->products;
 
-        if (!$category) {
-            return redirect()->back()->with('error', 'Category not found.');
-        }
-
-        $subcategoryIds = $category->subcategories->pluck('id');
-
-        $products = Product::where('category_id', $category->id)
-            ->orWhereIn('sub_category_id', $subcategoryIds)
-            ->with('images', 'category', 'subCategory')
-            ->get();
-
-        return view('pages.product.category_by_product', compact('products', 'category'));
+        return view('pages.product.category_by_product', compact('category', 'categoryByProduct'));
     }
+
 
 
     public function showSubcategoryProducts($name)
     {
+        $subcategory = SubCategory::where('name', $name)->get();
+        dd( $subcategory);
+        $category = Category::where('id', $subcategory->category_id)->with('products')->first();
 
-        $subcategory = SubCategory::where('name', $name)->firstOrFail();
-
-        $products = Product::where('sub_category_id', $subcategory->id)->get();
-
-        return view('pages.product.subcategory_by_product', compact('subcategory', 'products'));
+        return view('pages.product.subcategory_by_product', compact('subcategory', 'category'));
     }
+
 
 
 

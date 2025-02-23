@@ -13,6 +13,7 @@
                     <tr class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white">
                         <th class="px-5 py-4">ID</th>
                         <th class="px-5 py-4">Category</th>
+                        <th class="px-5 py-4">Sub Category</th>
                         <th class="px-5 py-4">Name</th>
                         <th class="px-5 py-4">Price</th>
                         <th class="px-5 py-4">Stock</th>
@@ -30,6 +31,8 @@
                                 </span>
                             </td>
                             <td class="px-5 py-4">{{ $product->category->name }}</td>
+                            <td class="px-5 py-4">{{ $product->subCategory->name.'  '.$product->subCategory->id }}</td>
+
                             <td class="px-5 py-4">{{ $product->name }}</td>
                             <td class="px-5 py-4">${{ number_format($product->price, 2) }}</td>
                             <td class="px-5 py-4">

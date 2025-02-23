@@ -61,7 +61,10 @@
 
             <div class="flex flex-wrap justify-between items-center p-4 border-t border-gray-200 ml-20">
                 <div class="text-lg m-4 font-semibold">
-                    Total: BDT {{ number_format($total_carts_price, 2) }}
+                    @foreach ($cartItems as $cart)
+
+                    Total: BDT {{(number_format($cart->price,2))  }}
+                    @endforeach
                 </div>
                 <div>
                     <a href="{{ route('checkout.page' )}}"

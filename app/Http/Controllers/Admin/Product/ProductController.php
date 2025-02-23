@@ -85,8 +85,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return back()->with(
                 'error',
-                'Something went wrong',
-            );
+                'Something went wrong' );
         }
     }
 
@@ -109,7 +108,7 @@ class ProductController extends Controller
 
             $request->validate([
                 'category_id' => 'required|exists:categories,id',
-                'sub_category_id' => 'required|exists:sub_categories,id',
+
                 'name' => 'required|string|max:255|unique:products,name,' . $id,
                 'description' => 'nullable|string',
                 'quantity' => 'required|integer|min:1',
@@ -123,7 +122,7 @@ class ProductController extends Controller
 
             $product->update([
                 'category_id' => $request->category_id,
-                'sub_category_id' => $request->sub_category_id,
+
                 'name' => $request->name,
                 'description' => $request->description,
                 'quantity' => $request->quantity,

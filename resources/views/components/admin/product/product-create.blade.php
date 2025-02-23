@@ -11,24 +11,24 @@
             @csrf
 
             <!-- Category -->
+
             <div class="flex flex-col">
                 <label for="category_id" class="mb-1 text-sm font-medium text-gray-700">Category</label>
                 <select id="category_id" name="category_id" class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800" required>
-                    <option value="">Select Category</option>
+
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id }}">{{ $category->id  .' '.' '.$category->name  }}</option>
                     @endforeach
                 </select>
             </div>
-
-            <!-- Sub Category -->
-            <div class="flex flex-col">
+              <!-- Sub Category -->
+              <div class="flex flex-col">
                 <label for="sub_category_id" class="mb-1 text-sm font-medium text-gray-700">Sub Category</label>
                 <select id="sub_category_id" name="sub_category_id" class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800" required>
-                    <option value="">Select Sub Category</option>
+
                     @foreach ($categories as $category)
                         @foreach ($category->subcategories as $subcategory)
-                            <option value="{{ $subcategory->id }}">{{ $subcategory->name }}</option>
+                            <option value="{{ $subcategory->id }}">{{ $subcategory->id  .' '.' '.$subcategory->name  }}</option>
                         @endforeach
                     @endforeach
                 </select>

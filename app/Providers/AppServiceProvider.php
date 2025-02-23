@@ -3,10 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Cart;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductDetail;
+use App\Models\Category;
 use App\Models\ProductOffer;
+use App\Models\ProductDetail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,14 +30,11 @@ class AppServiceProvider extends ServiceProvider
 
             $categories = Category::with('subcategories')->get();
             $products = Product::with('images')->paginate(20);
-            $cartItems=Cart::with(['user','product'])->get();
             $productDetail=ProductDetail::with('product')->first();
             $productOffers = Product::with([ 'offers'])->get();
-
             $view->with([
                 'categories' => $categories,
                 'products' => $products,
-                'cartItems'=> $cartItems,
                 'productDetail'=>$productDetail,
                 'productOffers'=>$productOffers,
             ]);
