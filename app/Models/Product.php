@@ -67,10 +67,15 @@ protected $fillable = [
         return $this->hasMany(Cart::class);
     }
 
-    public function orderItem(): HasMany
-    {
-        return $this->hasMany(OrderItem::class);
-    }
+       public function orderItems()
+       {
+           return $this->hasMany(OrderItem::class);
+       }
+
+       public function invoiceProducts()
+       {
+           return $this->hasMany(InvoiceProduct::class);
+       }
 
 
 

@@ -56,26 +56,24 @@
             <input type="text" class="input-search" placeholder="Search...">
         </div>
 
-        <!-- Icons & Mobile Menu Button -->
-        <div class="flex items-center space-x-4">
-            <a href="{{ route('cart.show') }}">
-                <!-- Cart Icon -->
-                <div id="cart-btn" class="relative   text-gray-600 hover:text-green-500 focus:outline-none">
-                    {{-- Use fa icon --}}
-                    <i class="fa fa-shopping-cart font-bold h-8 w-6"></i>
-
-
-
+  <!-- Icons & Mobile Menu Button -->
+<div class="flex items-center space-x-4">
+    <a href="{{ route('cart.show') }}">
+        <div id="cart-btn" class="relative text-gray-600 hover:text-green-500 focus:outline-none">
+            <i class="fa fa-shopping-cart font-bold h-8 w-6"></i>
+            @if(Auth::check())
+                @php
+                    $cartItemsCount = $cartsItem->where('user_id', Auth::id())->count();
+                @endphp
+                @if($cartItemsCount > 0)
                     <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1 font-bold">
-
+                        {{ $cartItemsCount }}
                     </span>
-
-
-                    <!-- No cart item count shown if user is not logged in -->
-
-                </div>
-            </a>
+                @endif
+            @endif
         </div>
+    </a>
+</div>
 
         <!-- Profile Icon -->
         <div>

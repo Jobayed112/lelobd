@@ -1,7 +1,7 @@
 <div class="bg-gray-50 min-h-screen p-4">
     <div class="container mx-auto bg-white rounded-lg shadow-lg">
         <div class="flex flex-wrap justify-between items-center p-4 border-b border-gray-200">
-            <h1 class="text-3xl font-bold text-gray-800 w-full sm:w-auto">Cart</h1>
+            <h1 class="text-5xl bg-blue-200 px-4 rounded ring-2 font-bold text-gray-800 w-full sm:w-auto">Cart</h1>
             <a href="{{ url('/') }}"
             class="mt-2 sm:mt-0 bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition">
                 Continue Shopping
@@ -59,12 +59,17 @@
                 </table>
             </div>
 
-            <div class="flex flex-wrap justify-between items-center p-4 border-t border-gray-200 ml-20">
-                <div class="text-lg m-4 font-semibold">
-                    @foreach ($cartItems as $cart)
-
-                    Total: BDT {{(number_format($cart->price,2))  }}
-                    @endforeach
+            <div class="flex flex-wrap justify-end  items-center p-4 border-t border-gray-200 ml-20">
+                <div class="text-lg m-4 pr-24   font-semibold">
+                    <p class="text-lg font-semibold text-gray-900">Total Payable:</p>
+                    <p class="text-xl font-bold text-gray-900">
+                        @php
+                            $totalAmount = $cartsItem->sum(function ($item) {
+                                return $item->price * $item->qty;
+                            });
+                        @endphp
+                        ${{ number_format($totalAmount, 2) }}
+                    </p>
                 </div>
                 <div>
                     <a href="{{ route('checkout.page' )}}"

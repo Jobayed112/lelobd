@@ -29,17 +29,13 @@ class InvoiceProduct extends Model
         return $this->belongsTo(Invoice::class, 'invoice_id');
     }
 
-    /**
-     * Get the related product.
-     */
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-    /**
-     * Get the related user.
-     */
+   
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

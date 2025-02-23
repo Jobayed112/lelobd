@@ -1,11 +1,12 @@
 <section class="container mx-auto p-4 m-2 border-b">
-    <h1 class="text-3xl font-bold text-center text-indigo-700 mb-6">Exclusive Product Offers</h1>
+
+  @foreach ($products as $product)
+
+                @if ($product->offer)<h1 class="text-3xl font-bold text-center text-indigo-700 mb-6">Exclusive Product Offers</h1>
 
     <div class="product-wrapper bg-slate-50 rounded-xl m-3 shadow-lg p-4">
         <div class="product-flex flex flex-wrap gap-4 justify-center">
-            @foreach ($products as $product)
 
-                @if ($product->offer)
                     <div class="sm:w-56 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">fdgsgsg
                         <div class="sm:w-56 bg-gray-100 rounded-t-lg overflow-hidden border-b relative">
                             <a href="{{ url('product/view/' . $product->id) }}">

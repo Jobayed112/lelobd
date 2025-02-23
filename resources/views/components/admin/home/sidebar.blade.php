@@ -131,7 +131,7 @@
                 </button>
                 <ul id="Order-dropdown" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{ url('order-list') }}"
+                        <a href="{{ route('order.list') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
                             <span>Order list</span>
                         </a>
@@ -144,6 +144,32 @@
                     </li>
                 </ul>
             </li>
+            {{-- Orders  end --}}
+
+
+
+            {{-- product details --}}
+            <li>
+                <button aria-controls="Product-detail" data-collapse-toggle="Product-detail" type="button"
+                    class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
+                    <span>Product Detail</span>
+                </button>
+                <ul id="Product-detail" class="hidden py-2 space-y-2">
+                    <li>
+                        <a href="{{ route('product.detail.list') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>product Detail list</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('order-create') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>product Detail create</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            {{-- product details end/ --}}
 
             {{-- invoice --}}
             <li>

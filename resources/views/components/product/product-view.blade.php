@@ -14,42 +14,42 @@
         </div>
 
         <div class="bg-white p-6 border rounded-lg shadow">
-            <h1 class="text-sm font-bold text-gray-800 mb-4">{{ $product->name }}</h1>
+            <h1 class="text-xl font-bold text-gray-800 mb-4">Product <strong> {{" " .$product->name }}</strong></h1>
             <div class="flex items-center mb-4">
-                <ul class="flex text-yellow-500 text-xs">
+                <ul class="flex text-yellow-500 text-[15px]">
                     @for ($i = 1; $i <= 5; $i++)
                         <li><i class="fa {{ $i <= $product->rating ? 'fa-star' : 'fa-star-o' }}"></i></li>
                     @endfor
                 </ul>
-                <span class="ml-2 text-gray-600 text-xs">({{ $product->review_count }} reviews)</span>
+                <span class="ml-2 text-gray-600 text-[15px]">({{ $product->review_count }} reviews)</span>
             </div>
-            <div class="text-base font-bold text-green-600 mb-4">
+            <div class="text-xl font-bold text-green-600 mb-4">
                 BDT {{ number_format($product->price, 2) }}
                 @if ($product->discount_price)
-                    <span class="text-gray-500 line-through text-xs">BDT
+                    <span class="text-gray-500 line-through text-[15px]">BDT
                         {{ number_format($product->original_price, 2) }}</span>
                 @endif
             </div>
-            <p class="text-xs text-gray-700 mb-4">{{ $product->description }}</p>
+            <p class="text-[15px] text-gray-700 mb-4">{{ $product->description }}</p>
 
             <div class="mb-6">
-                <h3 class="text-xs font-semibold mb-2">Select Size:</h3>
+                <h3 class="text-[15px] font-semibold mb-2">Select Size: Optional </h3>
                 <div class="flex space-x-2">
                     @foreach (['S', 'M', 'L', 'XL'] as $size)
                         <button
-                            class="border px-2 py-1 text-xs rounded-lg hover:border-green-600 transition">{{ $size }}</button>
+                            class="border px-2 py-1 text-[15px] rounded-lg hover:border-green-600 transition">{{ $size }}</button>
                     @endforeach
                 </div>
             </div>
 
             <div class="mb-6">
-                <h3 class="text-xs font-semibold mb-2">Quantity:</h3>
+                <h3 class="text-[15px] font-semibold mb-2">Quantity:</h3>
                 <div class="flex items-center">
-                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-lg text-xs"
+                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-lg text-[15px]"
                         onclick="changeQuantity(-1)">-</button>
                     <input id="quantityInput" type="number" value="1" min="1"
-                        class="w-8 text-center border-t border-b border-gray-300 text-xs">
-                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-lg text-xs"
+                        class="w-8 text-center border-t border-b border-gray-300 text-[15px]">
+                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-lg text-[15px]"
                         onclick="changeQuantity(1)">+</button>
                 </div>
             </div>
@@ -58,13 +58,13 @@
                 <form action="{{ route('cart.add', $product->id) }}" method="POST" class="inline-block">
                     @csrf
                     <button type="submit"
-                        class="bg-green-500 text-white text-xs px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">
+                        class="bg-green-500 text-white text-[15px] px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">
                         Add to Cart
                     </button>
                 </form>
                 <a href="{{ url('product.buy', $product->id) }}">
                     <button
-                        class="bg-blue-500 text-white text-xs px-4 py-2 hover:bg-blue-600 hover:ring-4 rounded transition">Buy Now</button>
+                        class="bg-blue-500 text-white text-[15px] px-4 py-2 hover:bg-blue-600 hover:ring-4 rounded transition">Buy Now</button>
                 </a>
             </div>
 
@@ -72,7 +72,7 @@
 
         <div class="bg-white border rounded-lg p-2 shadow">
             <h2 class="text-sm font-bold text-gray-800 mb-4">Product Details</h2>
-            <ul class="list-disc pl-6 text-xs text-gray-700">
+            <ul class="list-disc pl-6 text-[15px] text-gray-700">
                 @if(isset($productDetail))
                     <li>Material: {{ $productDetail->material }}</li>
                 <li>Available Sizes: {{ $productDetail->size }}</li>

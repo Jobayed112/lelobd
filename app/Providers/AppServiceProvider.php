@@ -28,14 +28,17 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('*', function ($view) {
 
-            $categories = Category::with('subcategories')->get();
-            $products = Product::with('images')->paginate(20);
-            $productDetail=ProductDetail::with('product')->first();
-            $productOffers = Product::with([ 'offers'])->get();
+            $categories = Category::with('subcategories','products')->get();
+            $products = Product::with('images','productDetail')->paginate(5);
+            $cartsItem=Cart::with('user','product.images')->get();
+
+           $productOffers = Product::with([ 'offers'])->get();
+
+
             $view->with([
                 'categories' => $categories,
                 'products' => $products,
-                'productDetail'=>$productDetail,
+                'cartsItem'=>$cartsItem,
                 'productOffers'=>$productOffers,
             ]);
         });

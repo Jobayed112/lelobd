@@ -18,7 +18,8 @@
                 <select id="category_id" name="category_id"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
                     required>
-                    <option disabled selected>Select Category</option>
+                    <option disabled selected>{{ $product->category_id . ' - ' . $product->category->name }}</option>
+
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
                             {{ old('category_id', $selectedCategoryId ?? '') == $category->id ? 'selected' : '' }}>
@@ -34,7 +35,8 @@
                 <select id="sub_category_id" name="sub_category_id"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
                     required>
-                    <option disabled selected>Select Subcategory</option>
+                    <option disabled selected>{{ $product->sub_category_id . ' - ' . $product->subCategory->name }}</option>
+
                     @foreach ($categories as $category)
                         @foreach ($category->subcategories as $subcategory)
                             <option value="{{ $subcategory->id }}" data-category="{{ $category->id }}"
@@ -89,10 +91,11 @@
                     <select id="type" name="type"
                         class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-pink-500 focus:outline-none text-gray-800"
                         required>
-                        <option value="popular">Popular</option>
-                        <option value="new">New</option>
-                        <option value="top">Top</option>
-                        <option value="special">Special</option>
+                        <option value="{{ old('type', $product->type) }}">{{ old('type', $product->type) }}</option>
+                        <option value="popular">popular</option>
+                        <option value="new">new</option>
+                        <option value="top">top</option>
+                        <option value="special">special</option>
                     </select>
                 </div>
 
@@ -102,6 +105,7 @@
                     <select id="stock" name="stock"
                         class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-800"
                         required>
+                        <option value="{{ old('price', $product->stock) }}">{{ old('price', $product->stock) }}</option>
                         <option value="instock">In Stock</option>
                         <option value="unavailable">Unavailable</option>
                     </select>
@@ -111,7 +115,7 @@
             <div class="col-span-3 grid grid-cols-2 gap-4">
                 <div class="flex flex-col">
                     <label for="img_url" class="mb-1 text-sm font-medium text-gray-700">Product Image</label>
-                    <input type="file" id="img_url" name="img_url" accept="image/*"
+                    <input type="file" id="img_url" name="img_url" value="" accept="image/*"
                         class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 focus:outline-none">
                 </div>
                 <div class="flex flex-col">

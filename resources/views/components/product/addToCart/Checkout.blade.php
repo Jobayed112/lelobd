@@ -2,27 +2,55 @@
     <!-- Checkout Section -->
     <h1 class="text-4xl font-extrabold text-gray-900 mb-4 text-center">Checkout</h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class=" grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Cart Overview -->
         <div class="bg-gray-50 p-8 rounded-lg shadow-md border border-gray-200">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Cart Overview</h3>
+
             <div class="space-y-6">
-                <!-- Product 1 -->
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-4">
-                        <img src="{{ asset('images/pro3.webp') }}" alt="Product Image"
-                            class="w-full h-32 object-cover rounded-lg shadow-lg overflow-hidden">
-                        <!-- Adjusted size -->
-                        <div>
-                            <p class="text-sm font-bold text-gray-700">Men's Premium Hoodie</p>
-                            <p class="text-gray-600">Price: <span class="font-medium">$59.99</span></p>
-                            <p class="text-gray-600">Quantity: <span class="font-medium">1</span></p>
-                            <p class="text-green-600 font-bold mt-2 text-sm">Total: $59.99</p>
+                @foreach ($cartsItem as $item)
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            @if($item->product->images->isNotEmpty())
+                                <img src="{{ asset($item->product->images->last()->img_url) }}" alt="{{ $item->product->name }}"
+                                    class="w-24 h-24 object-cover rounded-lg shadow-lg">
+                            @else
+                                <img src="{{ asset('path/to/default-image.jpg') }}" alt="No Image Available"
+                                    class="w-16 h-16 object-cover rounded-lg shadow-lg">
+                            @endif
+
+                            <div>
+                                <p class="text-sm font-semibold text-gray-700">{{ $item->product->name }}</p>
+                                <p class="text-gray-600">Price: <span
+                                        class="font-medium">${{ number_format($item->product->price, 2) }}</span></p>
+                                <p class="text-gray-600">Quantity: <span
+                                        class="font-medium">{{ $item->qty }}</span></p>
+                                <p class="text-green-600 font-bold mt-2 text-sm">Total:
+                                    ${{ number_format($item->product->price * $item->qty, 2) }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
+
+
+            <!-- Total Section -->
+            <!-- Total Section -->
+            <div class="flex justify-between mt-6 pt-4 border-t border-gray-300">
+                <p class="text-lg font-semibold text-gray-900">Total Payable:</p>
+                <p class="text-xl font-bold text-gray-900">
+                    @php
+                        $totalAmount = $cartsItem->sum(function ($item) {
+                            return $item->price * $item->qty;
+                        });
+                    @endphp
+                    ${{ number_format($totalAmount, 2) }}
+                </p>
+            </div>
+
         </div>
+
 
 
 
@@ -34,7 +62,8 @@
                 <select id="payment-method" name="payment-method"
                     class="w-full px-5 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="cash-on-delivery" class="flex items-center space-x-2">
-                        <img src="{{ asset('images/cash-on-delivery.png') }}" alt="Cash On Delivery" class="w-6 h-6 object-contain">
+                        <img src="{{ asset('images/cash-on-delivery.png') }}" alt="Cash On Delivery"
+                            class="w-6 h-6 object-contain">
                         <span>Cash On Delivery</span>
                     </option>
                     <option value="bkash" class="flex items-center space-x-2">
@@ -46,7 +75,8 @@
                         <span>Nogod</span>
                     </option>
                     <option value="credit-card" class="flex items-center space-x-2">
-                        <img src="{{ asset('images/credit-card.png') }}" alt="Credit Card" class="w-6 h-6 object-contain">
+                        <img src="{{ asset('images/credit-card.png') }}" alt="Credit Card"
+                            class="w-6 h-6 object-contain">
                         <span>Credit Card</span>
                     </option>
                 </select>
@@ -56,8 +86,8 @@
             <div class="mb-6">
                 <label for="coupon" class="block text-sm font-medium text-gray-700">Coupon Code (Optional)</label>
                 <input type="text" id="coupon" name="coupon"
-                       class="w-full px-5 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       placeholder="Enter your coupon code">
+                    class="w-full px-5 py-3 border border-gray-300 rounded-lg shadow-sm mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter your coupon code">
             </div>
         </div>
 

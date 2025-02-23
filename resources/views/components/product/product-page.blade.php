@@ -48,5 +48,11 @@
                 </div>
             @endforeach
         </div>
+
     </div>
+
+            <div class="flex justify-center bg-blue-500 text-zinc-300 mt-6">
+            {{ $products->links() }}
+        </div>
+
 </section>

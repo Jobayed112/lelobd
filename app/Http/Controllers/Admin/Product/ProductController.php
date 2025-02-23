@@ -11,17 +11,14 @@ use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
-    //  product lis heare
-    public function getSubcategories($categoryId)
-{
-    $subcategories = SubCategory::where('category_id', $categoryId)->get();
-    return response()->json($subcategories);
-}
+
+
     public function productlist()
     {
         try {
             $products = Product::with('category')->paginate(10);
             return view('pages.admin.product.product-list', compact('products'));
+
         } catch (\Exception $e) {
             return back()->with(
                 'error',
@@ -33,8 +30,7 @@ class ProductController extends Controller
     {
         try {
 
-            $categories = Category::with('subcategories')->get();
-            return view('pages.admin.product.product-create', compact('categories'));
+            return view('pages.admin.product.product-create');
 
         }
          catch (\Exception $e) {
@@ -95,7 +91,10 @@ class ProductController extends Controller
             $product = Product::with('category', 'subCategory')->findOrFail($id);
             $categories = Category::with('subcategories')->get();
 
+
             return view('pages.admin.product.product-update', compact('product', 'categories'));
+
+
         } catch (\Exception $e) {
             return back()->with('error', 'Something went wrong');
         }
