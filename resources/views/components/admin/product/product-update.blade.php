@@ -18,8 +18,12 @@
                 <select id="category_id" name="category_id"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
                     required>
+                    <option disabled selected>Select Category</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->id  .' '.' '.$category->name  }}</option>
+                        <option value="{{ $category->id }}"
+                            {{ old('category_id', $selectedCategoryId ?? '') == $category->id ? 'selected' : '' }}>
+                            {{ $category->id . ' - ' . $category->name }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -30,16 +34,19 @@
                 <select id="sub_category_id" name="sub_category_id"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
                     required>
+                    <option disabled selected>Select Subcategory</option>
                     @foreach ($categories as $category)
                         @foreach ($category->subcategories as $subcategory)
-                            <option value="{{ $subcategory->id }}"
-                                {{ old('sub_category_id') == $subcategory->id ? 'selected' : '' }}>
-                                {{  $subcategory->id .' '.' '.$subcategory->name }}
+                            <option value="{{ $subcategory->id }}" data-category="{{ $category->id }}"
+                                {{ old('sub_category_id', $selectedSubcategoryId ?? '') == $subcategory->id ? 'selected' : '' }}>
+                                {{ $subcategory->id . ' - ' . $subcategory->name }}
                             </option>
                         @endforeach
                     @endforeach
                 </select>
             </div>
+
+
 
             <!-- Product Name -->
             <div class="flex flex-col">
@@ -101,7 +108,6 @@
                 </div>
             </div>
 
-            <!-- Image Upload and Preview (One line) -->
             <div class="col-span-3 grid grid-cols-2 gap-4">
                 <div class="flex flex-col">
                     <label for="img_url" class="mb-1 text-sm font-medium text-gray-700">Product Image</label>
@@ -109,10 +115,12 @@
                         class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 focus:outline-none">
                 </div>
                 <div class="flex flex-col">
-                    <img id="img_urlPreview" src="" alt="Image Preview"
-                        class="hidden w-40 h-40 object-cover border border-gray-300 rounded-xl">
+                    <img id="img_urlPreview" alt="Preview Image"
+                        src="{{ $product->images->isNotEmpty() ? asset($product->images->last()->img_url) : asset('uploads/default.png') }}"
+                        class="w-40 h-40 object-cover border border-gray-300 rounded-xl">
                 </div>
             </div>
+
 
             <!-- Submit Button -->
             <div class="col-span-3 flex justify-center mt-4">
@@ -125,18 +133,50 @@
     </div>
 </div>
 
-<!-- Image Preview Script -->
-<script>
-    const img_urlInput = document.getElementById('img_url');
-    const img_urlPreview = document.getElementById('img_urlPreview');
 
-    img_urlInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
+
+
+
+<!-- JavaScript for Dynamic Subcategory Selection -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const categorySelect = document.getElementById("category_id");
+        const subcategorySelect = document.getElementById("sub_category_id");
+
+        function updateSubcategories() {
+            const selectedCategory = categorySelect.value;
+            Array.from(subcategorySelect.options).forEach(option => {
+                if (option.value === "") return;
+                option.style.display = option.getAttribute("data-category") === selectedCategory ?
+                    "block" : "none";
+            });
+            const firstVisibleOption = Array.from(subcategorySelect.options).find(option => option.style
+                .display === "block");
+            if (firstVisibleOption) {
+                subcategorySelect.value = firstVisibleOption.value;
+            }
+        }
+        updateSubcategories();
+        categorySelect.addEventListener("change", updateSubcategories);
+    });
+
+
+
+
+    // category and subcategory end
+
+
+    // <!-- Image Preview Script start -->
+
+    document.getElementById('img_url').addEventListener('change', function(event) {
+        let imgPreview = document.getElementById('img_urlPreview');
+        let file = event.target.files[0];
+
         if (file) {
-            const reader = new FileReader();
+            let reader = new FileReader();
             reader.onload = function(e) {
-                img_urlPreview.src = e.target.result;
-                img_urlPreview.classList.remove('hidden');
+                imgPreview.src = e.target.result;
+                imgPreview.classList.remove('hidden'); // Remove hidden class to show image
             }
             reader.readAsDataURL(file);
         }

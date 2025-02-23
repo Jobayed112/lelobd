@@ -15,28 +15,41 @@
             @method('PUT')
 
 
-            <!-- Category (Select) -->
-            <div class="flex flex-col">
-                <label for="category_id" class="mb-2 text-sm font-medium text-gray-700">Category</label>
-                <select id="category_id" name="category_id"
-                    class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 focus:outline-none"
-                    required>
-                    <option value="">Select Category</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            {{ $subcategory->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <!-- Category & Subcategory Selection -->
+<div class="grid grid-cols-2 gap-6">
+    <!-- Category Dropdown -->
+    <div class="flex flex-col">
+        <label for="category_id" class="mb-2 text-sm font-semibold text-gray-800">Category</label>
+        <select id="category_id" name="category_id"
+            class="border border-gray-300 bg-white text-gray-800 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none shadow-md"
+            required>
+            <option disabled selected>Select Category</option>
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
-            <!-- Sub-Category Name -->
-            <div class="flex flex-col">
-                <label for="name" class="mb-2 text-sm font-medium text-gray-700">Sub-Category Name</label>
-                <input type="text" id="name" name="name" value="{{ old('name', $subcategory->name) }}"
-                    class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 focus:outline-none text-gray-800"
-                    required>
-            </div>
+    <!-- Sub-Category Dropdown -->
+    <div class="flex flex-col">
+        <label for="subcategory_id" class="mb-2 text-sm font-semibold text-gray-800">Sub-Category</label>
+        <select id="subcategory_id" name="subcategory_id"
+            class="border border-gray-300 bg-white text-gray-800 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:outline-none shadow-md"
+            required>
+            <option disabled selected>Select Subcategory</option>
+            @foreach ($categories as $category)
+                @foreach ($category->subcategories as $subcategory)
+                    <option value="{{ $subcategory->id }}" data-category="{{ $category->id }}">
+                        {{ $subcategory->name }}
+                    </option>
+                @endforeach
+            @endforeach
+        </select>
+    </div>
+</div>
+
 
 
             <!-- Sub-Category Image -->
@@ -65,8 +78,35 @@
     </div>
 </div>
 
-<!-- Image Preview Script -->
+
+<!-- JavaScript for Dynamic Subcategory Selection -->
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const categorySelect = document.getElementById("category_id");
+        const subcategorySelect = document.getElementById("subcategory_id");
+
+        function updateSubcategories() {
+            const selectedCategory = categorySelect.value;
+            Array.from(subcategorySelect.options).forEach(option => {
+                if (option.value === "") return; // Keep the first option
+                option.style.display = option.getAttribute("data-category") === selectedCategory ?
+                    "block" : "none";
+            });
+            const firstVisibleOption = Array.from(subcategorySelect.options).find(option => option.style
+                .display === "block");
+            if (firstVisibleOption) {
+                subcategorySelect.value = firstVisibleOption.value;
+            }
+        }
+        updateSubcategories();
+        categorySelect.addEventListener("change", updateSubcategories);
+    });
+
+
+
+
+    // !--Image Preview Script-- >
+
     const img_urlInput = document.getElementById('img_url');
     const img_urlPreview = document.getElementById('img_urlPreview');
 

@@ -25,7 +25,7 @@
             <!-- Category Image -->
 
               <div class="flex flex-col">
-                <label for="img_url" class="mb-2 text-sm font-medium text-gray-700">Sub-Category Image</label>
+                <label for="img_url" class="mb-2 text-sm font-medium text-gray-700">Category Image</label>
                 <input type="file" id="img_url" name="img_url" accept="image/*"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-teal-500 focus:outline-none">
                 <div class="mt-3">
