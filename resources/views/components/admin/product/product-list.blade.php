@@ -61,8 +61,8 @@
         </div>
 
         <!-- Pagination -->
-        <div class="flex justify-center mt-6">
+        {{-- <div class="flex justify-center mt-6">
             {{ $products->links() }}
-        </div>
+        </div> --}}
     </div>
 </div>

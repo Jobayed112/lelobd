@@ -19,32 +19,20 @@ class ProductPageController extends Controller
         return view('pages.product.product-page', compact(var_name: 'products'));
     }
 
-    public function productView($id)
+    public function productView(Request $request ,$id)
     {
-        $product = Product::with('category')->findOrFail($id);
 
-        return view('pages.product.product-view', compact('product'));
-    }
+        try {
+
+            $productView = Product::with(['category', 'productDetail'])->findOrFail($id);
+            $productDetail=$productView->productDetail;
 
 
+            return view('pages.product.product-view', compact('productView','productDetail'));
+        } catch (\Exception $e) {
+            return response()->json(['error'=> 'Login Fast Than Cart','df'=>$e->getMessage()]);
+        }
 
-
-    public function ProductBuy()
-    {
-        return view('pages.product.product_buy');
-    }
-    public function ProductCartView()
-    {
-        return view('pages.product-page.product_cart_view');
-    }
-
-    public function ProductOrderList()
-    {
-        return view('pages.product-page.product_order_list');
-    }
-    public function ProductOrderDetails()
-    {
-        return view('pages.product-page.product_order_details');
     }
 
 
@@ -69,29 +57,6 @@ class ProductPageController extends Controller
         return view('pages.product.subcategory_by_product', compact('showSubcategoryProducts','subcategory'));
     }
 
-
-
-
-
-
-    public function maleproduct()
-    {
-        try {
-            $maleCategory = Category::where('name', 'Male')->first();
-
-            if (!$maleCategory) {
-                return response()->json(['error' => 'Male category not found'], 404);
-            }
-
-            $products = Product::where('category_id', $maleCategory->id)->paginate(10);
-
-            return view('pages.product.product-page', compact('products'));
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Something went wrong',
-            ], 500);
-        }
-    }
 
 
     // offer show

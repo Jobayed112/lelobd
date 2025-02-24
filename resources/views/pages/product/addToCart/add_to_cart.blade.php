@@ -6,6 +6,6 @@ Carts Page
 @include('components.home.header')
 
 @include('components.product.addToCart.add_to_cart')
-
+@include('components.product.top-subcategory')
 @include('components.home.footer')
 @endsection

@@ -18,16 +18,16 @@
                 <select id="category_id" name="category_id"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
                     required>
-                    <option disabled selected>{{ $product->category_id . ' - ' . $product->category->name }}</option>
 
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}"
-                            {{ old('category_id', $selectedCategoryId ?? '') == $category->id ? 'selected' : '' }}>
+                            {{ old('category_id', $product->category_id ?? '') == $category->id ? 'selected' : '' }}>
                             {{ $category->id . ' - ' . $category->name }}
                         </option>
                     @endforeach
                 </select>
             </div>
+
 
             <!-- Sub Category -->
             <div class="flex flex-col">
@@ -35,7 +35,8 @@
                 <select id="sub_category_id" name="sub_category_id"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800"
                     required>
-                    <option disabled selected>{{ $product->sub_category_id . ' - ' . $product->subCategory->name }}</option>
+                    <option disabled selected>{{ $product->sub_category_id . ' - ' . $product->subCategory->name }}
+                    </option>
 
                     @foreach ($categories as $category)
                         @foreach ($category->subcategories as $subcategory)
@@ -105,7 +106,8 @@
                     <select id="stock" name="stock"
                         class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-800"
                         required>
-                        <option value="{{ old('price', $product->stock) }}">{{ old('price', $product->stock) }}</option>
+                        <option value="{{ old('price', $product->stock) }}">{{ old('price', $product->stock) }}
+                        </option>
                         <option value="instock">In Stock</option>
                         <option value="unavailable">Unavailable</option>
                     </select>
@@ -130,7 +132,7 @@
             <div class="col-span-3 flex justify-center mt-4">
                 <button type="submit"
                     class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-xl shadow-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105">
-                    Create Product
+                    Update Product
                 </button>
             </div>
         </form>

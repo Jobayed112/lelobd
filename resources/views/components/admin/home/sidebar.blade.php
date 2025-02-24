@@ -170,7 +170,19 @@
                 </ul>
             </li>
             {{-- product details end/ --}}
+            {{-- cart list  --}}
 
+
+  <li>   <a href="{{ route('product.detail.list') }}">
+    <button aria-controls="Cart-list" data-collapse-toggle="Cart-list" type="button"
+        class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
+        <span>Cart list</span>
+    </a>
+    </button>
+
+</li>
+
+            {{-- cart list  --}}
             {{-- invoice --}}
             <li>
                 <button aria-controls="Invoice-dropdown" data-collapse-toggle="Invoice-dropdown" type="button"

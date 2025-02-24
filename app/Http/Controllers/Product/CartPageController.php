@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CartPageController extends Controller
 {
-    public function addToCart(Request $request)
+    public function addToCart(Request $request )
     {
         try {
             $request->validate([
-                'product_id' => 'required|exists:products,id',
+                'product_id' => 'nullable|exists:products,id',
                 'color' => 'nullable|string|max:200',
                 'size' => 'nullable|string|max:200',
                 'qty' => 'nullable|integer|min:1',
@@ -28,7 +28,7 @@ class CartPageController extends Controller
                 return back()->with('error', ' Must be login Unauthorized');
             }
 
-            $product = Product::findOrFail($request->product_id);
+            $product = Product::findOrFail($request->id);
 
             $qty = $request->qty;
 
@@ -48,7 +48,7 @@ class CartPageController extends Controller
 
             return back()->with('success', 'Product added to cart successfully!');
         } catch (\Exception $e) {
-            return back()->with('error', 'Login Fast');
+            return response()->json(['error'=> 'Login Fast Than Cart','df'=>$e->getMessage()]);
         }
     }
 

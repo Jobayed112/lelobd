@@ -1,26 +1,30 @@
 <section class="container mx-auto p-4 m-2 border-b">
-    <div class="product-wrapper bg-gray-100 ring-1  text-center  rounded-xl m-3 shadow-lg">
-        <button onclick="filterProducts('popular')"
-            class="px-3 m-2 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm sm:text-base">
-            Popular
-        </button>
-        <button onclick="filterProducts('new')"
-            class="px-3 m-2 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm sm:text-base">
-            New
-        </button>
-        <button onclick="filterProducts('top')"
-            class="px-3 m-2 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 text-sm sm:text-base">
-            Top
-        </button>
-        <button onclick="filterProducts('special')"
-            class="px-3 m-2 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm sm:text-base">
-            Special
-        </button>
-        <button onclick="filterProducts('all')"
-            class="px-3  m-2 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm sm:text-base">
+    <div class="product-wrapper bg-gray-100 ring-1 text-center rounded-xl py-3 shadow-lg">
+        <div class="flex flex-wrap justify-center gap-2 lg:gap-10">
+            <button onclick="filterProducts('all')"
+            class="px-3 py-2 bg-gray-500  hover:ring-2 text-white rounded-lg hover:bg-gray-600 text-sm sm:text-base">
             All
         </button>
+            <button onclick="filterProducts('popular')"
+                class="px-3 py-2 bg-blue-500  hover:ring-2 text-white rounded-lg hover:bg-blue-600 text-sm sm:text-base">
+                Popular
+            </button>
+            <button onclick="filterProducts('new')"
+                class="px-3 py-2 bg-green-500  hover:ring-2 text-white rounded-lg hover:bg-green-600 text-sm sm:text-base">
+                New
+            </button>
+            <button onclick="filterProducts('top')"
+                class="px-3 py-2 bg-purple-500  hover:ring-2 text-white rounded-lg hover:bg-purple-600 text-sm sm:text-base">
+                Top
+            </button>
+            <button onclick="filterProducts('special')"
+                class="px-3 py-2 bg-pink-500  hover:ring-2  text-white rounded-lg hover:bg-red-600 text-sm sm:text-base">
+                Special
+            </button>
+
+        </div>
     </div>
+
 
     <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 m-2 gap-2">
         @foreach ($products as $product)

@@ -59,12 +59,6 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 
 
-
-
-
-
-
-
 Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
 
@@ -125,8 +119,15 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
     Route::get('popular/product/list', [ProductController::class, 'productPopularList'])->name('popular-product-list');
 
-// product detals
-Route::get('product/detail/list',[ProductDetailController::class,'productDetailList'])->name('product.detail.list');
+    // product detals
+    Route::get('product/detail/list', [ProductDetailController::class, 'productDetailList'])->name('product.detail.list');
+
+    Route::get('product/detail/create', [ProductDetailController::class, 'productDetailCreate'])->name('product.detail.create');
+    Route::post('product/detail/store', [ProductDetailController::class, 'productDetailStore'])->name('product.detail.store');
+
+    Route::get('product/detail/edit/{id}', [ProductDetailController::class, 'productDetailEdit'])->name('product.detail.edit');
+    Route::post('product/detail/update/{id}', [ProductDetailController::class, 'productDetailUpdate'])->name('product.detail.update');
+    Route::get('product/detail/delete/{id}', [ProductDetailController::class, 'productDetailDelete'])->name('product.detail.delete');
 
 
     // offfer
@@ -143,14 +144,7 @@ Route::get('product/detail/list',[ProductDetailController::class,'productDetailL
 
 
     // order
-    Route::get('order/list',[OrderProductController::class,'orderList'])->name('order.list');
-
-
-
-
-
-
-
+    Route::get('order/list', [OrderProductController::class, 'orderList'])->name('order.list');
 });
 
 
@@ -170,13 +164,16 @@ Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
 
 Route::get('product/view/{id}', [ProductPageController::class, 'productView'])->name('product.view');
 
+
 Route::get('category/{name}/product', [ProductPageController::class, 'categoryByProduct'])->name('category.products');
 
 Route::get('subcategory/{name}/product', [ProductPageController::class, 'showSubcategoryProducts'])->name('subcategory.products');
 
 // add to cart
-Route::post('/cart/add', [CartPageController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/add/{id}', [CartPageController::class, 'addToCart'])->name('cart.add');
+
 Route::get('/cart/show', [CartPageController::class, 'cartShow'])->name('cart.show');
+
 Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
 
 

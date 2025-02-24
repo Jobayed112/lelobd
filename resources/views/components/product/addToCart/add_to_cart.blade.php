@@ -34,7 +34,7 @@
                                     <span class="px-2 py-1 rounded text-gray-800">{{ $cart->product->name }}</span>
                                 </td>
                                 <td class="px-4 py-3 border-b border-gray-200">
-                                    <span class="px-2 py-1 rounded text-gray-800">BDT {{ number_format($cart->price, 2) }}</span>
+                                    <span class="px-2 py-1 rounded text-gray-800">BDT {{ number_format($cart->product->price, 2) }}</span>
                                 </td>
                                 <td class="px-4 py-3 border-b border-gray-200">
                                     <span class="px-2 py-1 rounded text-gray-800">{{ $cart->qty }}</span>

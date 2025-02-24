@@ -112,7 +112,7 @@
             let dropdown = category.querySelector("ul");
 
             category.addEventListener("mouseenter", () => {
-                dropdown.classList.remove("hidden");
+                // dropdown.classList.remove("hidden");
             });
 
             category.addEventListener("mouseleave", () => {

@@ -5,14 +5,14 @@
             <div class="swiper-wrapper">
                 @foreach ($products as $product)
                     <div class="swiper-slide bg-white shadow-lg rounded-lg relative">
-                        <img src="{{ asset($product->images->last()->img_url ?? 'uploads/default.png') }}"
+                        <a href="{{ route('product.view', $product->id) }}"> <img src="{{ asset($product->images->last()->img_url ?? 'uploads/default.png') }}"
                              alt="{{ $product->name }}"
                              class="w-full h-full sm:h-full object-cover rounded-lg responsive-height">
-
+                            </a>
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-4">
                             <h3 class="text-xl font-semibold text-white mb-2">{{ $product->name }}</h3>
                             <p class="text-green-600 font-bold text-lg">${{ number_format($product->price, 2) }}</p>
-                            <a href="{{ url('product/view', $product->id) }}"
+                            <a href="{{ route('product.view' , $product->id) }}"
                                class="mt-3 inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
                                 View Details
                             </a>

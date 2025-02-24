@@ -4,7 +4,7 @@
             @foreach ($products as $product)
                 <div class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300  ring-1 hover:ring-4 ">
                     <div class="bg-gray-100 rounded-t-lg overflow-hidden border-b">
-                        <a href="{{ url('product/view/' . $product->id) }}">
+                        <a href="{{ route('product.view', $product->id) }}">
                             @if ($product->images->isNotEmpty())
                                 <img class="w-full  object-cover transition-transform duration-300 hover:scale-105"
                                     src="{{ asset($product->images->last()->img_url) }}" alt="{{ $product->name }}">
@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="text-center">
-                        <a href="{{ url('product/view/' . $product->id) }}"
+                        <a href="{{ route('product.view', $product->id) }}"
                             class="text-sm font-semibold p-2 text-gray-800 hover:text-indigo-600 hover:underline">
                             {{ $product->name }}
                         </a>
@@ -50,9 +50,9 @@
         </div>
 
     </div>
-
+{{--
             <div class="flex justify-center bg-blue-500 text-zinc-300 mt-6">
             {{ $products->links() }}
-        </div>
+        </div> --}}
 
 </section>

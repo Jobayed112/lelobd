@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
 
             $categories = Category::with('subcategories','products')->get();
-            $products = Product::with('images','productDetail')->paginate(5);
+            $products = Product::with('images','productDetail')->get();
             $cartsItem=Cart::with('user','product.images')->get();
 
            $productOffers = Product::with([ 'offers'])->get();
