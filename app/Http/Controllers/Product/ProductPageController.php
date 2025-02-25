@@ -36,6 +36,9 @@ class ProductPageController extends Controller
     }
 
 
+
+
+
     public function categoryByProduct($name)
     {
         $category = Category::where('name', $name)->with('products')->firstOrFail();

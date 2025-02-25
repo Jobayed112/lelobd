@@ -12,6 +12,14 @@ use Illuminate\Support\Facades\Auth;
 
 class CartPageController extends Controller
 {
+
+    public function AdminCartListShow() {
+
+        return view('pages.admin.order.cartlist');
+
+
+    }
+
     public function addToCart(Request $request )
     {
         try {
@@ -46,7 +54,7 @@ class CartPageController extends Controller
                 ['qty' => $request->qty ?? 1, 'price' => $total_price]
             );
 
-            return back()->with('success', 'Product added to cart successfully!');
+            return redirect()->route('cart.show')->with('success', 'Product added to cart successfully!');
         } catch (\Exception $e) {
             return response()->json(['error'=> 'Login Fast Than Cart','df'=>$e->getMessage()]);
         }
@@ -82,14 +90,15 @@ class CartPageController extends Controller
 
     public function ckeckoutPage(Request $request)
     {
-        $user_id = Auth::id();
+        $user_id = $request->header('user_id');
+
         $cartItems = Cart::where('user_id', $user_id)->get();
         $totalPrice = $cartItems->sum('price');
 
         return view('pages.product.addToCart.Checkout', compact('cartItems', 'totalPrice'));
     }
 
-    public function checkout(Request $request)
+    public function checkoutSubmit(Request $request)
     {
         try {
             $user_id = Auth::id() ?? $request->header('user_id');
@@ -100,7 +109,7 @@ class CartPageController extends Controller
             $cartItems = Cart::where('user_id', $user_id)->get();
 
             if ($cartItems->isEmpty()) {
-                return redirect()->route('cart.index')->with('error', 'Your cart is empty. Please add products to your cart.');
+                return redirect()->route('home')->with('error', 'Your cart is empty. Please add products to your cart.');
             }
 
             $totalPrice = 0;
@@ -110,9 +119,8 @@ class CartPageController extends Controller
 
             $request->validate([
                 'shipping_address' => 'required|string|max:255',
-                'payment_method' => 'required|string|in:credit_card,paypal,cash_on_delivery',
+                'payment_method' => 'required|string|in:bkash,nogod,cash_on_delivery',
             ]);
-
             $order = Order::create([
                 'user_id' => $user_id,
                 'total_price' => $totalPrice,
@@ -132,9 +140,12 @@ class CartPageController extends Controller
 
             Cart::where('user_id', $user_id)->delete();
 
-            return redirect()->route('order.success', ['order' => $order->id])->with('success', 'Checkout successful! Your order is being processed.');
+            return redirect()->route('home', ['order' => $order->id])->with('success', 'Checkout successful! Your order is being processed.');
+
+
         } catch (\Exception $e) {
-            return back()->with('error', 'There was an error processing your order. Please try again later.');
+            return response()->json(['af'=>'order faild ','sdf'=>$e->getMessage()]);
+            // return back()->with('error', 'There was an error processing your order. Please try again later.');
         }
     }
 }

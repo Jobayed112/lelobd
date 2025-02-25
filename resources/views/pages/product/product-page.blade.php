@@ -4,7 +4,7 @@ Product Page
 @endsection
 @section('content')
 @include('components.home.header')
-@include('components.home.slider')
+@include('components.product.slider')
 @include('components.product.product-page')
 @include('components.home.footer')
 

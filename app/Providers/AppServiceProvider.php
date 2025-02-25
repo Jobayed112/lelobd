@@ -34,7 +34,6 @@ class AppServiceProvider extends ServiceProvider
 
            $productOffers = Product::with([ 'offers'])->get();
 
-
             $view->with([
                 'categories' => $categories,
                 'products' => $products,

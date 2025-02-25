@@ -1,6 +1,6 @@
 <aside id="sidebar"
     class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full md:translate-x-0 bg-gray-100 border-r border-gray-200 dark:bg-gray-700 dark:border-gray-600 shadow-lg">
-    <div class="h-full px-2 pb-4 overflow-y-auto">
+    <div class="h-full px-2 pb-4 overflow-y-auto text-sm"> <!-- Added text-sm here -->
         <ul class="space-y-2 font-medium">
             <li>
                 <a href="{{ route('admin.dashboard') }}"
@@ -100,6 +100,28 @@
                 </ul>
             </li>
 
+            {{-- Product Details --}}
+            <li>
+                <button aria-controls="Product-detail" data-collapse-toggle="Product-detail" type="button"
+                    class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
+                    <span>Product Detail</span>
+                </button>
+                <ul id="Product-detail" class="hidden py-2 space-y-2">
+                    <li>
+                        <a href="{{ route('product.detail.list') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>Product Detail list</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url('order-create') }}"
+                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
+                            <span>Product Detail create</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             {{-- Offers --}}
             <li>
                 <button aria-controls="Offer-dropdown" data-collapse-toggle="Offer-dropdown" type="button"
@@ -122,7 +144,6 @@
                 </ul>
             </li>
 
-
             {{-- Orders --}}
             <li>
                 <button aria-controls="Order-dropdown" data-collapse-toggle="Order-dropdown" type="button"
@@ -139,51 +160,21 @@
                     <li>
                         <a href="{{ url('order-create') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
-                            <span>Order create</span>
+                            <span>Order Product List</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            {{-- Orders  end --}}
 
-
-
-            {{-- product details --}}
+            {{-- Cart List --}}
             <li>
-                <button aria-controls="Product-detail" data-collapse-toggle="Product-detail" type="button"
+                <a href="{{ route('cart.list') }}"
                     class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
-                    <span>Product Detail</span>
-                </button>
-                <ul id="Product-detail" class="hidden py-2 space-y-2">
-                    <li>
-                        <a href="{{ route('product.detail.list') }}"
-                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
-                            <span>product Detail list</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('order-create') }}"
-                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
-                            <span>product Detail create</span>
-                        </a>
-                    </li>
-                </ul>
+                    <span>Cart list</span>
+                </a>
             </li>
-            {{-- product details end/ --}}
-            {{-- cart list  --}}
 
-
-  <li>   <a href="{{ route('product.detail.list') }}">
-    <button aria-controls="Cart-list" data-collapse-toggle="Cart-list" type="button"
-        class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
-        <span>Cart list</span>
-    </a>
-    </button>
-
-</li>
-
-            {{-- cart list  --}}
-            {{-- invoice --}}
+            {{-- Invoice --}}
             <li>
                 <button aria-controls="Invoice-dropdown" data-collapse-toggle="Invoice-dropdown" type="button"
                     class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
@@ -204,7 +195,8 @@
                     </li>
                 </ul>
             </li>
-            {{-- user --}}
+
+            {{-- User --}}
             <li>
                 <button aria-controls="User-dropdown" data-collapse-toggle="User-dropdown" type="button"
                     class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">

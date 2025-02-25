@@ -62,13 +62,9 @@
                             class="bg-green-500 text-white text-[15px] px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">
                             Add to Cart
                         </button>
-                    </form>
-                    <a href="{{ url('product.buy',$productView->id )}}">
-                        <button
-                            class="bg-blue-500 text-white text-[15px] px-4 py-2 hover:bg-blue-600 hover:ring-4 rounded transition">Buy
-                            Now</button>
-                    </a>
-                </div>
+                        </form>
+
+                        </div>
 
         </div>
 

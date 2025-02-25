@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Invoice;
+use App\Models\Order;
+use App\Models\ProductDetail;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +21,9 @@ public function adminDashboard() {
 
     $invoices = Invoice::all();
     $users= User::all();
-    return view('pages.admin.home.summary',compact('products','categories','invoices','users'));
+    $productdetails=ProductDetail::with('products')->get();
+    $orders=Order::all();
+    return view('pages.admin.home.summary',compact('products','categories','invoices','users','productdetails','orders'));
 }
 public function admin()
 {

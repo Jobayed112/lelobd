@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\auth;
 
 use App\Models\User;
@@ -33,23 +34,18 @@ class LoginController extends Controller
                 return back()->with('error', 'User not found');
             }
 
-            if (Hash::check($request->password, $user->password)) {
+            if (Hash::check($request->password, $user->password))
+             {
+
                 Auth::login($user);
-
-                if (class_exists('JWTToken')) {
-                    $token = JWTToken::CreateToken($user->email, $user->id);
-                    return redirect()->route('home')->with('success', 'Login Successful')
-                        ->cookie('token', $token, 60 * 24 * 30);
-                }
-
-                return redirect()->route('home')->with('success', 'Login Successful');
+                $token = JWTToken::CreateToken($user->email, $user->id);
+                return redirect()->route('home')->with('success', 'Login Successful')
+                    ->cookie('token', $token, 60 * 24 * 30);
             } else {
                 return back()->with('error', 'Invalid credentials');
             }
-
         } catch (\Exception $e) {
             return back()->with('error', 'Unauthorized');
         }
     }
-
 }

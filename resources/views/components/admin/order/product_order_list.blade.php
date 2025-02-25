@@ -3,6 +3,6 @@
 Product Order List
 @endsection
 @section('content')
-    @include('components.product.Product_order_list')
+    @include('components.product.product_order_list')
 @endsection
 

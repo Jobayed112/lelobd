@@ -16,6 +16,9 @@ return new class extends Migration
             $table->decimal('total_price', 10, 2);
             $table->string('status')->default('pending');
             $table->string('shipping_address');
+            $table->enum('payment_method', ['bkash', 'nogod', 'cash_on_delivery'])->default('cash_on_delivery');
+
+
 
             $table->foreign("user_id")
             ->references("id")->on("users")

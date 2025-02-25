@@ -145,6 +145,14 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
     // order
     Route::get('order/list', [OrderProductController::class, 'orderList'])->name('order.list');
+    Route::get('order/edit/{id}', [OrderProductController::class, 'orderedit'])->name('order.edit');
+    Route::post('order/update/{id}', [OrderProductController::class, 'orderUpdate'])->name('order.update');
+
+
+
+    // cart list show
+    Route::get('cart/list',[CartPageController::class, 'AdminCartListShow'])->name('cart.list');
+
 });
 
 
@@ -154,29 +162,37 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
 // user web
 Route::get('/', [HomeController::class, 'home'])->name('home');
-Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
-
-// product route
-
-
-// product view
-// Route::get('product/page ',[ProductPageController::class,'productPage'])->name('product.page');
-
 Route::get('product/view/{id}', [ProductPageController::class, 'productView'])->name('product.view');
+Route::get('product/buy/{id}', [ProductPageController::class, 'productBuy'])->name('product.buy');
 
 
 Route::get('category/{name}/product', [ProductPageController::class, 'categoryByProduct'])->name('category.products');
 
 Route::get('subcategory/{name}/product', [ProductPageController::class, 'showSubcategoryProducts'])->name('subcategory.products');
 
-// add to cart
-Route::post('/cart/add/{id}', [CartPageController::class, 'addToCart'])->name('cart.add');
-
-Route::get('/cart/show', [CartPageController::class, 'cartShow'])->name('cart.show');
-
-Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
 
 
-Route::get('checkout/page/', [CartPageController::class, 'ckeckoutPage'])->name('checkout.page');
+Route::middleware(['VerifyToken'])->group(function () {
 
-Route::get('checkout/submit', [CartPageController::class, 'checkoutSubmit'])->name('checkout.submit');
+    Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+
+
+    // add to cart
+    Route::post('/cart/add/{id}', [CartPageController::class, 'addToCart'])->name('cart.add');
+
+    Route::get('/cart/show', [CartPageController::class, 'cartShow'])->name('cart.show');
+
+    Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
+
+
+    Route::get('checkout/page/', [CartPageController::class, 'ckeckoutPage'])->name('checkout.page');
+
+    Route::post('checkout/submit', [CartPageController::class, 'checkoutSubmit'])->name('checkout.submit');
+
+
+});
+// product route
+
+
+// product view
+// Route::get('product/page ',[ProductPageController::class,'productPage'])->name('product.page');

@@ -1,4 +1,4 @@
-<div class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen">
+<div class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen m-2">
     <div class="container mx-auto bg-white rounded-xl shadow-xl p-6">
         <div class="flex justify-between items-center mb-6 flex-wrap">
             <h1 class="text-4xl font-extrabold text-gray-800 w-full sm:w-auto">Order List</h1>
@@ -29,9 +29,9 @@
                             </td>
                             <td class="px-5 py-4">{{ $order->shipping_address }}</td>
                             <td class="px-5 py-4 space-x-3">
-                                <a href="{{ route('order-show', $order->id) }}" class="text-blue-600 hover:underline">View</a>
-                                <a href="{{ route('order-edit', $order->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                                <a href="{{ route('order-delete', $order->id) }}" class="text-red-600 hover:underline"
+                                <a href="{{ url('order-show', $order->id) }}" class="text-blue-600 hover:underline">View</a>
+                                <a href="{{ route('order.edit', $order->id) }}" class="text-blue-600 hover:underline">Edit</a>
+                                <a href="{{ url('order-delete', $order->id) }}" class="text-red-600 hover:underline"
                                     onclick="return confirm('Are you sure you want to delete this order?')">Delete</a>
                             </td>
                         </tr>
@@ -41,8 +41,8 @@
         </div>
 
         <!-- Pagination -->
-        <div class="flex justify-center mt-6">
+        {{-- <div class="flex justify-center mt-6">
             {{ $orders->links() }}
-        </div>
+        </div> --}}
     </div>
 </div>
