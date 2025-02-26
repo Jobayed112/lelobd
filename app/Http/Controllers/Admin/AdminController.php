@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Product;
+use App\Models\ProductOffer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -21,9 +22,10 @@ public function adminDashboard() {
 
     $invoices = Invoice::all();
     $users= User::all();
-    $productdetails=ProductDetail::with('products')->get();
+    $productdetails=ProductDetail::with('product')->get();
     $orders=Order::all();
-    return view('pages.admin.home.summary',compact('products','categories','invoices','users','productdetails','orders'));
+    $offers=ProductOffer::all();
+    return view('pages.admin.home.summary',compact('products','categories','invoices','users','productdetails','orders','offers'));
 }
 public function admin()
 {

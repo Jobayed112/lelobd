@@ -32,13 +32,13 @@ class AppServiceProvider extends ServiceProvider
             $products = Product::with('images','productDetail')->get();
             $cartsItem=Cart::with('user','product.images')->get();
 
-           $productOffers = Product::with([ 'offers'])->get();
 
             $view->with([
                 'categories' => $categories,
                 'products' => $products,
                 'cartsItem'=>$cartsItem,
-                'productOffers'=>$productOffers,
+
+
             ]);
         });
     }

@@ -14,7 +14,8 @@
         </div>
 
         <div class="bg-white p-6 border rounded-lg shadow">
-            <h1 class="text-xl font-bold text-gray-800 mb-4">Product <strong> {{ ' ' . $productView->name }}</strong></h1>
+            <h1 class="text-xl font-bold text-gray-800 mb-4">Product <strong> {{ ' ' . $productView->name }}</strong>
+            </h1>
             <div class="flex items-center mb-4">
                 <ul class="flex text-yellow-500 text-[15px]">
                     @for ($i = 1; $i <= 5; $i++)
@@ -31,40 +32,36 @@
                 @endif
             </div>
             <p class="text-[15px] text-gray-700 mb-4">{{ $productView->description }}</p>
+            <div class="flex items-center space-x-4">
+                <form action="{{ route('cart.add', $productView->id) }}" method="POST" class="inline-block">
 
-            <div class="mb-6">
-                <h3 class="text-[15px] font-semibold mb-2">Select Size: Optional </h3>
-                <div class="flex space-x-2">
-                    @foreach (['S', 'M', 'L', 'XL'] as $size)
-                        <button
-                            class="border px-2 py-1 text-[15px] rounded-lg hover:border-green-600 transition">{{ $size }}</button>
-                    @endforeach
-                </div>
-            </div>
-
-            <div class="mb-6">
-                <h3 class="text-[15px] font-semibold mb-2">Quantity:</h3>
-                <div class="flex items-center">
-                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-l-lg text-[15px]"
-                        onclick="changeQuantity(-1)">-</button>
-                    <input id="quantityInput" type="number" value="1" min="1"
-                        class="w-8 text-center border-t border-b border-gray-300 text-[15px]">
-                    <button class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-r-lg text-[15px]"
-                        onclick="changeQuantity(1)">+</button>
-                </div>
-            </div>
-
-                <div class="flex items-center space-x-4">
-                    <form action="{{ route('cart.add', $productView->id) }}" method="POST" class="inline-block">
-
-                        @csrf
-                        <button type="submit"
-                            class="bg-green-500 text-white text-[15px] px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">
-                            Add to Cart
-                        </button>
-                        </form>
-
+                    @csrf
+                    <div class="mb-6">
+                        <h3 class="text-[15px] font-semibold mb-2">Select Size: Optional </h3>
+                        <div class="flex space-x-2">
+                            @foreach (['S', 'M', 'L', 'XL'] as $size)
+                                <button
+                                    class="border px-2 py-1 text-[15px] rounded-lg hover:border-green-600 transition">{{ $size }}</button>
+                            @endforeach
                         </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-[15px] font-semibold mb-2">Quantity:</h3>
+                        <div class="flex items-center">
+                            <input type="number" name="qty" value="1" min="1"
+                                class="w-12 text-center border border-gray-300 rounded-lg">
+                        </div>
+                    </div>
+
+
+                    <button type="submit"
+                        class="bg-green-500 text-white text-[15px] px-4 py-2 hover:bg-green-600 hover:ring-4 rounded transition">
+                        Add to Cart
+                    </button>
+                </form>
+
+            </div>
 
         </div>
 
@@ -72,7 +69,6 @@
 
             <ul class="list-disc pl-6 text-[15px] text-gray-700">
                 @if (isset($productDetail))
-
                     <li>Material: {{ $productDetail->material }}</li>
                     <li>Available Sizes: {{ $productDetail->size }}</li>
                     <li>Color Options: {{ $productDetail->color }}</li>

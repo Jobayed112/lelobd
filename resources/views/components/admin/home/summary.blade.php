@@ -80,7 +80,26 @@
                 </div>
             </a>
         </div>
-
+<!-- Offer Card -->
+<div class="w-full sm:w-1/2 lg:w-1/4 p-2">
+    <a href="{{ route('offer.list') }}" class="block">
+        <div class="bg-white shadow-md rounded-lg p-4">
+            <div class="flex items-center">
+                <div class="flex-1">
+                    <h5 class="text-xl font-bold capitalize">
+                        <span id="invoice">{{ count($offers) }}</span>
+                    </h5>
+                    <p class="text-sm text-gray-600">Offer</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <div class="bg-blue-500 p-2 rounded-full shadow">
+                        <img class="w-8 h-8" src="{{ asset('images/icon.svg') }}" alt="icon">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
         <!-- Customer Card -->
         <div class="w-full sm:w-1/2 lg:w-1/4 p-2">
             <a href="{{ route('subcategory-list') }}" class="block">
@@ -123,6 +142,7 @@
                 </div>
             </a>
         </div>
+
 
         <!-- Invoice Card -->
         <div class="w-full sm:w-1/2 lg:w-1/4 p-2">

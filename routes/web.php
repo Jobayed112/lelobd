@@ -164,6 +164,7 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('product/view/{id}', [ProductPageController::class, 'productView'])->name('product.view');
 Route::get('product/buy/{id}', [ProductPageController::class, 'productBuy'])->name('product.buy');
+Route::get('offer/product', [ProductPageController::class, 'offerProduct'])->name('offer.product');
 
 
 Route::get('category/{name}/product', [ProductPageController::class, 'categoryByProduct'])->name('category.products');

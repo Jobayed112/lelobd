@@ -7,6 +7,7 @@
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Cart Overview</h3>
             <div class="space-y-6">
                 @foreach ($cartsItem as $item)
+
                     <div class="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                         <div class="flex items-center space-x-4">
                             @if($item->product->images->isNotEmpty())
@@ -30,7 +31,7 @@
                 @endforeach
             </div>
 
-            
+
         </div>
 
         <!-- Checkout Info -->
@@ -70,7 +71,8 @@
                 <!-- Total Amount -->
                 <div class="flex justify-between mb-6">
                     <p class="text-lg font-medium text-gray-700">Total Payable:</p>
-                    <p class="text-xl font-bold text-gray-900">${{ number_format($item->product->price * $item->qty, 2) }}</p>
+                    <p class="text-xl font-bold text-gray-900">${{$totalPrice = $cartItems->sum('price')
+}}</p>
                 </div>
 
                 <!-- Confirm Order Button -->

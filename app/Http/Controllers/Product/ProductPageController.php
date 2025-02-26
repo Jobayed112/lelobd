@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\ProductOffer;
 use App\Models\SubCategory;
+use Psy\Command\WhereamiCommand;
 
 class ProductPageController extends Controller
 {
@@ -62,13 +63,16 @@ class ProductPageController extends Controller
 
 
 
-    // offer show
-    public function offerProduct()  {
-        $offerprodusts=ProductOffer::with('product')->get();
+    public function offerProduct() {
+        $productOffers = ProductOffer::with('product.images')->get();
 
-        return view('pages.home',compact('offerprodusts'));
+        $productIds = $productOffers->pluck('product_id')->unique();
 
+        $products = Product::whereIn('id', $productIds)->with('offers', 'images')->get();
+
+        return view('pages.product.offer_product', compact('productOffers', 'products'));
     }
+
 
 
 

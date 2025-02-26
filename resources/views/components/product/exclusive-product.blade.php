@@ -50,6 +50,7 @@
                     <p class="text-sm {{ $product->stock ? 'text-green-500' : 'text-red-500' }} font-medium">
                         {{ $product->stock ? 'In stock' : 'Out of stock' }}
                     </p>
+
                     <span class="block text-xl font-bold text-gray-900">BDT:
                         {{ number_format($product->price, 2) }}</span>
 

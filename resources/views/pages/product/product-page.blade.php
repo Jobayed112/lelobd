@@ -5,6 +5,7 @@ Product Page
 @section('content')
 @include('components.home.header')
 @include('components.product.slider')
+@include('components.product.offer_product')
 @include('components.product.product-page')
 @include('components.home.footer')
 

@@ -46,6 +46,7 @@ class CartPageController extends Controller
 
 
             $price = $product->price;
+
             $total_price = $qty * $price;
 
 
@@ -67,7 +68,8 @@ class CartPageController extends Controller
             return redirect()->route('login.form')->with('error', 'You must be logged in to view your cart.');
         }
 
-        $cartItems = Cart::where('user_id', $user_id)->get();
+        $cartItems = Cart::where('user_id', $user_id)->with('product.images')->get();
+
 
 
         return view('pages.product.addToCart.add_to_cart', compact('cartItems' ));
