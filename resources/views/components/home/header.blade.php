@@ -39,7 +39,7 @@
                 <ul class="absolute left-0 hidden group-hover:block bg-gray-100 shadow-md rounded  w-44 p-1 z-10">
                     @foreach ($category->subcategories as $subcategory)
                         <li class="px-2 py-1 hover:bg-blue-100 hover:text-green-500 border-b">
-                            <a href="{{ route('subcategory.products', ['name' => $subcategory->name,'categoryname' => $category->name]) }}" class="block">
+                            <a href="{{ route('subcategory.products', ['id' => $subcategory->id,'categoryname' => $category->name]) }}" class="block">
                                 {{ $subcategory->name }}
                             </a>
                         </li>

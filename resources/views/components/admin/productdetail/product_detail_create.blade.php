@@ -48,6 +48,12 @@
                 <input type="text" id="material" name="material" value="{{ old('material') }}"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-800" required>
             </div>
+            <!-- Material -->
+            <div class="flex flex-col">
+                <label for="description" class="mb-1 text-sm font-medium text-gray-700">description</label>
+                <input type="text" id="description" name="description" value="{{ old('description') }}"
+                    class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 focus:outline-none text-gray-800" required>
+            </div>
 
             <!-- Submit Button -->
             <div class="col-span-3 flex justify-center mt-4">

@@ -90,10 +90,10 @@ class SubCategoryController extends Controller
     public function subcategorydelete($id)
     {
         $subcategory = SubCategory::findOrFail($id);
-        if ($subcategory->category()->exists()) {
+        // if ($subcategory->category()->exists()) {
 
-            return redirect()->route('subcategory-list')->with('error', 'Subcategories  Has Related Category Not Deleted.');
-        }
+        //     return redirect()->route('subcategory-list')->with('error', 'Subcategories  Has Related Category Not Deleted.');
+        // }
 
         if (file_exists(public_path($subcategory->img_url))) {
             unlink(public_path($subcategory->img_url));

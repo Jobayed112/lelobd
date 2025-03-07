@@ -1,65 +1,85 @@
-<section class="container mx-auto p-2  border-b">
-    <h1 class="text-3xl font-bold text-center text-indigo-700 mb-4">Exclusive Product Offers</h1>
+<section class="container mx-auto p-4 border-b">
+    <h1 class="text-4xl font-bold text-strat text-purple-700 mb-6">Exclusive Product Offers</h1>
 
-    <div class="product-wrapper bg-slate-50 rounded-xl m-1 shadow-lg p-4">
-        <div class="product-flex flex flex-wrap gap-4 justify-center">
+    <div class="product-wrapper bg-gradient-to-br from-gray-50 to-gray-200 rounded-xl shadow-lg p-6">
+        <div class="product-flex flex flex-wrap gap-6 justify-start">
 
             @foreach ($products as $product)
                 @foreach ($product->offers as $offer)
-                    <div class="sm:w-56 bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div
+                        class="w-64 bg-white border border-gray-300 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105">
 
                         {{-- Product Image --}}
-                        <div class="sm:w-56 bg-gray-100 rounded-t-lg overflow-hidden border-b relative">
+                        <div class="w-full h-48 bg-gray-100 rounded-t-lg overflow-hidden border-b relative">
                             <a href="{{ url('product/view/' . $product->id) }}">
                                 @if ($product->images->isNotEmpty())
-                                    <img src="{{ asset($product->images->last()->img_url) }}" alt="{{ $product->name }}" class="w-full h-40 object-cover">
+                                    <img src="{{ asset($product->images->last()->img_url) }}" alt="{{ $product->name }}"
+                                        class="w-full h-full object-cover">
                                 @else
-                                    <img src="{{ asset('default-image.jpg') }}" alt="No Image Available" class="w-full h-40 object-cover">
+                                    <img src="{{ asset('default-image.jpg') }}" alt="No Image Available"
+                                        class="w-full h-full object-cover">
                                 @endif
                             </a>
-                            <div class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                            <div
+                                class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
                                 {{ $offer->offer_name }}
                             </div>
                         </div>
 
                         {{-- Product Details --}}
-                        <div class="p-4 text-center">
+                        <div class="p-5 text-center">
                             <a href="{{ url('product/view/' . $product->id) }}"
-                               class="text-sm font-semibold text-gray-800 hover:text-indigo-600 hover:underline">
+                                class="text-lg font-semibold text-gray-900 hover:text-purple-600 hover:underline">
                                 {{ $product->name }}
                             </a>
-                            <p class="text-sm {{ $product->stock == 'instock' ? 'text-green-500' : 'text-red-500' }} font-medium">
-                                {{ $product->stock == 'instock' ? 'In stock' : 'Out of stock' }}
+                            <p
+                                class="text-sm {{ $product->stock == 'instock' ? 'text-green-500' : 'text-red-500' }} font-medium mt-1">
+                                {{ $product->stock == 'instock' ? 'In Stock' : 'Out of Stock' }}
                             </p>
 
                             {{-- Pricing --}}
-                            <div class="flex justify-center items-center mt-2">
-                                <span class="block text-xl font-bold text-gray-900 line-through hover:text-red-500">
+                            <div class="flex justify-center items-center mt-2 space-x-2">
+                                <span class="text-xl font-bold text-gray-500 line-through">
                                     BDT: {{ number_format($product->price, 2) }}
                                 </span>
-                                <span class="ml-2 text-lg font-bold text-green-600">
+                                <span class="text-xl font-bold text-green-600">
                                     BDT: {{ number_format($product->price - $offer->discount, 2) }}
                                 </span>
                             </div>
 
-                            {{-- Offer Validity --}}
-                            <p class="text-xs text-gray-500 mt-1">
-                                Offer valid from {{ $offer->start_date }} to {{ $offer->end_date }}
+                            {{-- Offer Validity Countdown --}}
+                            {{-- Offer Validity Countdown --}}
+                            @php
+                                $now = now();
+                                $endDate = \Carbon\Carbon::parse($offer->end_date);
+                                $diffInSeconds = $endDate->diffInSeconds($now);
+                            @endphp
+
+                            <p id="countdown-{{ $offer->id }}" class="text-sm text-gray-600 mt-1">
+                                Offer expires in
+                                <span class="font-bold text-red-600 days"></span>d
+                                <span class="font-bold text-blue-600 hours"></span>h
+                                <span class="font-bold text-green-600 minutes"></span>m
+                                <span class="font-bold text-purple-600 seconds"></span>s
                             </p>
+
+
+
 
                             {{-- Add to Cart Form --}}
                             @if ($product->stock == 'instock')
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-3">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="number" name="qty" value="1" min="1" class="w-16 text-center border border-gray-300 rounded-lg">
+                                    <input type="number" name="qty" value="1" min="1"
+                                        class="w-16 text-center border border-gray-300 rounded-lg">
                                     <button type="submit"
-                                            class="m-1 px-2 py-1 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-all duration-300">
+                                        class="mt-2 px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-all duration-300">
                                         Add to Cart
                                     </button>
                                 </form>
                             @else
-                                <p class="mt-1 text-sm text-red-500">Out of Stock</p>
+                                <p class="mt-2 text-sm text-red-500 font-semibold">Out of Stock</p>
                             @endif
                         </div>
 
@@ -70,3 +90,41 @@
         </div>
     </div>
 </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function startCountdown(endTime, elementId) {
+        let countdownElement = document.getElementById(elementId);
+
+        function updateCountdown() {
+            let now = new Date().getTime();
+            let timeLeft = endTime - now;
+
+            if (timeLeft <= 0) {
+                countdownElement.innerHTML = "<span class='text-red-500 font-bold'>Offer Expired!</span>";
+                clearInterval(timer);
+                return;
+            }
+
+            let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            countdownElement.querySelector('.days').textContent = days;
+            countdownElement.querySelector('.hours').textContent = hours;
+            countdownElement.querySelector('.minutes').textContent = minutes;
+            countdownElement.querySelector('.seconds').textContent = seconds;
+        }
+
+        updateCountdown();
+        let timer = setInterval(updateCountdown, 1000);
+    }
+
+    let countdownElement = document.querySelector("[id^='countdown-']");
+    if (countdownElement) {
+        let endTime = new Date(countdownElement.getAttribute('data-end-date')).getTime();
+        startCountdown(endTime, countdownElement.id);
+    }
+});
+
+</script>

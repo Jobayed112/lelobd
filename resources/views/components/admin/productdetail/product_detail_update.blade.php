@@ -15,7 +15,7 @@
             <div class="flex flex-col">
                 <label for="product_id" class="mb-1 text-sm font-medium text-gray-700">Product</label>
                 <select id="product_id" name="product_id" class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800" required>
-                    <option value="{{ $productdetails->product_id }}" selected>{{ $productdetails->product_id . ' - ' . $productdetails->product->name }}</option>
+
                     @foreach ($productdetails->product->all() as $product)
                         <option value="{{ $product->id }}">{{ $product->id . ' - ' . $product->name }}</option>
                     @endforeach
@@ -49,7 +49,12 @@
                 <input type="text" id="material" name="material" value="{{ old('material', $productdetails->material) }}"
                     class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-800" required>
             </div>
-
+     <!-- Description -->
+     <div class="flex flex-col">
+        <label for="description" class="mb-1 text-sm font-medium text-gray-700">Description</label>
+        <input type="text" id="description" name="description" value="{{ old('description', $productdetails->description) }}"
+            class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-800" required>
+    </div>
             <!-- Submit Button -->
             <div class="col-span-3 flex justify-center mt-4">
                 <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-6 rounded-xl shadow-lg hover:opacity-90 transition-all duration-300 transform hover:scale-105">
@@ -67,8 +72,8 @@
         let size = document.getElementById("size").value.trim();
         let color = document.getElementById("color").value.trim();
         let material = document.getElementById("material").value.trim();
-
-        if (!brand || !size || !color || !material) {
+        let description = document.getElementById("description").value.trim();
+        if (!brand || !size || !color || !material || !description ) {
             event.preventDefault();
             alert("All fields are required!");
         }

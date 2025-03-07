@@ -121,6 +121,13 @@
                     </li>
                 </ul>
             </li>
+   {{-- Cart List --}}
+   <li>
+    <a href="{{ route('cart.list') }}"
+        class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
+        <span>Cart list</span>
+    </a>
+</li>
 
             {{-- Offers --}}
             <li>
@@ -158,7 +165,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('order-create') }}"
+                        <a href="{{ route('order.item.list') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
                             <span>Order Product List</span>
                         </a>
@@ -166,36 +173,14 @@
                 </ul>
             </li>
 
-            {{-- Cart List --}}
-            <li>
-                <a href="{{ route('cart.list') }}"
-                    class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
-                    <span>Cart list</span>
-                </a>
-            </li>
 
             {{-- Invoice --}}
             <li>
-                <button aria-controls="Invoice-dropdown" data-collapse-toggle="Invoice-dropdown" type="button"
-                    class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
-                    <span>Invoice</span>
-                </button>
-                <ul id="Invoice-dropdown" class="hidden py-2 space-y-2">
-                    <li>
-                        <a href="{{ url('invoice-list') }}"
-                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
-                            <span>Invoice list</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ url('invoice-create') }}"
-                            class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
-                            <span>Invoice create</span>
-                        </a>
-                    </li>
-                </ul>
+                <a href="{{ route('invoice.list') }}"
+                class="flex items-center w-full text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 group p-2 border hover:ring mt-1">
+                <span>Invoice list</span>
+            </a>
             </li>
-
             {{-- User --}}
             <li>
                 <button aria-controls="User-dropdown" data-collapse-toggle="User-dropdown" type="button"

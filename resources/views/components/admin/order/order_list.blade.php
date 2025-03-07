@@ -9,6 +9,7 @@
                     <tr class="bg-gradient-to-r from-indigo-600 to-blue-500 text-white">
                         <th class="px-5 py-4">Order ID</th>
                         <th class="px-5 py-4">User</th>
+                        <th class="px-5 py-4">Phone</th>
                         <th class="px-5 py-4">Total Price</th>
                         <th class="px-5 py-4">Status</th>
                         <th class="px-5 py-4">Shipping Address</th>
@@ -20,18 +21,20 @@
                         <tr class="hover:bg-blue-50">
                             <td class="px-5 py-4">{{ $order->id }}</td>
                             <td class="px-5 py-4">{{ $order->user->name }}</td>
+                            <td class="px-5 py-4">
+                                {{ $order->phone ?? $order->user->phone }}
+                            </td>
                             <td class="px-5 py-4">${{ number_format($order->total_price, 2) }}</td>
                             <td class="px-5 py-4">
                                 <span class="px-3 py-1 rounded-xl text-white
-                                    {{ $order->status == 'pending' ? 'bg-yellow-500' : ($order->status == 'completed' ? 'bg-green-500' : 'bg-red-500') }}">
+                                    {{ $order->status == 'pending' ? 'bg-yellow-500' : ($order->status == 'confirmed' ? 'bg-green-500' : 'bg-red-500') }}">
                                     {{ ucfirst($order->status) }}
                                 </span>
                             </td>
                             <td class="px-5 py-4">{{ $order->shipping_address }}</td>
                             <td class="px-5 py-4 space-x-3">
-                                <a href="{{ url('order-show', $order->id) }}" class="text-blue-600 hover:underline">View</a>
-                                <a href="{{ route('order.edit', $order->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                                <a href="{{ url('order-delete', $order->id) }}" class="text-red-600 hover:underline"
+                                <a href="{{ route('order.confirmed', $order->id) }}" class="text-blue-600 hover:underline">Confirm</a>
+                                <a href="{{ route('order.delete', $order->id) }}" class="text-red-600 hover:underline"
                                     onclick="return confirm('Are you sure you want to delete this order?')">Delete</a>
                             </td>
                         </tr>

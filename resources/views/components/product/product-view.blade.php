@@ -14,7 +14,7 @@
         </div>
 
         <div class="bg-white p-6 border rounded-lg shadow">
-            <h1 class="text-xl font-bold text-gray-800 mb-4">Product <strong> {{ ' ' . $productView->name }}</strong>
+            <h1 class="text-xl font-bold text-gray-800 mb-4">Product :<strong> {{ ' ' . $productView->name }}</strong>
             </h1>
             <div class="flex items-center mb-4">
                 <ul class="flex text-yellow-500 text-[15px]">
@@ -37,14 +37,21 @@
 
                     @csrf
                     <div class="mb-6">
-                        <h3 class="text-[15px] font-semibold mb-2">Select Size: Optional </h3>
+                        <h3 class="text-[15px] font-semibold mb-2">Select Size: <span class="text-gray-500">Optional</span></h3>
                         <div class="flex space-x-2">
                             @foreach (['S', 'M', 'L', 'XL'] as $size)
-                                <button
-                                    class="border px-2 py-1 text-[15px] rounded-lg hover:border-green-600 transition">{{ $size }}</button>
+                                <label for="size-{{ $size }}" class="cursor-pointer">
+                                    <input type="radio" name="size" id="size-{{ $size }}" value="{{ $size }}" class="hidden peer">
+                                    <p class="border px-3 py-1 text-[15px] rounded-lg transition
+                                        peer-checked:bg-green-600 peer-checked:text-white
+                                        peer-checked:border-green-600 hover:border-green-500">
+                                        {{ $size }}
+                                    </p>
+                                </label>
                             @endforeach
                         </div>
                     </div>
+
 
                     <div class="mb-6">
                         <h3 class="text-[15px] font-semibold mb-2">Quantity:</h3>
@@ -69,10 +76,11 @@
 
             <ul class="list-disc pl-6 text-[15px] text-gray-700">
                 @if (isset($productDetail))
+                <strong class="'text-3xl"   > <li > Brand: {{ $productDetail->brand }}   </li> </strong>
                     <li>Material: {{ $productDetail->material }}</li>
                     <li>Available Sizes: {{ $productDetail->size }}</li>
                     <li>Color Options: {{ $productDetail->color }}</li>
-                    <li>Brand: {{ $productDetail->brand }}</li>
+                    <li>Description: {{ $productDetail->description }}</li>
                 @else
                     <li>product list is not shoig</li>
                 @endif

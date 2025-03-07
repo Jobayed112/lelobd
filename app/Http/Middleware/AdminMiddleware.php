@@ -11,13 +11,18 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminMiddleware
 {
 
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()->role !== 'admin') {
-            return redirect()->route('admin-login-form');
+        $user = User::first();
+
+        if (!$user) {
+            return redirect()->route('admin.login.form');
+        }
+
+        if ($user->role !== 'admin') {
+            return redirect()->route('admin.login.form');
         }
 
         return $next($request);
     }
-  }
-
+}

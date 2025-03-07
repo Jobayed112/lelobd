@@ -14,9 +14,11 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
 
             $table->decimal('total_price', 10, 2);
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Pending');
             $table->string('shipping_address');
+            $table->string('qty');
             $table->enum('payment_method', ['bkash', 'nogod', 'cash_on_delivery'])->default('cash_on_delivery');
+            $table->string('phone', 50);
 
 
 

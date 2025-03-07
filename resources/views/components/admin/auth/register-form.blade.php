@@ -17,7 +17,7 @@
             <label for="phone" class="block text-sm font-medium text-gray-700">Number</label>
             <input type="number" id="phone" name="phone"
                 class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your full Number" required>
+                placeholder="Enter your full Number" required >
 
         </div>
 
@@ -49,10 +49,10 @@
 
         <!-- Role Input -->
         <div class="mb-2">
-            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            <label for="role" class="block text-sm font-medium text-gray-700">role</label>
             <select id="role" name="role" class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
+                <option value="user">user</option>
+                <option value="admin">admin</option>
             </select>
 
         </div>

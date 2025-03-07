@@ -17,6 +17,7 @@
                         <th class="px-5 py-4">Size</th>
                         <th class="px-5 py-4">Color</th>
                         <th class="px-5 py-4">Material</th>
+                        <th class="px-5 py-4">Description</th>
                         <th class="px-5 py-4">Actions</th>
                     </tr>
                 </thead>
@@ -29,6 +30,7 @@
                             <td class="px-5 py-4">{{ $detail->size }}</td>
                             <td class="px-5 py-4">{{ $detail->color }}</td>
                             <td class="px-5 py-4">{{ $detail->material }}</td>
+                            <td class="px-5 py-4">{{ $detail->description }}</td>
                             <td class="px-5 py-4 space-x-3">
                                 <a href="{{ route('product.detail.edit', $detail->id) }}"
                                     class="text-blue-600 hover:underline">Edit</a>

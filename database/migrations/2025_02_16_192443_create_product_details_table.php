@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+
     public function up(): void
     {
         Schema::create('product_details', function (Blueprint $table) {
@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->string('color')->nullable();
             $table->string('material')->nullable();
+            $table->text('description');
 
             $table->foreign('product_id')
                 ->references('id')->on('products')

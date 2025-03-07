@@ -14,7 +14,7 @@ return new class extends Migration
             $table->unsignedBigInteger("order_id");
             $table->unsignedBigInteger("product_id");
 
-            $table->integer('quantity');
+            $table->integer('qty');
             $table->decimal('price', 10, 2);
 
             $table->foreign("order_id")

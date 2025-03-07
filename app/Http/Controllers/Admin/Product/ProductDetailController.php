@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductDetail;
-use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 
 class ProductDetailController extends Controller
@@ -30,6 +29,7 @@ class ProductDetailController extends Controller
                 'size' => 'required|string|max:255',
                 'color' => 'required|string|max:255',
                 'material' => 'required|string|max:255',
+                'description' => 'required|string|max:255',
             ]);
 
             ProductDetail::create([
@@ -38,19 +38,20 @@ class ProductDetailController extends Controller
                 'size' => $request->size,
                 'color' => $request->color,
                 'material' => $request->material,
+                'description' => $request->description,
             ]);
             return redirect()->route('product.detail.list')->with('success', 'Product details created successfully!');
 
         } catch (\Exception $e) {
-            return back()->with('error', 'Something went wrong');
+            return response()->json(['error'=>'Something went wrong','dff'=>$e->getMessage()]);
         }
 
     }
 public function productDetailEdit(Request $request,$id) {
 
-    $request->validate([
-        'product_id' => 'required|exists:products,id',
-    ]);
+    // $request->validate([
+    //     'product_id' => 'required|exists:products,id',
+    // ]);
 
     $productdetails=ProductDetail::with('product')->findOrFail($id);
 
@@ -67,6 +68,7 @@ public function productDetailUpdate(Request $request, $id)
         'size' => 'required|string|max:255',
         'color' => 'required|string|max:255',
         'material' => 'required|string|max:255',
+        'description' => 'required|string|max:255',
     ]);
 
     $productdetail = ProductDetail::findOrFail($id);

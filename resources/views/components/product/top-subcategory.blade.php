@@ -5,7 +5,7 @@
             @foreach ($categories as $category)  <!-- Loop through categories -->
                 @foreach ($category->subcategories as $subcategory)  <!-- Loop through subcategories of each category -->
                     <div class="text-center ring-1 hover:ring-4 bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300">
-                        <a href="{{ route('subcategory.products', ['name' => $subcategory->name]) }}" class="block">
+                        <a href="{{ route('subcategory.products', ['id' => $subcategory->id]) }}" class="block">
                             <img src="{{ asset($subcategory->img_url ?? 'images/no-image.png') }}"
                                 class="w-20 h-20 sm:w-28 sm:h-28 object-cover rounded-full mx-auto shadow-lg border border-indigo-200 bg-blue-100 p-2 transition-all duration-300 hover:scale-105"
                                 alt="{{ $subcategory->name }}">

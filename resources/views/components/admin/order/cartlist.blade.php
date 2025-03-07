@@ -30,9 +30,8 @@
                             <td class="px-5 py-4">${{ number_format($item->product->price, 2) }}</td>
                             <td class="px-5 py-4 font-bold text-green-600">${{ number_format($item->qty * $item->product->price, 2) }}</td>
                             <td class="px-5 py-4 space-x-3">
-                                <a href="{{ url('cart/edit', $item->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                                <a href="{{ url('cart/remove', $item->id) }}" class="text-red-600 hover:underline"
-                                    onclick="return confirm('Are you sure you want to remove this item from the cart?')">Remove</a>
+                                <p  class="text-blue-600 hover:underline">Ok</p>
+
                             </td>
                         </tr>
                     @endforeach

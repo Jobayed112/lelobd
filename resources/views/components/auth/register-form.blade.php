@@ -20,9 +20,9 @@
                 <!-- Phone Number -->
                 <div class="mb-2">
                     <label for="phone" class="block font-medium text-gray-700 text-[14px]">Phone Number</label>
-                    <input type="number" id="phone" name="phone"
+                    <input type="text" id="phone" name="phone"
                         class="w-full text-[14px] px-3 py-2 border border-gray-300 rounded-lg shadow-sm mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Enter your phone number" required>
+                        placeholder="Enter your phone number" required value="+8801" required oninput="enforcePrefix()">
                 </div>
             </div>
 

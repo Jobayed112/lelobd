@@ -58,11 +58,11 @@ Route::post('reset/password', [ResetController::class, 'resetPassword'])->name('
 Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 
+Route::get('dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+Route::prefix('admin')->middleware(['VerifyToken','Admin'])->group(function () {
 
-Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
 
 
-    Route::get('dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
 
     Route::get('admin-profile', [AdminController::class, 'profile'])->name('admin-profile');
 
@@ -148,6 +148,18 @@ Route::prefix('admin')->middleware(['VerifyToken'])->group(function () {
     Route::get('order/edit/{id}', [OrderProductController::class, 'orderedit'])->name('order.edit');
     Route::post('order/update/{id}', [OrderProductController::class, 'orderUpdate'])->name('order.update');
 
+    Route::get('order/confirm/{id}', [OrderProductController::class, 'confirmOrder'])->name('order.confirmed');
+    Route::get('order/delete/{id}', [OrderProductController::class, 'orderDelete'])->name('order.delete');
+
+    // Order Item List
+    Route::get('order/item/list', [OrderProductController::class, 'orderItemList'])->name('order.item.list');
+    Route::get('order/item/delete/{id}', [OrderProductController::class, 'orderItemDelete'])->name('order.item.delete');
+
+
+
+    Route::get('invoice/list', [OrderProductController::class, 'invoiceList'])->name('invoice.list');
+    Route::get('invoice/show/{id}', [OrderProductController::class, 'showInvoice'])->name('invoice.show');
+    Route::get('invoice/delete/{id}', [OrderProductController::class, 'invoiceDelete'])->name('invoice.delete');
 
 
     // cart list show
@@ -169,7 +181,7 @@ Route::get('offer/product', [ProductPageController::class, 'offerProduct'])->nam
 
 Route::get('category/{name}/product', [ProductPageController::class, 'categoryByProduct'])->name('category.products');
 
-Route::get('subcategory/{name}/product', [ProductPageController::class, 'showSubcategoryProducts'])->name('subcategory.products');
+Route::get('subcategory/{id}/product', [ProductPageController::class, 'showSubcategoryProducts'])->name('subcategory.products');
 
 
 

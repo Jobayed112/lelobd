@@ -10,29 +10,34 @@
         <form action="{{ route('product-store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-3 gap-4">
             @csrf
 
-            <!-- Category -->
+           <!-- Category -->
+<div class="flex flex-col">
+    <label for="category_id" class="mb-1 text-sm font-medium text-gray-700">Category</label>
+    <select id="category_id" name="category_id" class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800" required>
+        <option value="" disabled selected>Select a category</option>
+        @foreach ($categories as $category)
+            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                {{ $category->id . ' ' . $category->name }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
-            <div class="flex flex-col">
-                <label for="category_id" class="mb-1 text-sm font-medium text-gray-700">Category</label>
-                <select id="category_id" name="category_id" class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800" required>
-
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->id  .' '.' '.$category->name  }}</option>
-                    @endforeach
-                </select>
-            </div>
-              <!-- Sub Category -->
-              <div class="flex flex-col">
-                <label for="sub_category_id" class="mb-1 text-sm font-medium text-gray-700">Sub Category</label>
-                <select id="sub_category_id" name="sub_category_id" class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800" required>
-
-                    @foreach ($categories as $category)
-                        @foreach ($category->subcategories as $subcategory)
-                            <option value="{{ $subcategory->id }}">{{ $subcategory->id  .' '.' '.$subcategory->name  }}</option>
-                        @endforeach
-                    @endforeach
-                </select>
-            </div>
+<!-- Sub Category -->
+<div class="flex flex-col">
+    <label for="sub_category_id" class="mb-1 text-sm font-medium text-gray-700">Sub Category</label>
+    <select id="sub_category_id" name="sub_category_id" class="border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none text-gray-800" required>
+        <option value="" disabled selected>Select a subcategory</option>
+        @foreach ($categories as $category)
+            @foreach ($category->subcategories as $subcategory)
+                <option value="{{ $subcategory->id }}" data-category="{{ $category->id }}"
+                    {{ old('sub_category_id') == $subcategory->id ? 'selected' : '' }}>
+                    {{ $subcategory->id . ' ' . $subcategory->name }}
+                </option>
+            @endforeach
+        @endforeach
+    </select>
+</div>
 
             <!-- Product Name -->
             <div class="flex flex-col">
@@ -102,8 +107,40 @@
     </div>
 </div>
 
-<!-- Image Preview Script -->
+
 <script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    const categorySelect = document.getElementById("category_id");
+    const subcategorySelect = document.getElementById("sub_category_id");
+    function updateSubcategories() {
+        const selectedCategory = categorySelect.value;
+        let hasVisibleOption = false;
+        Array.from(subcategorySelect.options).forEach(option => {
+            if (option.value === "") return; // Skip default option
+            if (option.getAttribute("data-category") === selectedCategory) {
+                option.style.display = "block";
+                if (!hasVisibleOption) {
+                    subcategorySelect.value = option.value; // Select the first visible subcategory
+                    hasVisibleOption = true;
+                }
+            } else {
+                option.style.display = "none";
+            }
+        });
+        // If no subcategory matches, reset selection
+        if (!hasVisibleOption) {
+            subcategorySelect.value = "";
+        }
+    }
+
+    updateSubcategories();
+    categorySelect.addEventListener("change", updateSubcategories);
+});
+
+
+
+//  <!-- Image Preview Script -->
     const img_urlInput = document.getElementById('img_url');
     const img_urlPreview = document.getElementById('img_urlPreview');
 

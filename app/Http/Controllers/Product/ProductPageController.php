@@ -50,12 +50,12 @@ class ProductPageController extends Controller
 
 
 
-    public function showSubcategoryProducts($name)
+    public function showSubcategoryProducts($id)
     {
-        $subcategory = SubCategory::where('name', $name)->with('products', 'category')->first();
 
+        $subcategory = SubCategory::where('id', $id)->with('products' ,'category')->firstOrFail();
         if (!$subcategory) {
-            return abort(404, 'Subcategory not found');
+            return back()->with('error', 'Subcategory not found');
         }
         $showSubcategoryProducts = $subcategory->products;
         return view('pages.product.subcategory_by_product', compact('showSubcategoryProducts','subcategory'));

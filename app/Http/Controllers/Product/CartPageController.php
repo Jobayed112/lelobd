@@ -115,27 +115,33 @@ class CartPageController extends Controller
             }
 
             $totalPrice = 0;
+            $totalQty = 0;
+
             foreach ($cartItems as $item) {
-                $totalPrice += $item->price;
+                $totalPrice += $item->price * $item->qty;
+                $totalQty += $item->qty;
             }
 
             $request->validate([
                 'shipping_address' => 'required|string|max:255',
                 'payment_method' => 'required|string|in:bkash,nogod,cash_on_delivery',
+                'phone' => ['required', 'regex:/^\+8801[3-9]\d{8}$/'],
             ]);
+
             $order = Order::create([
                 'user_id' => $user_id,
                 'total_price' => $totalPrice,
+                'qty' => $totalQty,
                 'shipping_address' => $request->shipping_address,
                 'payment_method' => $request->payment_method,
+                'phone' => $request->phone,
                 'status' => 'pending',
             ]);
-
             foreach ($cartItems as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item->product_id,
-                    'quantity' => $item->qty,
+                    'qty' => $item->qty,
                     'price' => $item->price,
                 ]);
             }

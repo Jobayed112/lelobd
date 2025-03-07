@@ -21,7 +21,7 @@ class InvoiceProduct extends Model
         'product_id',
         'user_id',
         'qty',
-        'sale_price',
+        'price',
     ];
 
     public function invoice(): BelongsTo
@@ -35,9 +35,9 @@ class InvoiceProduct extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
-   
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+
+    // public function user(): BelongsTo
+    // {
+    //     return $this->belongsTo(User::class, 'user_id');
+    // }
 }

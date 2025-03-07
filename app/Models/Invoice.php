@@ -17,15 +17,10 @@ class Invoice extends Model
     protected $table = 'invoices';
     protected $fillable = [
         'user_id',
-        'total',
-        'vat',
-        'payable',
-        'cus_details',
-        'ship_details',
-        'tran_id',
-        'val_id',
-        'delivery_status',
-        'payment_status',
+        'order_id',
+        'invoice_number',
+        'total_amount',
+        'status',
 
     ];
 
@@ -41,6 +36,7 @@ class Invoice extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
     public function invoiceProducts(): HasMany
     {
         return $this->hasMany(InvoiceProduct::class, 'invoice_id');

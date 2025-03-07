@@ -13,23 +13,16 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('order_id');
+            $table->bigInteger('invoice_number')->unsigned()->unique();
+            $table->decimal('total_amount', 10, 2);
+            $table->enum('status',['Pending','Processing','confirmed'])->default('Pending');
 
-            $table->string('total',50);
-            $table->string('vat',50);
-            $table->string('payable',50);
-            $table->string('cus_details',500);
-            $table->string('ship_details',500);
-            $table->string('tran_id',100);
-            $table->string('val_id',100)->default(0);
-
-            $table->enum('delivery_status',['Pending','Processing','Completed'])->default('Pending');
-
-            $table->string('payment_status');
+            $table->foreign('order_id')->references('id')->on('orders')
+                ->cascadeOnUpdate()->restrictOnDelete();
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();
-
-
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

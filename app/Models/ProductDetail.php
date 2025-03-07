@@ -13,7 +13,7 @@ class ProductDetail extends Model
     protected $table = 'product_details';
 
     protected $fillable=[
-        'product_id', 'brand', 'size', 'color', 'material',
+        'product_id', 'brand', 'size', 'color', 'material','description'
 
     ];
 

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
-use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Invoice;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\InvoiceProduct;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\OrderItem;
 
 class OrderProductController extends Controller
 {
@@ -43,4 +48,114 @@ class OrderProductController extends Controller
             return redirect()->route('order.list')->with('success', 'Order updated successfully!');
 
     }
+    public function orderDelete($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->invoice()->exists()) {
+            return redirect()->route('order.list')->with('error', 'Order cannot be deleted because an invoice has already been created.');
+        }
+        $order->orderItems()->delete();
+
+        $order->delete();
+
+        return redirect()->route('order.list')->with('success', 'Order deleted successfully!');
+    }
+
+
+
+    public function confirmOrder($orderId)
+    {
+        DB::beginTransaction();
+        try {
+
+            $order = Order::with('orderItems')->findOrFail($orderId);
+            $lastInvoice = Invoice::latest()->first();
+            $nextInvoiceNumber = $lastInvoice ? $lastInvoice->invoice_number + 1 : 12345678;
+
+            if ($order->invoice()->exists()) {
+                return back()->with('error', 'Invoice already created for this order.');
+            }
+
+            $invoice = Invoice::create([
+                'invoice_number' => $nextInvoiceNumber,
+                'order_id' => $order->id,
+                'user_id' => $order->user_id,
+                'total_amount' => $order->total_price,
+                'status' => 'confirmed',
+            ]);
+
+            foreach ($order->orderItems as $item) {
+                InvoiceProduct::create([
+                    'invoice_id' => $invoice->id,
+                    'product_id' => $item->product_id,
+                    'qty' => $item->qty,
+                    'price' => $item->price,
+                    'user_id' => $order->user_id,
+                ]);
+            }
+
+            $order->update(['status' => 'confirmed']);
+
+            DB::commit();
+            return redirect()->route('invoice.show', $invoice->id)->with('success', 'Order confirmed and Invoice generated.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' =>'Something went wrong! Please try again.','mass'=>$e->getMessage()]);
+        }
+    }
+
+
+    public function invoiceList()
+    {
+        $invoices = Invoice::with('invoiceProducts.product')->get();
+        return view('pages.admin.invoice.invoice_list', compact('invoices'));
+    }
+    public function showInvoice($invoiceId)
+    {
+        $invoice = Invoice::with('invoiceProducts.product', 'order')->findOrFail($invoiceId);
+        return view('pages.admin.invoice.invoice', compact('invoice'));
+    }
+
+    public function invoiceDelete($id)
+    {
+        try {
+            $invoice = Invoice::findOrFail($id);
+
+
+            $invoice->invoiceProducts()->delete();
+
+            $invoice->delete();
+
+            return redirect()->route('invoice.list')->with('success', 'Invoice deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('invoice.list')->with('error', 'Something went wrong while deleting the invoice.');
+        }
+    }
+
+
+    public function orderItemList()
+    {
+
+
+        $orderItems = OrderItem::all();
+
+        return view('pages.admin.order.product_order_list', compact('orderItems'));
+    }
+
+
+
+    public function orderItemDelete($id)
+    {
+        $orderItem = OrderItem::findOrFail($id);
+
+        if ($orderItem->order()->exists()) {
+            return redirect()->back()->with('error', 'Order item cannot be deleted because an invoice has already been created.');
+        }
+        $orderItem->order()->delete();
+        $orderItem->delete();
+
+        return redirect()->back()->with('success', 'Order item deleted successfully!');
+    }
+
 }
