@@ -55,13 +55,14 @@
                                 $diffInSeconds = $endDate->diffInSeconds($now);
                             @endphp
 
-                            <p id="countdown-{{ $offer->id }}" class="text-sm text-gray-600 mt-1">
-                                Offer expires in
-                                <span class="font-bold text-red-600 days"></span>d
-                                <span class="font-bold text-blue-600 hours"></span>h
-                                <span class="font-bold text-green-600 minutes"></span>m
-                                <span class="font-bold text-purple-600 seconds"></span>s
-                            </p>
+<p id="countdown-{{ $offer->id }}" class="text-sm text-gray-600 mt-1"
+    data-end-date="{{ $offer->end_date }}">
+     Offer expires in
+     <span class="font-bold text-red-600 days"></span>d
+     <span class="font-bold text-blue-600 hours"></span>h
+     <span class="font-bold text-green-600 minutes"></span>m
+     <span class="font-bold text-purple-600 seconds"></span>s
+ </p>
 
 
 
@@ -91,16 +92,14 @@
     </div>
 </section>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    function startCountdown(endTime, elementId) {
-        let countdownElement = document.getElementById(elementId);
-
+document.addEventListener("DOMContentLoaded", function () {
+    function startCountdown(endTime, element) {
         function updateCountdown() {
             let now = new Date().getTime();
             let timeLeft = endTime - now;
 
             if (timeLeft <= 0) {
-                countdownElement.innerHTML = "<span class='text-red-500 font-bold'>Offer Expired!</span>";
+                element.innerHTML = "<span class='text-red-500 font-bold'>Offer Expired!</span>";
                 clearInterval(timer);
                 return;
             }
@@ -110,21 +109,22 @@
             let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            countdownElement.querySelector('.days').textContent = days;
-            countdownElement.querySelector('.hours').textContent = hours;
-            countdownElement.querySelector('.minutes').textContent = minutes;
-            countdownElement.querySelector('.seconds').textContent = seconds;
+            element.querySelector('.days').textContent = days;
+            element.querySelector('.hours').textContent = hours;
+            element.querySelector('.minutes').textContent = minutes;
+            element.querySelector('.seconds').textContent = seconds;
         }
 
         updateCountdown();
         let timer = setInterval(updateCountdown, 1000);
     }
 
-    let countdownElement = document.querySelector("[id^='countdown-']");
-    if (countdownElement) {
-        let endTime = new Date(countdownElement.getAttribute('data-end-date')).getTime();
-        startCountdown(endTime, countdownElement.id);
-    }
+    document.querySelectorAll("[id^='countdown-']").forEach((element) => {
+        let endTime = new Date(element.getAttribute('data-end-date')).getTime();
+        if (!isNaN(endTime)) {
+            startCountdown(endTime, element);
+        }
+    });
 });
 
 </script>

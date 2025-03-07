@@ -59,12 +59,15 @@ Route::get('logout', [LogoutController::class, 'logout'])->name('logout');
 
 
 Route::get('dashboard', [AdminController::class, 'adminDashboard'])->name('admin.dashboard');
+
 Route::prefix('admin')->middleware(['VerifyToken','Admin'])->group(function () {
 
 
 
 
     Route::get('admin-profile', [AdminController::class, 'profile'])->name('admin-profile');
+
+    Route::get('user/list', [AdminController::class, 'userList'])->name('user.list');
 
 
     // category-list
@@ -160,10 +163,14 @@ Route::prefix('admin')->middleware(['VerifyToken','Admin'])->group(function () {
     Route::get('invoice/list', [OrderProductController::class, 'invoiceList'])->name('invoice.list');
     Route::get('invoice/show/{id}', [OrderProductController::class, 'showInvoice'])->name('invoice.show');
     Route::get('invoice/delete/{id}', [OrderProductController::class, 'invoiceDelete'])->name('invoice.delete');
+    Route::get('/invoice/download/{invoice_id}', [OrderProductController::class, 'downloadInvoice'])->name('invoice.download');
 
 
     // cart list show
     Route::get('cart/list',[CartPageController::class, 'AdminCartListShow'])->name('cart.list');
+
+
+
 
 });
 

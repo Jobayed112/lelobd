@@ -114,7 +114,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url('order-create') }}"
+                        <a href="{{ route('product.detail.create') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
                             <span>Product Detail create</span>
                         </a>
@@ -189,7 +189,7 @@
                 </button>
                 <ul id="User-dropdown" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="{{ url('user-list') }}"
+                        <a href="{{ route('user.list') }}"
                             class="border m-1 hover:ring flex items-center ml-8 p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600">
                             <span>User list</span>
                         </a>

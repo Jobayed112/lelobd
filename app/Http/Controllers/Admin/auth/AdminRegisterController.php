@@ -19,7 +19,7 @@ class AdminRegisterController extends Controller
             $request->validate([
                 'name' => 'required|string|max:50',
                 'email' => 'required|string|email|unique:users,email',
-                'phone' => ['required','regex:/^\+8801[3-9]\d{8}$/|unique:users,phone'],
+                'phone' => 'required','regex:/^\+8801[3-9]\d{8}$/|unique:users,phone',
                 'password' => 'required|string|min:8|confirmed',
                 'role' => 'required|in:admin,user',
             ]);

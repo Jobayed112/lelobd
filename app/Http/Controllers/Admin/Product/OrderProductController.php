@@ -10,6 +10,8 @@ use App\Models\InvoiceProduct;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\OrderItem;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class OrderProductController extends Controller
 {
@@ -132,6 +134,20 @@ class OrderProductController extends Controller
             return redirect()->route('invoice.list')->with('error', 'Something went wrong while deleting the invoice.');
         }
     }
+
+
+
+public function downloadInvoice($invoice_id)
+{
+    $invoice = Invoice::with(['user', 'order', 'invoiceProducts.product'])->findOrFail($invoice_id);
+
+    // Load the invoice view into PDF
+    $pdf = Pdf::loadView('pages.admin.invoice.pdf', compact('invoice'));
+
+    // Download the PDF
+    return $pdf->download('invoice_'.$invoice->invoice_number.'.pdf');
+}
+
 
 
     public function orderItemList()

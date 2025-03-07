@@ -19,6 +19,7 @@ class Cart extends Model
         'size',
         'qty',
         'price',
+        'total_price',
     ];
 
     public function product(): BelongsTo

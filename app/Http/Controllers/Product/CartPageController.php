@@ -13,14 +13,13 @@ use Illuminate\Support\Facades\Auth;
 class CartPageController extends Controller
 {
 
-    public function AdminCartListShow() {
+    public function AdminCartListShow()
+    {
 
         return view('pages.admin.order.cartlist');
-
-
     }
 
-    public function addToCart(Request $request )
+    public function addToCart(Request $request)
     {
         try {
             $request->validate([
@@ -38,6 +37,8 @@ class CartPageController extends Controller
 
             $product = Product::findOrFail($request->id);
 
+
+
             $qty = $request->qty;
 
             if ($qty == 18) {
@@ -45,19 +46,25 @@ class CartPageController extends Controller
             }
 
 
-            $price = $product->price;
+            if ($product->offers()->exists()) {
+                $offer = $product->offers()->first();
+                $price =  $product->price - $offer->discount;
+            } else {
+                $price = $product->price;
+            }
+
 
             $total_price = $qty * $price;
 
 
             Cart::updateOrCreate(
-                ['user_id' => $user_id, 'product_id' => $product->id],
-                ['qty' => $request->qty ?? 1, 'price' => $total_price]
+                ['user_id' => $user_id, 'product_id' => $product->id,'price' => $price],
+                ['qty' => $request->qty ?? 1, 'total_price' => $total_price]
             );
 
             return redirect()->route('cart.show')->with('success', 'Product added to cart successfully!');
         } catch (\Exception $e) {
-            return response()->json(['error'=> 'Login Fast Than Cart','df'=>$e->getMessage()]);
+            return response()->json(['error' => 'Login Fast Than Cart', 'df' => $e->getMessage()]);
         }
     }
 
@@ -72,7 +79,7 @@ class CartPageController extends Controller
 
 
 
-        return view('pages.product.addToCart.add_to_cart', compact('cartItems' ));
+        return view('pages.product.addToCart.add_to_cart', compact('cartItems'));
     }
 
     public function removeFromCart($id)
@@ -149,10 +156,8 @@ class CartPageController extends Controller
             Cart::where('user_id', $user_id)->delete();
 
             return redirect()->route('home', ['order' => $order->id])->with('success', 'Checkout successful! Your order is being processed.');
-
-
         } catch (\Exception $e) {
-            return response()->json(['af'=>'order faild ','sdf'=>$e->getMessage()]);
+            return response()->json(['af' => 'order faild ', 'sdf' => $e->getMessage()]);
             // return back()->with('error', 'There was an error processing your order. Please try again later.');
         }
     }

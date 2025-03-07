@@ -129,7 +129,7 @@
                     <div class="flex items-center">
                         <div class="flex-1">
                             <h5 class="text-xl font-bold capitalize">
-                                <span id="invoice">{{ count($categories) }}</span>
+                                <span id="invoice">{{ count($orders) }}</span>
                             </h5>
                             <p class="text-sm text-gray-600">Order</p>
                         </div>
@@ -146,12 +146,12 @@
 
         <!-- Invoice Card -->
         <div class="w-full sm:w-1/2 lg:w-1/4 p-2">
-            <a href="{{ route('product-list') }}" class="block">
+            <a href="{{ route('invoice.list') }}" class="block">
                 <div class="bg-white shadow-md rounded-lg p-4">
                     <div class="flex items-center">
                         <div class="flex-1">
                             <h5 class="text-xl font-bold capitalize">
-                                <span id="invoice"></span>
+                                <span id="invoice">{{ count($invoices) }}</span>
                             </h5>
                             <p class="text-sm text-gray-600">Invoice</p>
                         </div>
@@ -166,66 +166,27 @@
         </div>
 
         <!-- Total Sale Card -->
-        <div class="w-full sm:w-1/2 lg:w-1/4 p-2">
-            <a href="{{ route('product-list') }}" class="block">
-                <div class="bg-white shadow-md rounded-lg p-4">
-                    <div class="flex items-center">
-                        <div class="flex-1">
-                            <h5 class="text-xl font-bold capitalize">
-                                $ <span id="total"></span>
-                            </h5>
-                            <p class="text-sm text-gray-600">Total Sale</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                            <div class="bg-blue-500 p-2 rounded-full shadow">
-                                <img class="w-8 h-8" src="{{ asset('images/icon.svg') }}" alt="icon">
-                            </div>
-                        </div>
+<div class="w-full sm:w-1/3 lg:w-1/4 h-64 p-4 "> <!-- Changed width and height -->
+    <a href="{{ route('product-list') }}" class="block">
+        <div class="bg-white shadow-md rounded-lg p-6"> <!-- Adjusted padding -->
+            <div class="flex items-center h-full"> <!-- Ensure the height of the card is fully utilized -->
+                <div class="flex-1">
+                    <h5 class="text-2xl font-bold capitalize">
+                        $ <span id="total">{{ $totalSales }}</span>
+                    </h5>
+                    <p class="text-sm text-gray-600">Total Sale</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <div class="bg-blue-500 p-3 rounded-full shadow">
+                        <img class="w-10 h-10" src="{{ asset('images/icon.svg') }}" alt="icon"> <!-- Adjusted icon size -->
                     </div>
                 </div>
-                <a href="{{ route('product-list') }}" class="block">
+            </div>
         </div>
+    </a>
+</div>
 
-        <!-- Vat Collection Card -->
-        <div class="w-full sm:w-1/2 lg:w-1/4 p-2">
-            <a href="{{ route('product-list') }}" class="block">
-                <div class="bg-white shadow-md rounded-lg p-4">
-                    <div class="flex items-center">
-                        <div class="flex-1">
-                            <h5 class="text-xl font-bold capitalize">
-                                $ <span id="vat"></span>
-                            </h5>
-                            <p class="text-sm text-gray-600">Vat Collection</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                            <div class="bg-blue-500 p-2 rounded-full shadow">
-                                <img class="w-8 h-8" src="{{ asset('images/icon.svg') }}" alt="icon">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
 
-        <!-- Total Collection Card -->
-        <div class="w-full sm:w-1/2 lg:w-1/4 p-2">
-            <a href="{{ route('product-list') }}" class="block">
-                <div class="bg-white shadow-md rounded-lg p-4">
-                    <div class="flex items-center">
-                        <div class="flex-1">
-                            <h5 class="text-xl font-bold capitalize">
-                                $ <span id="payable"></span>
-                            </h5>
-                            <p class="text-sm text-gray-600">Total Collection</p>
-                        </div>
-                        <div class="flex-shrink-0">
-                            <div class="bg-blue-500 p-2 rounded-full shadow">
-                                <img class="w-8 h-8" src="{{ asset('images/icon.svg') }}" alt="icon">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+
     </div>
 </div>

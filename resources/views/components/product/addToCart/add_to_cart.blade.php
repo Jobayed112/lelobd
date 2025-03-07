@@ -34,14 +34,14 @@
                                     <span class="px-2 py-1 rounded text-gray-800">{{ $cart->product->name }}</span>
                                 </td>
                                 <td class="px-4 py-3 border-b border-gray-200">
-                                    <span class="px-2 py-1 rounded text-gray-800">BDT {{ number_format($cart->product->price, 2) }}</span>
+                                    <span class="px-2 py-1 rounded text-gray-800">BDT {{ number_format($cart->price, 2) }}</span>
                                 </td>
                                 <td class="px-4 py-3 border-b border-gray-200">
                                     <span class="px-2 py-1 rounded text-gray-800">{{ $cart->qty }}</span>
                                 </td>
                                 <td class="px-4 py-3 border-b border-gray-200">
                                     <span class="px-2 py-1 rounded text-gray-800">
-                                        BDT {{ number_format($cart->product->price * $cart->qty, 2) }}
+                                        BDT {{ number_format($cart->total_price, 2) }}
                                     </span>
                                 </td>
                                 <td class="px-4 py-3 border-b border-gray-200">
@@ -63,7 +63,7 @@
                 <div class="text-lg m-4 pr-24   font-semibold">
                     <p class="text-lg font-semibold text-gray-900">Total Payable:</p>
                     <p class="text-xl font-bold text-gray-900">
-                        ${{ number_format($totalPrice = $cartItems->sum('price') , decimals: 2) }}
+                        ${{ number_format($totalPrice = $cartItems->sum('total_price') ,  2) }}
 
 
                     </p>

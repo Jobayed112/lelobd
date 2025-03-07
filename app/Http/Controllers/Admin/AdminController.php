@@ -16,38 +16,49 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
 
-public function adminDashboard() {
-    $products = Product::all();
-    $categories = Category::with('subcategories')->get();
+    public function adminDashboard()
+    {
+        $products = Product::all();
+        $categories = Category::with('subcategories')->get();
 
-    $invoices = Invoice::all();
-    $users= User::all();
-    $productdetails=ProductDetail::with('product')->get();
-    $orders=Order::all();
-    $offers=ProductOffer::all();
-    return view('pages.admin.home.summary',compact('products','categories','invoices','users','productdetails','orders','offers'));
-}
-public function admin()
-{
-    try {
-        $user = Auth::user();
+        $invoices = Invoice::all();
+        $users = User::all();
+        $productdetails = ProductDetail::with('product')->get();
+        $orders = Order::all();
+        $offers = ProductOffer::all();
+        $totalSales = Invoice::where('status', 'confirmed')->sum('total_amount');
 
-
-        if (!$user) {
-            return redirect()->route('admin-login-form');
-        }elseif ($user->role == 'admin') {
-            // Show admin dashboard
-
-            return redirect()->route('admin-dashboard');
-        }
-        return back()->with(
-            'error' ,'Your Role Is Not Match' );
-
-
-    } catch (\Exception $e) {
-        return back()->with(
-            'error' ,'unauthorize' );
+        return view('pages.admin.home.summary', compact('products', 'categories', 'invoices', 'users', 'productdetails', 'orders', 'offers','totalSales'));
     }
-}
+    public function admin()
+    {
+        try {
+            $user = Auth::user();
 
+
+            if (!$user) {
+                return redirect()->route('admin-login-form');
+            } elseif ($user->role == 'admin') {
+                // Show admin dashboard
+
+                return redirect()->route('admin-dashboard');
+            }
+            return back()->with(
+                'error',
+                'Your Role Is Not Match'
+            );
+        } catch (\Exception $e) {
+            return back()->with(
+                'error',
+                'unauthorize'
+            );
+        }
+    }
+
+    // user list
+    public function userList()
+    {
+        $users = User::all();
+        return view('pages.admin.user_list', compact('users'));
+    }
 }

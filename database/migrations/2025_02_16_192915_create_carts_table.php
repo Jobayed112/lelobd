@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('size',200)->nullable();
             $table->string('qty',200);
             $table->string('price',200);
+            $table->string('total_price',200);
 
             $table->foreign('product_id')->references('id')->on('products')
                 ->restrictOnDelete()

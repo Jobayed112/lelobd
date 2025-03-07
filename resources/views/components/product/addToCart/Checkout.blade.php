@@ -19,11 +19,11 @@
                             <div>
                                 <p class="text-base font-semibold text-gray-700">{{ $item->product->name }}</p>
                                 <p class="text-gray-600">Price: <span
-                                        class="font-medium">${{ number_format($item->product->price, 2) }}</span></p>
+                                        class="font-medium">${{ number_format($item->price, 2) }}</span></p>
                                 <p class="text-gray-600">Quantity: <span class="font-medium">{{ $item->qty }}</span>
                                 </p>
                                 <p class="text-green-600 font-bold mt-2">Total:
-                                    ${{ number_format($item->product->price * $item->qty, 2) }}</p>
+                                    ${{ number_format($item->total_price) }}</p>
 
                             </div>
                         </div>
@@ -85,7 +85,7 @@
         <div class="flex justify-between mb-2 mt-4">
             <p class="text-lg font-medium text-gray-700">Total Payable:</p>
             @php
-                $totalPrice = number_format($cartsItem->sum('price'), 2);
+                $totalPrice = number_format($cartsItem->sum('total_price'), 2);
             @endphp
             <p class="text-xl font-bold text-gray-900">${{ $totalPrice }}</p>
         </div>
