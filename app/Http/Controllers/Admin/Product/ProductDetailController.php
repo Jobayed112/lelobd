@@ -43,7 +43,7 @@ class ProductDetailController extends Controller
             return redirect()->route('product.detail.list')->with('success', 'Product details created successfully!');
 
         } catch (\Exception $e) {
-            return response()->json(['error'=>'Something went wrong','dff'=>$e->getMessage()]);
+            return back()->with('error','Something went wrong');
         }
 
     }

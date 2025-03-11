@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('price',50);
 
             $table->foreign('invoice_id')->references('id')->on('invoices')
-                ->cascadeOnUpdate()->restrictOnDelete();
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
 
             $table->foreign('product_id')->references('id')->on('products')
                 ->cascadeOnUpdate()->restrictOnDelete();

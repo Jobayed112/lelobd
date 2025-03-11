@@ -135,4 +135,39 @@ class ResetController extends Controller
             return back()->with('error','Password reset failed' );
         }
     }
+
+    // user update name email and phone number
+
+    public function userProfileUpdate(Request $request) {
+
+       $userEmail= $request->header('user_email');
+         $user=User::where('email',$userEmail)->first();
+        if($user){
+            $user->name=$request->input('name');
+            $user->email=$request->input('email');
+            $user->phone=$request->input('phone');
+            $user->save();
+            return back()->with('message', 'User updated successfully' );
+           }
+              else{
+                return back()->with('error', 'User not found' );
+              }
+    }
+    public function userPasswordChange (Request $request)  {
+        $userEmail= $request->header('user_email');
+        $user=User::where('email',$userEmail)->first();
+
+        if($user && Hash::check($request->input('current-password'), $user->password) && $request->input('new-password')==$request->input('confirm-password')){
+            $user->password=Hash::make($request->input('new-password'));
+            $user->save();
+            return back()->with('message', 'Password updated successfully' );
+        }
+        else{
+            return back()->with('error', 'Password not matched' );
+        }
+
+
+    }
+
+
 }

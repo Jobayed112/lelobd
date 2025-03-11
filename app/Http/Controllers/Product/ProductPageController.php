@@ -31,7 +31,7 @@ class ProductPageController extends Controller
 
             return view('pages.product.product-view', compact('productView','productDetail'));
         } catch (\Exception $e) {
-            return response()->json(['error'=> 'Login Fast Than Cart','df'=>$e->getMessage()]);
+            return back()->with('error','Login Fast Than Cart');
         }
 
     }

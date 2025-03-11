@@ -24,14 +24,14 @@ class UpdatedPasswordController extends Controller
             $user = $request->user();
 
             if (!Hash::check($validatedData['current_password'], $user->password)) {
-                return response()->json(['error' => 'Current password is incorrect'], 400);
+                return back()->with('error' ,'Current password is incorrect');
             }
 
             $user->update([
                 'password' => Hash::make($validatedData['new_password']),
             ]);
 
-            return response()->json(['message' => 'Password updated successfully'], 200);
+            return back()->with('message' , 'Password updated successfully');
         }  catch (\Exception $e) {
             return back()->with(
                 'error' ,'unauthorize' );

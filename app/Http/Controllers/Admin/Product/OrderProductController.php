@@ -103,7 +103,7 @@ class OrderProductController extends Controller
             return redirect()->route('invoice.show', $invoice->id)->with('success', 'Order confirmed and Invoice generated.');
         } catch (\Exception $e) {
             DB::rollback();
-            return response()->json(['error' =>'Something went wrong! Please try again.','mass'=>$e->getMessage()]);
+            return  back()->with('error','Something went wrong! Please try again.');
         }
     }
 
@@ -123,15 +123,15 @@ class OrderProductController extends Controller
     {
         try {
             $invoice = Invoice::findOrFail($id);
-
-
             $invoice->invoiceProducts()->delete();
-
+            if ($invoice->order && $invoice->order->invoice()->count() == 1) {
+                $invoice->order->delete();
+            }
             $invoice->delete();
 
             return redirect()->route('invoice.list')->with('success', 'Invoice deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->route('invoice.list')->with('error', 'Something went wrong while deleting the invoice.');
+            return response()->json(['error'=>'Something went wrong while deleting the invoice.','mess'=>$e->getMessage()]);
         }
     }
 
@@ -166,12 +166,12 @@ public function downloadInvoice($invoice_id)
         $orderItem = OrderItem::findOrFail($id);
 
         if ($orderItem->order()->exists()) {
-            return redirect()->back()->with('error', 'Order item cannot be deleted because an invoice has already been created.');
+            return  back()->with('error', 'Order item cannot be deleted because an invoice has already been created.');
         }
         $orderItem->order()->delete();
         $orderItem->delete();
 
-        return redirect()->back()->with('success', 'Order item deleted successfully!');
+        return  back()->with('success', 'Order item deleted successfully!');
     }
 
 }

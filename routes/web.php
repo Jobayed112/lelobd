@@ -195,6 +195,11 @@ Route::get('subcategory/{id}/product', [ProductPageController::class, 'showSubca
 Route::middleware(['VerifyToken'])->group(function () {
 
     Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+    // user update name and email and phone number
+    Route::post('user/profile/update', [ResetController::class, 'userProfileUpdate'])->name('user.profile.update');
+
+    Route::post('user/password/change', [ResetController::class, 'userPasswordChange'])->name('user.password.change');
+    Route::get('user/order/delete/{id}', [HomeController::class, 'userorderDelete'])->name('user.order.delete');
 
 
     // add to cart

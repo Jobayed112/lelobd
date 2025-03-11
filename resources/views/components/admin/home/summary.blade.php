@@ -166,10 +166,10 @@
         </div>
 
         <!-- Total Sale Card -->
-<div class="w-full sm:w-1/3 lg:w-1/4 h-64 p-4 "> <!-- Changed width and height -->
+<div class="w-full sm:w-1/3 lg:w-1/4 h-64 p-4 ">
     <a href="{{ route('product-list') }}" class="block">
-        <div class="bg-white shadow-md rounded-lg p-6"> <!-- Adjusted padding -->
-            <div class="flex items-center h-full"> <!-- Ensure the height of the card is fully utilized -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <div class="flex items-center h-full">
                 <div class="flex-1">
                     <h5 class="text-2xl font-bold capitalize">
                         $ <span id="total">{{ $totalSales }}</span>
@@ -178,7 +178,7 @@
                 </div>
                 <div class="flex-shrink-0">
                     <div class="bg-blue-500 p-3 rounded-full shadow">
-                        <img class="w-10 h-10" src="{{ asset('images/icon.svg') }}" alt="icon"> <!-- Adjusted icon size -->
+                        <img class="w-10 h-10" src="{{ asset('images/icon.svg') }}" alt="icon">
                     </div>
                 </div>
             </div>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Order;
+use App\Models\Invoice;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductOffer;
@@ -23,10 +26,31 @@ class HomeController extends Controller
         if (!$user) {
             return redirect()->route('login.form');
         } elseif (Auth::check()) {
-            return view('pages.user.profile');
+
+            $email = Auth::user()->email;
+            $user = User::where('email', $email)->first();
+            $orders=$user->orders;
+            $invoices=Invoice::where('user_id',$user->id)->get();
+            return view('pages.user.profile',compact('orders','invoices'));
+
         }
 
     }
+
+    public function userorderDelete($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->invoice()->exists()) {
+            return redirect()->route('home')->with('error', 'Order cannot be deleted because an invoice has already been created.');
+        }
+        $order->orderItems()->delete();
+
+        $order->delete();
+
+        return redirect()->route('profile')->with('success', 'Order deleted successfully!');
+    }
+
 }
 
 

@@ -19,7 +19,8 @@ return new class extends Migration
             $table->enum('status',['Pending','Processing','confirmed'])->default('Pending');
 
             $table->foreign('order_id')->references('id')->on('orders')
-                ->cascadeOnUpdate()->restrictOnDelete();
+            ->cascadeOnUpdate()
+            ->cascadeOnDelete();
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->cascadeOnUpdate()->restrictOnDelete();

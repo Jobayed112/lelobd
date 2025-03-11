@@ -37,11 +37,12 @@ class CartPageController extends Controller
 
             $product = Product::findOrFail($request->id);
 
+            $productQty = $product->qty;
 
 
             $qty = $request->qty;
 
-            if ($qty == 18) {
+            if ($qty <= $productQty) {
                 return back()->with('error', 'Requested quantity exceeds available stock');
             }
 
@@ -64,7 +65,7 @@ class CartPageController extends Controller
 
             return redirect()->route('cart.show')->with('success', 'Product added to cart successfully!');
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Login Fast Than Cart', 'df' => $e->getMessage()]);
+            return back()->with('error' , 'Login Fast Than Cart');
         }
     }
 
@@ -157,8 +158,7 @@ class CartPageController extends Controller
 
             return redirect()->route('home', ['order' => $order->id])->with('success', 'Checkout successful! Your order is being processed.');
         } catch (\Exception $e) {
-            return response()->json(['af' => 'order faild ', 'sdf' => $e->getMessage()]);
-            // return back()->with('error', 'There was an error processing your order. Please try again later.');
+            return back()->with('error', 'There was an error processing your order. Please try again later.');
         }
     }
 }
