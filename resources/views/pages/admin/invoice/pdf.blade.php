@@ -47,7 +47,11 @@
                     <tr>
                         <td>{{ $item->product->name }}</td>
                         <td>{{ $item->qty }}</td>
-                        <td>BDT {{ number_format($item->price, 2) }}</td>
+                        @php
+                            $total= $item->price * $item->qty;
+
+                        @endphp
+                        <td>BDT {{ number_format($total, 2) }}</td>
                     </tr>
                 @endforeach
             </tbody>

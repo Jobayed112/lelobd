@@ -6,7 +6,7 @@
         <div class="bg-white p-8 rounded-lg shadow-lg border border-gray-300">
             <h3 class="text-2xl font-semibold text-gray-800 mb-2">Cart Overview</h3>
             <div class="space-y-6">
-                @foreach ($cartsItem as $item)
+                @foreach ($cartItems as $item)
                     <div class="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-sm">
                         <div class="flex items-center space-x-4">
                             @if ($item->product->images->isNotEmpty())
@@ -85,7 +85,7 @@
         <div class="flex justify-between mb-2 mt-4">
             <p class="text-lg font-medium text-gray-700">Total Payable:</p>
             @php
-                $totalPrice = number_format($cartsItem->sum('total_price'), 2);
+                $totalPrice = number_format($cartItems->sum('total_price'), 2);
             @endphp
             <p class="text-xl font-bold text-gray-900">${{ $totalPrice }}</p>
         </div>

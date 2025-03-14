@@ -167,7 +167,7 @@
 
         <!-- Total Sale Card -->
 <div class="w-full sm:w-1/3 lg:w-1/4 h-64 p-4 ">
-    <a href="{{ route('product-list') }}" class="block">
+    <a href="{{ route('invoice.list') }}" class="block">
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex items-center h-full">
                 <div class="flex-1">

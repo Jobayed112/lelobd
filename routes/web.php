@@ -210,7 +210,7 @@ Route::middleware(['VerifyToken'])->group(function () {
     Route::delete('/cart/remove/{id}', [CartPageController::class, 'removeFromCart'])->name('cart.remove');
 
 
-    Route::get('checkout/page/', [CartPageController::class, 'ckeckoutPage'])->name('checkout.page');
+    Route::get('checkout/page', [CartPageController::class, 'ckeckoutPage'])->name('checkout.page');
 
     Route::post('checkout/submit', [CartPageController::class, 'checkoutSubmit'])->name('checkout.submit');
 

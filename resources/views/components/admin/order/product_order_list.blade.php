@@ -1,7 +1,7 @@
 <div class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen m-2">
     <div class="container mx-auto bg-white rounded-xl shadow-xl p-6">
         <div class="flex justify-between items-center mb-6 flex-wrap">
-            <h1 class="text-4xl font-extrabold text-gray-800 w-full sm:w-auto">Order List</h1>
+            <h1 class="text-4xl font-extrabold text-gray-800 w-full sm:w-auto">Order Product List</h1>
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-700 border border-gray-300 rounded-xl shadow">
@@ -20,7 +20,10 @@
                             <td class="px-5 py-4">{{ $orderItem->order_id }}</td>
                             <td class="px-5 py-4">{{ $orderItem->product->name }}</td>
                             <td class="px-5 py-4">{{ $orderItem->qty }}</td>
-                            <td class="px-5 py-4">${{ number_format($orderItem->price, 2) }}</td>
+                            @php
+                                $total = $orderItem->price * $orderItem->qty;
+                            @endphp
+                            <td class="px-5 py-4">${{ number_format($total, 2) }}</td>
                             <td class="px-5 py-4 space-x-3">
                                 <a href="{{ route('order.item.delete', $orderItem->id) }}" class="text-red-600 hover:underline"
                                     onclick="return confirm('Are you sure you want to delete this orderItem?')">Delete</a>

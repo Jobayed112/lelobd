@@ -125,13 +125,16 @@ class OrderProductController extends Controller
             $invoice = Invoice::findOrFail($id);
             $invoice->invoiceProducts()->delete();
             if ($invoice->order && $invoice->order->invoice()->count() == 1) {
+                $invoice->order->orderItems()->delete();
                 $invoice->order->delete();
             }
             $invoice->delete();
-
             return redirect()->route('invoice.list')->with('success', 'Invoice deleted successfully.');
         } catch (\Exception $e) {
-            return response()->json(['error'=>'Something went wrong while deleting the invoice.','mess'=>$e->getMessage()]);
+            return response()->json([
+                'error' => 'Something went wrong while deleting the invoice.',
+                'mess' => $e->getMessage()
+            ]);
         }
     }
 
@@ -140,7 +143,6 @@ class OrderProductController extends Controller
 public function downloadInvoice($invoice_id)
 {
     $invoice = Invoice::with(['user', 'order', 'invoiceProducts.product'])->findOrFail($invoice_id);
-
     // Load the invoice view into PDF
     $pdf = Pdf::loadView('pages.admin.invoice.pdf', compact('invoice'));
 

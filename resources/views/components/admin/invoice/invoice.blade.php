@@ -63,7 +63,10 @@
                     <tr>
                         <td class="border border-gray-300 px-4 py-2">{{ $item->product->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $item->qty }}</td>
-                        <td class="border border-gray-300 px-4 py-2">BDT {{ number_format($item->price, 2) }}</td>
+                        @php
+                            $total = $item->price * $item->qty;
+                        @endphp
+                        <td class="border border-gray-300 px-4 py-2">BDT {{ number_format($total  , 2) }}</td>
                     </tr>
                 @endforeach
             </tbody>

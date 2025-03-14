@@ -15,6 +15,8 @@ class CartPageController extends Controller
 
     public function AdminCartListShow()
     {
+        // $cartsItems=Cart::with('user','product.images')->get();
+
 
         return view('pages.admin.order.cartlist');
     }
